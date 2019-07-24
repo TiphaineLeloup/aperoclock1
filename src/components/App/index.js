@@ -7,7 +7,18 @@ import './app.scss';
 // == Composant
 const App = () => (
   <div id="app">
-    App React
+    <header className="header">
+      <Header />
+    </header>
+    <nav className="nav">
+      <Nav />
+    </nav>
+    {/* <main className="content">
+      *contenu*
+    </main> */}
+    <footer className="footer">
+      <Footer />
+    </footer>
   </div>
 );
 
