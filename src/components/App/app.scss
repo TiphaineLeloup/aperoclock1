@@ -1,2 +1,21 @@
 @import 'src/styles/vars';
 
+.nav {
+    position:fixed;
+    left:0;
+    top:0;
+    width: 10%;
+    height: 100%;
+    background: $green;
+    padding: 2em;
+
+}
+
+.header {
+    margin-left: 20%;
+}
+
+.footer {
+    margin-left: 10%;
+}
+

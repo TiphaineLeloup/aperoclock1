@@ -1,1 +1,14 @@
 @import 'src/styles/vars';
+
+.footer {
+
+background-color: $darkgreen;
+padding: 0.8em;
+
+
+  &-text {
+    color: white;
+
+    
+  }
+}
