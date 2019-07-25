@@ -22,7 +22,10 @@ $red: #fa0d23ff;
 $darkred: #f10017ff;
 $darkerred: #b50011ff;
 
-// ajout Font via Cufont - donc pas de liens de font
+// ajout Font sans lien de font
+
+//BRANDON GROTESQUE
+
 @font-face {
   font-family: "Brandon-grotesque";
   src: local("Brandon-grotesque-black"),
@@ -69,5 +72,14 @@ $darkerred: #b50011ff;
   font-family: "Brandon-grotesque";
   src: local("Brandon-grotesque-thin-italic"),
   url(/src/fonts/Brandon-grotesque/brandon-grotesque-thin-italic-58a8a3a8861fe.otf)
+  format("truetype");
+}
+
+// STRATUM
+
+@font-face {
+  font-family: "Stratum";
+  src: local("Stratum"),
+  url(/src/fonts/Stratum/StratumNo1-Regular.ttf)
   format("truetype");
 }
