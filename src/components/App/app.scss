@@ -1,21 +1,18 @@
 @import 'src/styles/vars';
 
-.nav {
-    position:fixed;
-    left:0;
-    top:0;
-    width: 10%;
-    height: 100%;
-    background: $green;
-    padding: 2em;
-
+.ant-layout {
+  background-color: white;
 }
 
-.header {
-    margin-left: 20%;
+#app {
+  display: flex;
+  flex-direction: column;
 }
 
-.footer {
-    margin-left: 10%;
+#app, #root {
+  min-height: 100%;
 }
 
+main {
+  padding: 1em;
+}

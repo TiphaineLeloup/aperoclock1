@@ -1,7 +1,11 @@
 @import 'src/styles/vars';
 
+.ant-layout-header {
+  background-color : white;
+}
+
 .header {
-padding: 1.5em;
+  text-align: center;
 
   &-title {
     font-size: 3em;
