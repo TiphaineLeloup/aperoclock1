@@ -6,7 +6,9 @@ import { Layout } from 'antd';
 import Nav from 'src/components/Nav';
 import Header from 'src/components/Header';
 import Footer from 'src/components/Footer';
-import Dashboard from 'src/components/Dashboard';
+import Map from 'src/components/Map';
+import Profile from 'src/components/Profile';
+import Contact from 'src/components/Contact';
 import './app.scss';
 
 // == Composant
@@ -29,7 +31,9 @@ const App = () => {
             <Header />
           </AntdHeader>
           <Content>
-            <Dashboard />
+            <Map />
+            <Profile />
+            <Contact />
           </Content>
           <AntdFooter className="footer">
             <Footer />
