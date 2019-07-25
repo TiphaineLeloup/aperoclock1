@@ -24,12 +24,50 @@ $darkerred: #b50011ff;
 
 // ajout Font via Cufont - donc pas de liens de font
 @font-face {
-  font-family: Brandon-grotesque;
+  font-family: "Brandon-grotesque";
   src: local("Brandon-grotesque-black"),
-  url(/src/fonts/Brandon-grotesque/brandon-grotesque-black-58a8a3e824392.otf),
+  url(/src/fonts/Brandon-grotesque/brandon-grotesque-black-58a8a3e824392.otf)
   format("truetype");
 }
 
-// @font-face {
-//   font-family: 
-// }
+@font-face {
+  font-family: "Brandon-grotesque-bold-italic";
+  src: local("Brandon-grotesque-bold-italic"),
+  url(/src/fonts/Brandon-grotesque/brandon-grotesque-bold-italic-58a8a48221563.otf)
+  format("truetype");
+}
+
+@font-face {
+  font-family: "Brandon-grotesque-light";
+  src: local("Brandon-grotesque-light"),
+  url(/src/fonts/Brandon-grotesque/brandon-grotesque-light-58a8a4b38001d.otf)
+  format("truetype");
+}
+
+@font-face {
+  font-family: "Brandon-grotesque-light-italic";
+  src: local("Brandon-grotesque-light-italic"),
+  url(/src/fonts/Brandon-grotesque/brandon-grotesque-light-italic-58a8a4ccb88be.otf)
+  format("truetype");
+}
+
+@font-face {
+  font-family: "Brandon-grotesque-medium-italic";
+  src: local("Brandon-grotesque-medium-italic"),
+  url(/src/fonts/Brandon-grotesque/brandon-grotesque-medium-italic-58a8a3c40866a.otf)
+  format("truetype");
+}
+
+@font-face {
+  font-family: "Brandon-grotesque-regular-italic";
+  src: local("Brandon-grotesque-regular-italic"),
+  url(/src/fonts/Brandon-grotesque/brandon-grotesque-regular-italic-58a8a456c4724.otf)
+  format("truetype");
+}
+
+@font-face {
+  font-family: "Brandon-grotesque";
+  src: local("Brandon-grotesque-thin-italic"),
+  url(/src/fonts/Brandon-grotesque/brandon-grotesque-thin-italic-58a8a3a8861fe.otf)
+  format("truetype");
+}
