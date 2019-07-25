@@ -1,0 +1,13 @@
+@import 'src/styles/vars';
+
+#listGroups {
+  padding: 1em;
+  text-align: center;
+
+  .ant-card {
+    display: inline-block;
+    margin: 1em;
+    width: 25%;
+  }
+
+}

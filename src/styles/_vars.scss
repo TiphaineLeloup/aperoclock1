@@ -24,10 +24,9 @@ $darkerred: #b50011ff;
 
 // ajout Font via Cufont - donc pas de liens de font
 @font-face {
-  font-family: Brandon-grotesque;
+  font-family: "Brandon-grotesque";
   src: local("Brandon-grotesque-black"),
-  url(/src/fonts/Brandon-grotesque/brandon-grotesque-black-58a8a3e824392.otf),
-  format("truetype");
+  url(/src/fonts/Brandon-grotesque/brandon-grotesque-black-58a8a3e824392.otf) format("truetype");
 }
 
 // @font-face {

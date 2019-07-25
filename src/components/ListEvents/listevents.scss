@@ -1,0 +1,33 @@
+@import 'src/styles/vars';
+
+#listEvents {
+  margin: auto;
+  padding: 1em;
+  text-align: left;
+  width: 80%;
+
+  .ant-list-item-meta-avatar {
+    color: $green;
+    font-size: 1rem;
+  }
+
+  .event {
+    padding-right: 1em;
+  }
+
+  p{
+    margin-bottom: 0;
+  }
+
+  .participationTrue .ant-badge-count {
+    background-color: $lightergreen;
+  }
+
+  .participationNull .ant-badge-count {
+    background-color: $lighterorange;
+  }
+
+  .participationFalse .ant-badge-count {
+    background-color: $lighterred;
+  }
+}
