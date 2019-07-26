@@ -10,6 +10,9 @@ import Dashboard from 'src/components/Dashboard';
 import Form from 'src/components/Form';
 import Login from 'src/components/Login';
 import LoginForm from 'src/components/LoginForm';
+import Map from 'src/components/Map';
+import Profile from 'src/components/Profile';
+import Contact from 'src/components/Contact';
 import './app.scss';
 
 // == Composant
@@ -32,8 +35,9 @@ const App = () => {
             <Header />
           </AntdHeader>
           <Content>
-            <LoginForm />
-            <Dashboard />
+            <Map />
+            <Profile />
+            <Contact />
           </Content>
           <AntdFooter className="footer">
             <Footer />

@@ -1,0 +1,13 @@
+@import 'src/styles/vars';
+
+#dashboard {
+  text-align: center;
+
+  .ant-switch {
+    background-color: $orange;
+  }
+
+  .ant-switch-checked {
+    background-color: $yellow;
+  }
+}
