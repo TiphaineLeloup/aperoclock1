@@ -7,8 +7,14 @@ import './eventform.scss';
 
 const EventForm = () => (
   <form>
-    <Input placeholder="Nom de l'évènement" />;
-    <TextArea placeholder="Description de l'évènement" rows={4} />;
+    <label htmlFor="eventName">
+    Nom de l'évènement
+      <Input type="text" placeholder="Ecrivez ici" />;
+    </label>
+    <label htmlFor="eventDescription">
+    Description de l'évènement
+      <TextArea placeholder="Ecrivez ici" rows={4} />;
+    </label>
     <Button type="link">Valider</Button>
   </form>
 );
