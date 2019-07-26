@@ -10,6 +10,8 @@ import Dashboard from 'src/components/Dashboard';
 import Form from 'src/components/Form';
 import Login from 'src/components/Login';
 import LoginForm from 'src/components/LoginForm';
+import GroupForm from 'src/components/GroupForm';
+import EventForm from 'src/components/EventForm';
 import Map from 'src/components/Map';
 import Profile from 'src/components/Profile';
 import Contact from 'src/components/Contact';

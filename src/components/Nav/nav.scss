@@ -5,9 +5,13 @@
   font-family: stratum;
 }
 
-nav li a {
+nav li.ant-menu-item a {
   background-color: white;
   border-radius: 1em;
-  padding-left: 0.75em;
   font-weight: bold;
+  padding-left: 0.75em;
+  
+  &:hover {
+    color: $yellow;
+  }
 }

@@ -8,7 +8,7 @@ const ListEvents = () => {
 
   return (
     <div id="listEvents">
-    {/* PENSER À LA CLEF */}
+      {/* PENSER À LA CLEF */}
       <List
         dataSource={fakeEvents}
         itemLayout="horizontal"
