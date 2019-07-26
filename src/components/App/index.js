@@ -7,6 +7,9 @@ import Nav from 'src/components/Nav';
 import Header from 'src/components/Header';
 import Footer from 'src/components/Footer';
 import Dashboard from 'src/components/Dashboard';
+import Form from 'src/components/Form';
+import Login from 'src/components/Login';
+import LoginForm from 'src/components/LoginForm';
 import './app.scss';
 
 // == Composant
@@ -29,6 +32,7 @@ const App = () => {
             <Header />
           </AntdHeader>
           <Content>
+            <LoginForm />
             <Dashboard />
           </Content>
           <AntdFooter className="footer">
