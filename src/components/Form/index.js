@@ -2,6 +2,8 @@ import React from 'react';
 
 import './form.scss';
 
+// FORMULAIRE INSCRIPTION
+
 const Form = () => (
   <form>
     <label id="indentifiant">

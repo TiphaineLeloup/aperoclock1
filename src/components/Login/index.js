@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'antd';
 import './login.scss';
 
+// FORMULAIRE CHOIX ENTRE CONNEXION ET INSCRIPTION
 
 const Login = () => (
   <form>
