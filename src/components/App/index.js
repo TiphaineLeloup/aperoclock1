@@ -15,6 +15,7 @@ import EventForm from 'src/components/EventForm';
 import Map from 'src/components/Map';
 import Profile from 'src/components/Profile';
 import Contact from 'src/components/Contact';
+import AlertColor from 'src/components/Alert';
 import './app.scss';
 
 // == Composant
@@ -36,7 +37,7 @@ const App = () => {
           <AntdHeader>
             <Header />
           </AntdHeader>
-          <Content>
+          <Content>            
             <Map />
             <Profile />
             <Contact />
