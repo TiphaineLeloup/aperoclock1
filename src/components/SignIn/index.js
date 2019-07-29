@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './loginform.scss';
+import './SignIn.scss';
 // import { Form } from 'antd';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
@@ -42,5 +42,5 @@ class LoginFormToCreate extends React.Component {
   }
 };
 
-const LoginForm = Form.create({name:'login'})(LoginFormToCreate);
-export default LoginForm;
+const SignIn = Form.create({name:'login'})(LoginFormToCreate);
+export default SignIn;
