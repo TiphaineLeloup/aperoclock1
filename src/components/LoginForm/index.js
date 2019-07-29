@@ -1,8 +1,14 @@
 import React from 'react';
 
 import './loginform.scss';
-// import { Form } from 'antd';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+
+import {
+  Form,
+  Icon,
+  Input,
+  Button,
+  Checkbox,
+} from 'antd';
 
 // FORMULAIRE DE CONNEXION
 
@@ -42,5 +48,5 @@ class LoginFormToCreate extends React.Component {
   }
 };
 
-const LoginForm = Form.create({name:'login'})(LoginFormToCreate);
+const LoginForm = Form.create({ name: 'login' })(LoginFormToCreate);
 export default LoginForm;

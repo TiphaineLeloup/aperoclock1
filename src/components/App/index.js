@@ -7,7 +7,7 @@ import Nav from 'src/components/Nav';
 import Header from 'src/components/Header';
 import Footer from 'src/components/Footer';
 import Dashboard from 'src/components/Dashboard';
-import Form from 'src/components/Form';
+import LoginForm from 'src/components/LoginForm';
 import Home from 'src/components/Home';
 import SignIn from 'src/components/SignIn';
 import GroupForm from 'src/components/GroupForm';
@@ -37,7 +37,8 @@ const App = () => {
           <AntdHeader>
             <Header />
           </AntdHeader>
-          <Content>            
+          <Content>
+            <SignIn />
             <Map />
             <Profile />
             <Contact />
