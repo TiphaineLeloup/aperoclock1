@@ -12,19 +12,19 @@ import './signin.scss';
 // FORMULAIRE D'INSCRIPTION
 
 class SignInUnwrap extends React.Component {
-
   render() {
     const { TextArea } = Input;
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+    const {
+      getFieldDecorator, getFieldsError, getFieldError, isFieldTouched,
+    } = this.props.form;
 
-    const formItemLayout =
-    {
+    const formItemLayout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 12 },
     };
 
     return (
-      <Form layout={"horizontal"}>
+      <Form layout="horizontal">
 
         <Form.Item label="Nom d'Utilisateur" {...formItemLayout}>
           {getFieldDecorator('name', {
@@ -62,7 +62,7 @@ class SignInUnwrap extends React.Component {
           )}
         </Form.Item>
         <Form.Item label="Nom Prénom" {...formItemLayout}>
-            <Input type="text" id="fullName" name="fullName" placeholder="Nom prénom (facultatif)" />
+          <Input type="text" id="fullName" name="fullName" placeholder="Nom prénom (facultatif)" />
         </Form.Item>
         <Form.Item label="Adresse" {...formItemLayout}>
           {getFieldDecorator('addressComplementInside', {
@@ -72,7 +72,7 @@ class SignInUnwrap extends React.Component {
           )}
         </Form.Item>
         <Form.Item label="Complément d'adresse" {...formItemLayout}>
-            <Input type="text" id="addressComplementOutside" name="fullName" placeholder="Complément d'adresse (facultatif)" />
+          <Input type="text" id="addressComplementOutside" name="fullName" placeholder="Complément d'adresse (facultatif)" />
         </Form.Item>
         <Form.Item label="Code postal" {...formItemLayout}>
           {getFieldDecorator('addressePostalCode', {
@@ -105,12 +105,12 @@ class SignInUnwrap extends React.Component {
         <Form.Item label="Biographie" {...formItemLayout}>
           <TextArea type="text" id="userDesc" name="userDesc" placeholder="Petite biographie rigolote (facultatif)" rows={4} />
         </Form.Item>
-      
-      <Button name="sendForm">Valider</Button>
+
+        <Button name="sendForm">Valider</Button>
       </Form>
     );
   }
-};
+}
 
 const SignIn = Form.create({ name: 'form_login' })(SignInUnwrap);
 
