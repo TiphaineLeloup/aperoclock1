@@ -10,11 +10,9 @@ import {
   Checkbox,
 } from 'antd';
 
-// FORMULAIRE DE CONNEXION
+// FORMULAIRE D'INSCRIPTION
 
-// trouver comment inserer les getFieldDecorator https://ant.design/components/form/ (tiphaine)
 
-class LoginFormToCreate extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -46,7 +44,8 @@ class LoginFormToCreate extends React.Component {
     </Form>
   );
   }
-};
+}
 
 const LoginForm = Form.create({ name: 'login' })(LoginFormToCreate);
 export default LoginForm;
+
