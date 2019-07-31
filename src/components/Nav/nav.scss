@@ -2,16 +2,52 @@
 
 .ant-layout-sider, .ant-menu {
   background-color: $lightergreen;
-  font-family: stratum;
+  font-family: Stratum;
 }
 
-nav li.ant-menu-item a {
-  background-color: white;
-  border-radius: 1em;
-  font-weight: bold;
-  padding-left: 0.75em;
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
+.ant-menu:active,
+.ant-menu-item:active {
+  background-color : transparent;
+}
+
+.ant-menu-inline .ant-menu-selected::after, .ant-menu-inline .ant-menu-item-selected::after {
+  border-color : transparent;
+  content : ">";
+  font-size : 2em;
+  line-height: 1.15em;
+  right : 1em;
+}
+
+nav .ant-menu-inline li.ant-menu-item {
+  overflow: visible;
   
-  &:hover {
+  &-selected a,
+  &::after {
     color: $yellow;
   }
+  
+  &:hover:not(.ant-menu-item-selected) {
+    padding-top: 4px;
+  }
+
+  a {
+    background-color: white;
+    border-bottom: 10px solid $green;
+    border-radius: 1em;
+    font-weight: bold;
+    padding-left: 0.75em;
+    transition: border-width 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
+    
+    &:hover:not(:active){
+      border-bottom-width: 8px;
+      color: $yellow;
+      cursor: pointer;
+    }
+  }
+}
+
+.nav-logo {
+  padding: 1em;
+  text-align: center;
 }

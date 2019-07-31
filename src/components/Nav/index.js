@@ -1,10 +1,14 @@
 import React from 'react';
 import { Menu } from 'antd';
 
+import Logo from 'src/img/logo_min.svg';
 import './nav.scss';
 
 const Nav = () => (
   <nav>
+    <div className="nav-logo">
+      <img src={Logo} alt="logo" />
+    </div>
     <Menu
       className="side-menu"
       mode="inline"
