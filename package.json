@@ -44,7 +44,7 @@
     "save-deps": "rm -rf node_modules && npm update --save && npm update --save-dev"
   },
   "dependencies": {
-    "antd": "^3.20.5",
+    "antd": "^3.20.7",
     "axios": "^0.19.0",
     "babel-plugin-import": "^1.12.0",
     "classnames": "^2.2.6",
@@ -52,6 +52,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
+    "react-scripts": "^3.0.1",
     "redux": "^4.0.1"
   }
 }
