@@ -1,7 +1,8 @@
 import React from 'react';
 import { Menu } from 'antd';
 import { NavLink } from 'react-router-dom';
-// import slugify from 'slugify'; / si besoin pour des URL fiendly (si on commence à avoir des URL à rallonge)
+// import slugify from 'slugify';
+// si besoin pour des URL fiendly (si on commence à avoir des URL à rallonge)
 
 import './nav.scss';
 
