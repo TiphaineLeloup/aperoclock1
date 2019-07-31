@@ -38,7 +38,7 @@ const App = () => {
             <Header />
           </AntdHeader>
           <Content>
-            <SignIn />
+            <Dashboard />
             <Map />
             <Profile />
             <Contact />

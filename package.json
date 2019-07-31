@@ -52,13 +52,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
-<<<<<<< HEAD
     "react-scripts": "^3.0.1",
     "redux": "^4.0.1"
-=======
-    "react-router-dom": "^5.0.1",
-    "redux": "^4.0.1",
-    "slugify": "^1.3.4"
->>>>>>> 6b33697dc7c645bcbeb195dbfb66023845c8062a
   }
 }
