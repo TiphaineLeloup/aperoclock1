@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button } from 'antd';
-import './login.scss';
+import './home.scss';
 
+// FORMULAIRE CHOIX ENTRE CONNEXION ET INSCRIPTION
 
-const Login = () => (
+const Home = () => (
   <form>
     <Button type="link">Connexion</Button>
 
@@ -11,4 +12,4 @@ const Login = () => (
   </form>
 );
 
-export default Login;
+export default Home;

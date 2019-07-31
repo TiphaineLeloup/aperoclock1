@@ -1,6 +1,5 @@
 import React from 'react';
-import { Input } from 'antd';
-import { Button } from 'antd';
+import { Input, Button } from 'antd';
 import './groupform.scss';
 
 
@@ -10,7 +9,7 @@ const GroupForm = () => {
     <form>
       <Input placeholder="Nom du groupe" />;
       <TextArea placeholder="Description du groupe" rows={4} />;
-      <Button type="link">Valider</Button>
+      <Button type="link">Création du groupe</Button>
     </form>
   );
 };

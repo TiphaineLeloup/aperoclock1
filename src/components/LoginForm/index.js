@@ -1,28 +1,50 @@
 import React from 'react';
 
 import './loginform.scss';
-import { Form } from 'antd';
 
-const LoginForm = () => (
-  <form>
-    <label>
-    E-mail
-      <input type="text" name="Email" />
-    </label>
-    <label>
-    Identifiant
-      <input type="text" name="Identifiant" />
-    </label>
-    <label>
-    Mot de passe
-      <input type="text" name="Mot de passe" />
-    </label>
-    <label>
-    Confirmer le mot de passe
-      <input type="text" name="Confirmer le mot de passe" />
-    </label>
-    <input type="submit" value="Envoyer" />
-  </form>
-);
+import {
+  Form,
+  Icon,
+  Input,
+  Button,
+  Checkbox,
+} from 'antd';
 
-export default LoginForm;
+// FORMULAIRE D'INSCRIPTION
+
+
+
+//   render() {
+//     const { getFieldDecorator } = this.props.form;
+//     return (
+//       <Form onSubmit={() => { }} className = "login-form" >
+//         <Form.Item>
+//           <Input
+//             prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+//             placeholder="Username"
+//           />
+//         </Form.Item>
+//         <Form.Item>
+//           <Input
+//             prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+//             type="password"
+//             placeholder="Password"
+//           />
+//         </Form.Item>
+//         <Form.Item>
+//           <Checkbox>Remember me</Checkbox>
+//           <a className="login-form-forgot" href="">
+//             Forgot password
+//           </a>
+//           <Button type="primary" htmlType="submit" className="login-form-button">
+//             Log in
+//           </Button>
+//           Or <a href="">register now!</a>
+//         </Form.Item>
+//     </Form>
+//   );
+//   }
+// }
+
+// const LoginForm = Form.create({ name: 'login' })(LoginFormToCreate);
+// export default LoginForm;
