@@ -4,20 +4,6 @@
   background-color: white;
 }
 
-.ant-layout-sider {
-  height: 100%;
-  position: fixed;
-}
-
-#app {
-  display: flex;
-  flex-direction: column;
-}
-
-#app, #root {
-  min-height: 100%;
-}
-
 main {
   padding: 1em;
 }

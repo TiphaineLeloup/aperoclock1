@@ -38,9 +38,10 @@ const App = () => {
             <Header />
           </AntdHeader>
           <Content>
-            <SignIn />
+            <Dashboard />
+            {/* <SignIn />
             <Map />
-            <Profile />
+            <Profile /> */}
             <Contact />
           </Content>
           <AntdFooter className="footer">
