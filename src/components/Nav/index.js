@@ -4,10 +4,14 @@ import { NavLink } from 'react-router-dom';
 // import slugify from 'slugify';
 // si besoin pour des URL fiendly (si on commence à avoir des URL à rallonge)
 
+import Logo from 'src/img/logo_min.svg';
 import './nav.scss';
 
 const Nav = () => (
   <nav>
+    <div className="nav-logo">
+      <img src={Logo} alt="logo" />
+    </div>
     <Menu
       className="side-menu"
       mode="inline"
