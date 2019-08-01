@@ -18,6 +18,8 @@ import Contact from 'src/components/Contact';
 import AlertColor from 'src/components/Alert';
 import './app.scss';
 
+import data from 'src/data/index';
+
 // == Composant
 const App = () => {
   const {
