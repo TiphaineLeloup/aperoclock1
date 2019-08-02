@@ -32,8 +32,9 @@ const App = () => {
     Content,
   } = Layout;
 
-  return (
+  return ( // Trouver comment faire pour que le footer header et content ne s'affiche pas avec la route de "deconnexion" = home
     <div id="app">
+      <Route path="/home" exact component={Home} />
       <Layout>
         <Sider>
           <Nav />

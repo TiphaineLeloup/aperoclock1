@@ -22,7 +22,7 @@ const Nav = () => (
       <Menu.Item><NavLink to="/groupes" className="menu-item-link" exact activeClassName="menu-item-link--active">Groupes</NavLink></Menu.Item>
       <Menu.Item><NavLink to="/evenements" className="menu-item-link" exact activeClassName="menu-item-link--active">Événements</NavLink></Menu.Item>
       <Menu.Item><NavLink to="/profil" className="menu-item-link" exact activeClassName="menu-item-link--active">Profil</NavLink></Menu.Item>
-      <Menu.Item><NavLink to="/" className="menu-item-link" exact activeClassName="menu-item-link--active">Déconnexion</NavLink></Menu.Item>
+      <Menu.Item><NavLink to="/home" className="menu-item-link" exact activeClassName="menu-item-link--active">Déconnexion</NavLink></Menu.Item>
     </Menu>
   </nav>
 );
