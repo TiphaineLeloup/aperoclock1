@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'antd';
 import './home.scss';
 
-// FORMULAIRE CHOIX ENTRE CONNEXION ET INSCRIPTION
+// FORMULAIRE CHOIX ENTRE CONNEXION ET INSCRIPTION - HOME
 
 const Home = () => (
   <form>

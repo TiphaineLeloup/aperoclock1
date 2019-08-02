@@ -1,16 +1,15 @@
 // == Import : npm
 import React from 'react';
 
-
 // == Import : local
 
 
 // == Composant
-const Map = () => (
-  <div id="map">
-  Page map
+const Groups = () => (
+  <div id="groups">
+  Page des groupes
   </div>
 );
 
 // == Export
-export default Map;
+export default Groups;

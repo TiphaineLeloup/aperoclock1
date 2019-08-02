@@ -7,7 +7,7 @@ import React from 'react';
 // == Composant
 const Profile = () => (
   <div id="profile">
-  Page profile
+  Page profil
   </div>
 );
 
