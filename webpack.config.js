@@ -7,6 +7,17 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
+// Env vars
+const webpack = require('webpack');
+const dotenv = require('dotenv');
+const filename = process.env.NODE_ENV === 'production' ? '.env' : '.env.development';
+const env = dotenv.config({ path: filename }).parsed;
+
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
+
 // Config pour le devServer
 const host = 'localhost';
 const port = 8080;
@@ -120,6 +131,23 @@ module.exports = {
           },
         ],
       },
+      // LESS
+      {
+        test: /\.less$/,
+        use: [{
+          loader: 'style-loader',
+        }, {
+          loader: 'css-loader',
+        }, {
+          loader: 'less-loader',
+          options: {
+            modifyVars: {
+              'primary-color': 'pink',
+            },
+            javascriptEnabled: true,
+          },
+        }],
+      },
     ],
   },
   devServer: {
@@ -143,5 +171,6 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
+    new webpack.DefinePlugin(envKeys),
   ],
 };
