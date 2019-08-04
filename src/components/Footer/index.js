@@ -1,10 +1,11 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import './footer.scss';
 
 const Footer = () => (
   <div className="footer">
-    <p className="footer-text"><a href="#" className="footer-link">Copyright - Mentions Légales - Contact</a></p>
+    <p className="footer-text"><NavLink to="/contact" className="footer-link">Copyright - Mentions Légales - Contact</NavLink></p>
   </div>
 );
 

@@ -5,11 +5,11 @@ import React from 'react';
 
 
 // == Composant
-const Profile = () => (
-  <div id="profile">
-  Page profil
+const Groups = () => (
+  <div id="groups">
+  Page des groupes
   </div>
 );
 
 // == Export
-export default Profile;
+export default Groups;

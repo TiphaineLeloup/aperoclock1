@@ -1,6 +1,7 @@
 // == Import : npm
 import React from 'react';
 import { Layout } from 'antd';
+import { Route } from 'react-router-dom';
 
 // == Import : local
 import Nav from 'src/components/Nav';
@@ -12,11 +13,15 @@ import Home from 'src/components/Home';
 import SignIn from 'src/components/SignIn';
 import GroupForm from 'src/components/GroupForm';
 import EventForm from 'src/components/EventForm';
-import Map from 'src/components/Map';
+import Events from 'src/components/Events';
+import Groups from 'src/components/Groups';
+import TheMap from 'src/components/Map';
 import Profile from 'src/components/Profile';
 import Contact from 'src/components/Contact';
 import AlertColor from 'src/components/Alert';
 import './app.scss';
+
+import data from 'src/data/index';
 
 // == Composant
 const App = () => {
@@ -27,8 +32,9 @@ const App = () => {
     Content,
   } = Layout;
 
-  return (
+  return ( // Trouver comment faire pour que le footer header et content ne s'affiche pas avec la route de "deconnexion" = home
     <div id="app">
+      <Route path="/home" exact component={Home} />
       <Layout>
         <Sider>
           <Nav />
@@ -38,12 +44,21 @@ const App = () => {
             <Header />
           </AntdHeader>
           <Content>
+<<<<<<< HEAD
             <LoginForm />
             {/* <Dashboard /> */}
             {/* <SignIn />
             <Map />
             <Profile />
             <Contact /> */}
+=======
+            <Route path="/" exact component={Dashboard} />
+            <Route path="/map" exact component={TheMap} />
+            <Route path="/groupes" exact component={Groups} />
+            <Route path="/evenements" exact component={Events} />
+            <Route path="/profil" exact component={Profile} />
+            <Route path="/contact" exact component={Contact} />
+>>>>>>> 1825ff7dde32a424c4c790cfe9f30cf1f19d1c20
           </Content>
           <AntdFooter className="footer">
             <Footer />

@@ -2,24 +2,29 @@ import React from 'react';
 import { Badge, List } from 'antd';
 
 import './listevents.scss';
+import datas from 'src/data';
 
-const ListEvents = () => {
-  const fakeEvents = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+class ListEvents extends React.Component {
+  render() {
+    const fakeEvents = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const dataevent = datas.map(elem => (
+      elem.event
+    ));
 
-  return (
+    return (
     <div id="listEvents">
       {/* PENSER À LA CLEF */}
       <List
-        dataSource={fakeEvents}
+        dataSource={dataevent}
         itemLayout="horizontal"
         renderItem={
           item => (
             <List.Item>
               <List.Item.Meta
-                avatar={<div className="miniDate">25/07/2019</div>}
+                avatar={<div className="miniDate">{item.date}</div>}
                 title={(
                   <>
-                    <span className="event">Evénement {item}</span>
+                    <span className="event">{item.name}</span>
                     <Badge
                       className="participationTrue"
                       count={5}
@@ -37,7 +42,7 @@ const ListEvents = () => {
                 description={(
                   <>
                     <p>Groupe X</p>
-                    <p>Blablabla...</p>
+                    <p>{ item.description }</p>
                   </>
                 )}
               />
@@ -46,7 +51,8 @@ const ListEvents = () => {
         }
       />
     </div>
-  );
-};
+    );
+  }
+}
 
 export default ListEvents;

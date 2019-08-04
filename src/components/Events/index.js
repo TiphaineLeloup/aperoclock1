@@ -5,11 +5,11 @@ import React from 'react';
 
 
 // == Composant
-const Profile = () => (
-  <div id="profile">
-  Page profil
+const Events = () => (
+  <div id="events">
+  Page des évènements
   </div>
 );
 
 // == Export
-export default Profile;
+export default Events;

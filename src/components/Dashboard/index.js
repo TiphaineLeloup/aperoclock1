@@ -11,7 +11,7 @@ import './dashboard.scss';
 const Dashboard = () => {
   const VIEW_GROUPS = true;
   const VIEW_EVENTS = false;
-  const [view, setView] = useState(VIEW_GROUPS);
+  const [view, setView] = useState(VIEW_EVENTS);
 
   return (
     <div id="dashboard">
