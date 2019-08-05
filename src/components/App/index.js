@@ -45,13 +45,13 @@ const App = () => {
           </AntdHeader>
           <Content>
             {/* <LoginForm /> */}
+            {/* <SignIn /> */}
             <Route path="/" exact component={Dashboard} />
             <Route path="/map" exact component={SimpleMap} />
             <Route path="/groupes" exact component={Groups} />
             <Route path="/evenements" exact component={Events} />
             <Route path="/profil" exact component={Profile} />
             <Route path="/contact" exact component={Contact} />
-            {/* <SignIn /> */}
           </Content>
           <AntdFooter className="footer">
             <Footer />

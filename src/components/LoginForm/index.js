@@ -26,7 +26,7 @@ class LoginFormUnwrap extends React.Component {
     const { dispatchLogin } = this.props;
 
     if (username && password) {
-      console.log("submit");
+      console.log('submit');
       dispatchLogin(username, password);
     }
   }
@@ -35,7 +35,7 @@ class LoginFormUnwrap extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form" >
+      <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item label="Nom d'utilisateur">
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
