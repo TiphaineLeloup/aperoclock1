@@ -15,7 +15,7 @@ import GroupForm from 'src/components/GroupForm';
 import EventForm from 'src/components/EventForm';
 import Events from 'src/components/Events';
 import Groups from 'src/components/Groups';
-import MapContainer from 'src/components/Map';
+import SimpleMap from 'src/components/Map';
 import Profile from 'src/components/Profile';
 import Contact from 'src/components/Contact';
 import AlertColor from 'src/components/Alert';
@@ -44,7 +44,7 @@ const App = () => {
             <Header />
           </AntdHeader>
           <Content>
-          <MapContainer/>
+            <SimpleMap />
             <LoginForm />
             {/* <Dashboard /> */}
             {/* <SignIn />
