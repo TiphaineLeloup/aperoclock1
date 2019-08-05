@@ -44,12 +44,11 @@ const App = () => {
             <Header />
           </AntdHeader>
           <Content>
-          <MapContainer/>
-            <LoginForm />
+            <MapContainer />
+            {/* <LoginForm /> */}
             {/* <Dashboard /> */}
-            {/* <SignIn />
-            <Map />
-            <Profile />
+            {/* <SignIn /> */}
+            {/* <Profile />
             <Contact /> */}
           </Content>
           <AntdFooter className="footer">
