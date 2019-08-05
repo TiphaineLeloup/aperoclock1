@@ -7,7 +7,7 @@ import { Route } from 'react-router-dom';
 import Nav from 'src/components/Nav';
 import Header from 'src/components/Header';
 import Footer from 'src/components/Footer';
-import Dashboard from 'src/components/Dashboard';
+import Dashboard from 'src/containers/Dashboard';
 import LoginForm from 'src/containers/LoginForm';
 import Home from 'src/components/Home';
 import SignIn from 'src/components/SignIn';
@@ -15,7 +15,7 @@ import GroupForm from 'src/components/GroupForm';
 import EventForm from 'src/components/EventForm';
 import Events from 'src/components/Events';
 import Groups from 'src/components/Groups';
-import TheMap from 'src/components/Map';
+import MapContainer from 'src/components/Map';
 import Profile from 'src/components/Profile';
 import Contact from 'src/components/Contact';
 import AlertColor from 'src/components/Alert';
@@ -44,21 +44,13 @@ const App = () => {
             <Header />
           </AntdHeader>
           <Content>
-<<<<<<< HEAD
+          <MapContainer/>
             <LoginForm />
             {/* <Dashboard /> */}
             {/* <SignIn />
             <Map />
             <Profile />
             <Contact /> */}
-=======
-            <Route path="/" exact component={Dashboard} />
-            <Route path="/map" exact component={TheMap} />
-            <Route path="/groupes" exact component={Groups} />
-            <Route path="/evenements" exact component={Events} />
-            <Route path="/profil" exact component={Profile} />
-            <Route path="/contact" exact component={Contact} />
->>>>>>> 1825ff7dde32a424c4c790cfe9f30cf1f19d1c20
           </Content>
           <AntdFooter className="footer">
             <Footer />
