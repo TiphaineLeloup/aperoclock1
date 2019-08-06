@@ -19,7 +19,7 @@ class Adress
      */
     private $numero;
     /**
-     * 
+     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $typeVoie;
@@ -40,19 +40,22 @@ class Adress
      */
     private $city;
     /**
-     * 
+     *
      * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $country;
+
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=4, nullable=true)
      */
     private $longitude;
+
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=4, nullable=true)
      */
     private $latitude;
+   
 
     
     public function getId(): ?int
@@ -113,22 +116,28 @@ class Adress
         $this->country = $country;
         return $this;
     }
-    public function getLongitude(): ?int
+
+    public function getLongitude()
     {
         return $this->longitude;
     }
-    public function setLongitude(?int $longitude): self
+
+    public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
+
         return $this;
     }
-    public function getLatitude(): ?int
+
+    public function getLatitude()
     {
         return $this->latitude;
     }
-    public function setLatitude(?int $latitude): self
+
+    public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
+
         return $this;
     }
 }
