@@ -34,7 +34,7 @@ const App = () => {
     Content,
   } = Layout;
 
-  const isLogged = false;
+  const isLogged = JSON.parse(localStorage.getItem('user'));
 
   return (
     <>
@@ -69,7 +69,7 @@ const App = () => {
           <div>
             <Layout>
               <Content>
-                <Route path="/" exact component={Home} />
+                <Route path="/" component={Home} />
                 <Route path="/login" component={LoginForm} />
                 <Route path="/inscription" component={SignIn} />
               </Content>
