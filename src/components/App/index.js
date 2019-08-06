@@ -46,11 +46,11 @@ const App = () => {
           </AntdHeader>
           <Content>
             <PrivateRoute path="/" exact component={Dashboard} />
-            <PrivateRoute path="/map" exact component={SimpleMap} />
+            <Route path="/map" exact component={SimpleMap} />
             <PrivateRoute path="/groupes" exact component={Groups} />
             <PrivateRoute path="/evenements" exact component={Events} />
             <PrivateRoute path="/profil" exact component={Profile} />
-            <PrivateRoute path="/contact" exact component={Contact} />
+            <Route path="/contact" exact component={Contact} />
             <Route path="/login" component={LoginForm} />
           </Content>
           <AntdFooter className="footer">
