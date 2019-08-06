@@ -23,8 +23,8 @@ final class Version20190803102516 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE guest CHANGE app_user_id app_user_id INT NOT NULL, CHANGE event_id event_id INT NOT NULL');
-        $this->addSql('ALTER TABLE guest ADD CONSTRAINT FK_ACB79A354A3353D8 FOREIGN KEY (app_user_id) REFERENCES app_user (id)');
-        $this->addSql('ALTER TABLE guest ADD CONSTRAINT FK_ACB79A3571F7E88B FOREIGN KEY (event_id) REFERENCES event (id)');
+        // $this->addSql('ALTER TABLE guest ADD CONSTRAINT FK_ACB79A354A3353D8 FOREIGN KEY (app_user_id) REFERENCES app_user (id)');
+        // $this->addSql('ALTER TABLE guest ADD CONSTRAINT FK_ACB79A3571F7E88B FOREIGN KEY (event_id) REFERENCES event (id)');
     }
 
     public function down(Schema $schema) : void

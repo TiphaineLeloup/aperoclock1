@@ -46,7 +46,7 @@ const App = () => {
           </AntdHeader>
           <Content>
             <PrivateRoute path="/" exact component={Dashboard} />
-            <PrivateRoute path="/map" exact component={TheMap} />
+            <PrivateRoute path="/map" exact component={SimpleMap} />
             <PrivateRoute path="/groupes" exact component={Groups} />
             <PrivateRoute path="/evenements" exact component={Events} />
             <PrivateRoute path="/profil" exact component={Profile} />
