@@ -19,6 +19,7 @@ import TheMap from 'src/components/Map';
 import Profile from 'src/components/Profile';
 import Contact from 'src/components/Contact';
 import AlertColor from 'src/components/Alert';
+import PrivateRoute from './PrivateRoute';
 import './app.scss';
 
 import data from 'src/data/index';
@@ -44,21 +45,13 @@ const App = () => {
             <Header />
           </AntdHeader>
           <Content>
-<<<<<<< HEAD
-            <LoginForm />
-            {/* <Dashboard /> */}
-            {/* <SignIn />
-            <Map />
-            <Profile />
-            <Contact /> */}
-=======
-            <Route path="/" exact component={Dashboard} />
-            <Route path="/map" exact component={TheMap} />
-            <Route path="/groupes" exact component={Groups} />
-            <Route path="/evenements" exact component={Events} />
-            <Route path="/profil" exact component={Profile} />
-            <Route path="/contact" exact component={Contact} />
->>>>>>> 1825ff7dde32a424c4c790cfe9f30cf1f19d1c20
+            <PrivateRoute path="/" exact component={Dashboard} />
+            <PrivateRoute path="/map" exact component={TheMap} />
+            <PrivateRoute path="/groupes" exact component={Groups} />
+            <PrivateRoute path="/evenements" exact component={Events} />
+            <PrivateRoute path="/profil" exact component={Profile} />
+            <PrivateRoute path="/contact" exact component={Contact} />
+            <Route path="/login" component={LoginForm} />
           </Content>
           <AntdFooter className="footer">
             <Footer />

@@ -33,7 +33,7 @@ function login(username, password) {
     body: JSON.stringify({ username, password }),
   };
   console.log("service");
-  return fetch(`${process.env.API_URL}`, {})
+  return fetch(`${process.env.API_URL}/login_check`, requestOptions)
     // eslint-disable-next-line no-use-before-define
     .then(handleResponse)
     .then((user) => {

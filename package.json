@@ -35,6 +35,8 @@
   },
   "scripts": {
     "start": "webpack-dev-server",
+    "start:server": "php AperoClockBack/bin/console server:start",
+    "stop:server": "php AperoClockBack/bin/console server:stop",
     "clean": "rm -rf dist",
     "clean:all": "rm -rf dist node_modules",
     "build:dev": "NODE_ENV=development webpack",
@@ -59,7 +61,7 @@
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "redux": "^4.0.1",
-    "slugify": "^1.3.4"
+    "slugify": "^1.3.4",
     "react-scripts": "^3.0.1",
     "redux": "^4.0.1"
   }
