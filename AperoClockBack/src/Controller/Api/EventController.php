@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Event;
 use App\Entity\Adress;
 use App\Form\EventType;
+use App\Utils\DistanceCalculator;
 use App\Repository\EventRepository;
 use App\Repository\GuestRepository;
 use App\Repository\AppUserRepository;
