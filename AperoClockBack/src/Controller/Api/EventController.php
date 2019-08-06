@@ -49,7 +49,7 @@ class EventController extends AbstractController
      * @Route("/api/user/event/create", name="event_new", methods={"POST"})
      */
     public function createOrEdit(Request $request, ObjectManager $objectManager, ValidatorInterface $validator,
-     SerializerInterface $serializer, AppUserRepository $userRepository, EventRepository $eventRepository, ObjectManager $om, AppGroupRepository $appGroupRepository)
+    \Swift_Mailer $mailer, SerializerInterface $serializer, AppUserRepository $userRepository, EventRepository $eventRepository, ObjectManager $om, AppGroupRepository $appGroupRepository)
     {
         $frontDatas = [];
         if ($content = $request->getContent()) {
@@ -110,6 +110,25 @@ class EventController extends AbstractController
 
         $om->persist($event);
         $om->flush();
+
+
+        //get all users that belong to the group of the event to mail them
+        $usersToMail = $appGroup->getAppUsers();
+        foreach($usersToMail as $user){
+            $mail[] = $user->getEmail();
+            
+        }
+
+        $message = (new \Swift_Message('Un nouvel Event organisé par un de vos groupes !'))
+            ->setFrom('AperoclockRocket@gmail.com')
+            ->setTo('anaisbx2@hotmail.com')
+            ->setBody(
+                $this->renderView(
+                    'event.html.twig'
+                ), 'text/html'
+            );
+    
+        $mailer->send($message);
         
         return new JsonResponse(
             [
