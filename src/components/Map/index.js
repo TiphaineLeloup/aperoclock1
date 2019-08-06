@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import GoogleMap from './GoogleMap';
 import Marker from './Marker';
+import DrawerMarker from 'src/components/Drawer';
 
 class SimpleMap extends Component {
   state = {
@@ -22,11 +23,12 @@ class SimpleMap extends Component {
           yesIWantToUseGoogleMapApiInternals
           defaultZoom={this.state.zoom}
         >
-          <Marker
+          <Marker                    
             lat={48.866667}
             lng={2.333333}
-            text="My Marker"
+            text="My Marker"            
           />
+          <DrawerMarker />
         
         </GoogleMap>
       </div>
