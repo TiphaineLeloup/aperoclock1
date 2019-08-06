@@ -49,7 +49,7 @@ class EventController extends AbstractController
      * @Route("/api/user/event/create", name="event_new", methods={"POST"})
      */
     public function createOrEdit(Request $request, ObjectManager $objectManager, ValidatorInterface $validator,
-     SerializerInterface $serializer, AppUserRepository $userRepository, EventRepository $eventRepository, ObjectManager $om, AppGroupRepository $appGroupRepository)
+    \Swift_Mailer $mailer, SerializerInterface $serializer, AppUserRepository $userRepository, EventRepository $eventRepository, ObjectManager $om, AppGroupRepository $appGroupRepository)
     {
         $frontDatas = [];
         if ($content = $request->getContent()) {
@@ -110,6 +110,42 @@ class EventController extends AbstractController
 
         $om->persist($event);
         $om->flush();
+
+
+        //get all users that belong to the group of the event 
+        $usersOfGroup = $group->getAppUsers();
+
+        //Pour chaque user, parmis leurs alertes
+        foreach ($usersOfGroup as $user){
+            $alerts = $user->getSubscriptions();
+            foreach ($alerts as $alert){
+                //si une a le nom creéation d'un event
+                if ($alert->getAlert()->getName() === "eventCreate" 
+                && $alert->getHasSubscribed() === true){
+                    $usersToMail[] = $user;
+                }
+            }
+        }
+        
+
+        //et que son adresse et l'adresse de l'event ne sont pas séparés par plus de ... km
+
+        //ON envoit un mail aux users retenus
+        foreach($usersToMail as $user){
+            $mail[] = $user->getEmail();
+            
+        }
+        dd($mail);
+        $message = (new \Swift_Message('Un nouvel Event organisé par un de vos groupes !'))
+            ->setFrom('AperoclockRocket@gmail.com')
+            ->setTo('anaisbx2@hotmail.com')
+            ->setBody(
+                $this->renderView(
+                    'event.html.twig'
+                ), 'text/html'
+            );
+    
+        $mailer->send($message);
         
         return new JsonResponse(
             [

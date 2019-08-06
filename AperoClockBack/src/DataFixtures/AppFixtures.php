@@ -62,7 +62,7 @@ class AppFixtures extends Fixture
         ]);
        
         
-        $populator->addEntity(Alert::class, 6, [
+        $populator->addEntity(Alert::class, 4, [
             "name" => function() use ($generator) { return $generator->words(4, true); },
             "description" => function() use ($generator) { return $generator->realText(100); },
         ]);
@@ -78,7 +78,7 @@ class AppFixtures extends Fixture
         $populator->addEntity(Guest::class, 30, [
             "choice" => function() use ($generator) { return $generator->boolean(); },
         ]);
-        $populator->addEntity(Subscription::class, 6, [
+        $populator->addEntity(Subscription::class, 120, [
             "hasSubscribed" => function() use ($generator) { return $generator->boolean(); },
         ] );
 
