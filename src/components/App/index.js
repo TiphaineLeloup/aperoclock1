@@ -33,32 +33,49 @@ const App = () => {
     Content,
   } = Layout;
 
-  return ( // Trouver comment faire pour que le footer header et content ne s'affiche pas avec la route de "deconnexion" = home
-    <div id="app">
-      <Route path="/home" exact component={Home} />
-      <Layout>
-        <Sider>
-          <Nav />
-        </Sider>
-        <Layout>
-          <AntdHeader>
-            <Header />
-          </AntdHeader>
-          <Content>
-            <PrivateRoute path="/" exact component={Dashboard} />
-            <PrivateRoute path="/map" exact component={TheMap} />
-            <PrivateRoute path="/groupes" exact component={Groups} />
-            <PrivateRoute path="/evenements" exact component={Events} />
-            <PrivateRoute path="/profil" exact component={Profile} />
-            <PrivateRoute path="/contact" exact component={Contact} />
-            <Route path="/login" component={LoginForm} />
-          </Content>
-          <AntdFooter className="footer">
-            <Footer />
-          </AntdFooter>
-        </Layout>
-      </Layout>
-    </div>
+  const isLogged = true;
+
+  return (
+    <>
+      { isLogged
+        ? (
+          // if logged
+          <div id="app">
+            <Layout>
+              <Sider>
+                <Nav />
+              </Sider>
+              <Layout>
+                <AntdHeader>
+                  <Header />
+                </AntdHeader>
+                <Content>
+                  <Route path="/" exact component={Dashboard} />
+                  <Route path="/map" exact component={SimpleMap} />
+                  <Route path="/groupes" exact component={Groups} />
+                  <Route path="/evenements" exact component={Events} />
+                  <Route path="/profil" exact component={Profile} />
+                  <Route path="/contact" exact component={Contact} />
+                  <Route path="/login" component={LoginForm} />
+                  <Route path="/inscription" component={SignIn} />
+                </Content>
+                <AntdFooter className="footer">
+                  <Footer />
+                </AntdFooter>
+              </Layout>
+            </Layout>
+          </div>
+        ) : (
+          // if not logged
+          <Layout>
+            <Content>
+              <Route path="/home" exact component={Home} />
+            </Content>
+          </Layout>
+        )
+      }
+
+    </>
   );
 };
 

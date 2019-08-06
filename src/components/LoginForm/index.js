@@ -42,7 +42,7 @@ class LoginFormUnwrap extends React.Component {
           })(
             <Input
               onChange={this.handleChange}
-              placeholder="Username"
+              placeholder="Identifiant"
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
               ref={this.usernameInput}
             />,
@@ -54,7 +54,7 @@ class LoginFormUnwrap extends React.Component {
           })(
             <Input
               onChange={this.handleChange}
-              placeholder="Password"
+              placeholder="Mot de passe"
               prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
               ref={this.passwordInput}
               type="password"
@@ -62,14 +62,14 @@ class LoginFormUnwrap extends React.Component {
           )}
         </Form.Item>
         <Form.Item>
-          <Checkbox>Remember me</Checkbox>
+          <Checkbox>Mémoriser mes informations</Checkbox>
           <a className="login-form-forgot" href="">
-            Forgot password
+            Mot de passe oublié ?
           </a>
           <Button type="primary" htmlType="submit" className="login-form-button">
-            Log in
+            Connexion
           </Button>
-          Or <a href="">register now!</a>
+          {/* Ou <Link to="/inscription">inscrivez-vous dès maintenant !</Link> */}
         </Form.Item>
       </Form>
     );
