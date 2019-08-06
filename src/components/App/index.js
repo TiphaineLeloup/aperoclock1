@@ -19,10 +19,12 @@ import SimpleMap from 'src/components/Map';
 import Profile from 'src/components/Profile';
 import Contact from 'src/components/Contact';
 import AlertColor from 'src/components/Alert';
+import DrawerMarker from 'src/components/Drawer';
+import data from 'src/data/index';
 import PrivateRoute from './PrivateRoute';
 import './app.scss';
 
-import data from 'src/data/index';
+
 
 // == Composant
 const App = () => {
@@ -51,7 +53,9 @@ const App = () => {
             <PrivateRoute path="/evenements" exact component={Events} />
             <PrivateRoute path="/profil" exact component={Profile} />
             <Route path="/contact" exact component={Contact} />
-            <Route path="/login" component={LoginForm} />
+            <Route path="/login" component={LoginForm} /> 
+            <Route path="/Drawer" component={DrawerMarker} />            
+
           </Content>
           <AntdFooter className="footer">
             <Footer />
