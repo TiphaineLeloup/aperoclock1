@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import DrawerMarker from 'src/components/Drawer';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -20,7 +21,7 @@ const Wrapper = styled.div`
 `;
 
 const Marker = props => (
-  <Wrapper
+  <Wrapper  
     alt={props.text}    
     {...props.onClick ? { onClick: props.onClick } : {}}
   />
