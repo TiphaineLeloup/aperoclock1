@@ -6,9 +6,9 @@ import './home.scss';
 
 const Home = () => (
   <form>
-    <Button type="link">Connexion</Button>
+    <Button>Connexion</Button>
 
-    <Button type="link">Inscription</Button>
+    <Button>Inscription</Button>
   </form>
 );
 

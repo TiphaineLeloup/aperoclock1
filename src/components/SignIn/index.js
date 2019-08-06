@@ -58,7 +58,7 @@ class SignInUnwrap extends React.Component {
           {getFieldDecorator('birthDate', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
           })(
-            <Input type="text" id="birthDate" name="birthDate" placeholder="Date de naissance" />,
+            <Input type="text" id="birthDate" name="birthDate" placeholder="00/00/0000" />,
           )}
         </Form.Item>
         <Form.Item label="Nom Prénom" {...formItemLayout}>
@@ -72,7 +72,7 @@ class SignInUnwrap extends React.Component {
           )}
         </Form.Item>
         <Form.Item label="Complément d'adresse" {...formItemLayout}>
-          <Input type="text" id="addressComplementOutside" name="fullName" placeholder="Complément d'adresse (facultatif)" />
+          <Input type="text" id="addressComplementOutside" name="fullName" placeholder="Bis, Ter, etc... (facultatif)" />
         </Form.Item>
         <Form.Item label="Code postal" {...formItemLayout}>
           {getFieldDecorator('addressePostalCode', {
