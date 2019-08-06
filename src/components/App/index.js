@@ -34,7 +34,7 @@ const App = () => {
     Content,
   } = Layout;
 
-  const isLogged = true;
+  const isLogged = false;
 
   return (
     <>
@@ -57,8 +57,6 @@ const App = () => {
                   <Route path="/evenements" exact component={Events} />
                   <Route path="/profil" exact component={Profile} />
                   <Route path="/contact" exact component={Contact} />
-                  <Route path="/login" component={LoginForm} />
-                  <Route path="/inscription" component={SignIn} />
                 </Content>
                 <AntdFooter className="footer">
                   <Footer />
@@ -68,11 +66,15 @@ const App = () => {
           </div>
         ) : (
           // if not logged
-          <Layout>
-            <Content>
-              <Route path="/home" exact component={Home} />
-            </Content>
-          </Layout>
+          <div>
+            <Layout>
+              <Content>
+                <Route path="/" exact component={Home} />
+                <Route path="/login" component={LoginForm} />
+                <Route path="/inscription" component={SignIn} />
+              </Content>
+            </Layout>
+          </div>
         )
       }
 

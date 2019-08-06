@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 import './loginform.scss';
 
@@ -67,9 +68,11 @@ class LoginFormUnwrap extends React.Component {
             Mot de passe oublié ?
           </a>
           <Button type="primary" htmlType="submit" className="login-form-button">
+            <NavLink to="/">
             Connexion
+            </NavLink>
           </Button>
-          {/* Ou <Link to="/inscription">inscrivez-vous dès maintenant !</Link> */}
+          Ou <NavLink to="/inscription">inscrivez-vous dès maintenant !</NavLink>
         </Form.Item>
       </Form>
     );
