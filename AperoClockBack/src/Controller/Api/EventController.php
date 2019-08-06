@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Event;
 use App\Entity\Adress;
 use App\Form\EventType;
+use App\Utils\DistanceCalculator;
 use App\Repository\EventRepository;
 use App\Repository\GuestRepository;
 use App\Repository\AppUserRepository;
@@ -115,33 +116,53 @@ class EventController extends AbstractController
         //get all users that belong to the group of the event 
         $usersOfGroup = $group->getAppUsers();
 
-        //Pour chaque user, parmis leurs alertes
         foreach ($usersOfGroup as $user){
             $alerts = $user->getSubscriptions();
+        
             foreach ($alerts as $alert){
-                //si une a le nom creéation d'un event
+
+                //if the user has subscribed to event creation alert
                 if ($alert->getAlert()->getName() === "eventCreate" 
                 && $alert->getHasSubscribed() === true){
-                    $usersToMail[] = $user;
+                    
+                    $distanceAccepted = $user->getDistanceKM();
+
+                    
+                    $userLatitude = floatval($user->getAdress()->getLatitude());
+                    $userLongitude = floatval($user->getAdress()->getLongitude());
+
+                    $eventLatitude = floatval($frontDatas['latitude']);
+                    $eventLongitude = floatval($frontDatas['longitude']);
+                    
+                    //service to calculate km differences between coordonates 
+                    $distanceCalculator = new DistanceCalculator();
+                    $distanceDifference = $distanceCalculator
+                                        ->distance($userLatitude, $userLongitude, $eventLatitude, $eventLongitude, $unit = 'k');
+
+                    if ($distanceAccepted <= $distanceDifference){
+
+                        $usersToMail[] = $user;
+                    }  
                 }
             }
         }
         
 
-        //et que son adresse et l'adresse de l'event ne sont pas séparés par plus de ... km
-
-        //ON envoit un mail aux users retenus
         foreach($usersToMail as $user){
             $mail[] = $user->getEmail();
             
         }
-        dd($mail);
+
+        $mail[]= "anais.berton.io@gmail.com";
+        // dd($mail);
+        $mailsToMe = ['anais.berton.io@gmail.com','anaisbx2@hotmail.com'];
         $message = (new \Swift_Message('Un nouvel Event organisé par un de vos groupes !'))
             ->setFrom('AperoclockRocket@gmail.com')
-            ->setTo('anaisbx2@hotmail.com')
+            ->setTo($mail)
+            
             ->setBody(
                 $this->renderView(
-                    'event.html.twig'
+                    'mails/eventCreate.html.twig'
                 ), 'text/html'
             );
     

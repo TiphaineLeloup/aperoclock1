@@ -83,6 +83,11 @@ class AppUser implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Subscription", mappedBy="appUser")
      */
     private $subscriptions;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $distanceKM;
     
     public function __construct()
     {
@@ -318,6 +323,18 @@ class AppUser implements UserInterface
                 $subscription->setAlert(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDistanceKM(): ?int
+    {
+        return $this->distanceKM;
+    }
+
+    public function setDistanceKM(?int $distanceKM): self
+    {
+        $this->distanceKM = $distanceKM;
 
         return $this;
     }
