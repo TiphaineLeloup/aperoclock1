@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use Exception;
 use App\Entity\Adress;
 use App\Entity\AppUser;
 use App\Entity\Subscription;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -47,7 +49,7 @@ class UserController extends AbstractController
      *@Route("/api/user/infos/edit", name="user_infos_edit", methods={"POST"})
      * @Route("/api/user/signup", name="signup", methods={"POST"})
      */
-    public function signUp(Request $request,AlertRepository $alertRepository, AppUserRepository $appUserRepository, SerializerInterface $serializer, ObjectManager $om, UserPasswordEncoderInterface $encoder)
+    public function signUp(Request $request, AlertRepository $alertRepository, AppUserRepository $appUserRepository, ValidatorInterface $validator, SerializerInterface $serializer, ObjectManager $om, UserPasswordEncoderInterface $encoder)
     {
         $frontDatas = [];
         if ($content = $request->getContent()) {
@@ -102,18 +104,21 @@ class UserController extends AbstractController
             //Validation and send status
         
         try {
-            if (count($errors) > 0) {
-                    $errors = $validator->validate($user);
-                    $errorsString = (string) $errors;
+            
+            $errors = $validator->validate($user);
+
+            if (count($errors) >= 0) {
+                    
+                 $errorsString = (string) $errors;
+                        
+                return new JsonResponse(
+                        [
+                            'status' => 'error',
+                            'message' => $errorsString
+                        ],
+                        JsonResponse::HTTP_BAD_REQUEST);
              }
             
-        return new JsonResponse(
-                    [
-                        'status' => 'error',
-                        $errorsString
-                    ],
-                    JsonResponse::HTTP_BAD_REQUEST);
-
             $om->persist($user);
             
             $om->flush();
