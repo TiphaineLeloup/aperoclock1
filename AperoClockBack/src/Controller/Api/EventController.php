@@ -74,7 +74,7 @@ class EventController extends AbstractController
         $om->persist($adress);
 
 
-        //Then, hydrate an object Event, create one if it dosent exist
+        //Then, hydrate an object Event, create one if it doesnt exist
          if (!isset($frontDatas['eventId'])){
             $event = new Event; 
         }else{
