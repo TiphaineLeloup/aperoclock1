@@ -70,19 +70,27 @@ class GroupController extends AbstractController
         $group->setCreatedBy($user);
 
            //Validation and send status
-           $errors = $validator->validate($group);
-
-           if (count($errors) > 0){
-   
-               $errorsString = (string) $errors;
-   
-               return new JsonResponse(
-                   [
-                       'status' => 'error',
-                       $errorsString
-                   ],
-                   JsonResponse::HTTP_BAD_REQUEST);
-           }
+        
+        try {
+            if (count($errors) > 0) {
+                $errors = $validator->validate($group);
+                $errorsString = (string) $errors;
+            }
+        
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    $errorsString
+                ],
+                JsonResponse::HTTP_BAD_REQUEST);
+            $om->persist($group);
+            
+            
+            $om->flush();
+        }
+     catch (Exception $e) {
+        print($e);
+    }
         
 
         //ici, utiliser le validator, et si y a des erreurs, on strigify et on envoie un return json error

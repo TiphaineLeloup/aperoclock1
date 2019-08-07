@@ -68,7 +68,7 @@ class EventController extends AbstractController
         $om->persist($adress);
 
 
-        //Then, hydrate an object Event, create one if it doesnt exist
+        //Then, hydrate an object Event, create one if it dosent exist
          if (!isset($frontDatas['eventId'])){
             $event = new Event; 
         }else{
@@ -89,23 +89,27 @@ class EventController extends AbstractController
        
         
         //Validation and send status
-        $errors = $validator->validate($event);
-
-        if (count($errors) > 0){
-
-            $errorsString = (string) $errors;
-
+        
+        try {
+            if (count($errors) > 0) {
+                $errors = $validator->validate($event);
+                $errorsString = (string) $errors;
+            }
+        
             return new JsonResponse(
                 [
                     'status' => 'error',
                     $errorsString
                 ],
                 JsonResponse::HTTP_BAD_REQUEST);
+            $om->persist($event);
+            
+            
+            $om->flush();
         }
-
-        $om->persist($event);
-        $om->flush();
-
+     catch (Exception $e) {
+        print($e);
+    }
 
         //get all users that belong to the group of the event 
         $usersOfGroup = $group->getAppUsers();
@@ -150,6 +154,7 @@ class EventController extends AbstractController
         $mail[]= "anais.berton.io@gmail.com";
         // dd($mail);
         $mailsToMe = ['anais.berton.io@gmail.com','anaisbx2@hotmail.com'];
+        
 
         //determines if the mail is about creattion or edition
         if (!isset($frontDatas['eventId'])){
@@ -158,11 +163,10 @@ class EventController extends AbstractController
                 $view = $this->renderView('mails/eventEdit.html.twig', 'text/html');
             }
 
+
         $message = (new \Swift_Message('Un nouvel Event organisé par un de vos groupes !'))
             ->setFrom('AperoclockRocket@gmail.com')
             ->setTo($mail)
-            
-            
             ->setBody($view);
     
         $mailer->send($message);
@@ -188,17 +192,67 @@ class EventController extends AbstractController
 
         $id = $data['eventId'];
 
-        if (!$eventToDelete = $eventRepository->find($id)){
+        $eventToDelete = $eventRepository->find($id);
+    
 
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    
-                ],
-                JsonResponse::HTTP_BAD_REQUEST);
-        }else{
             $om->remove($eventToDelete);
             $om->flush();
+
+            $eventGroup = $eventToDelete->getAppGroup();
+
+            $usersOfGroup = $eventGroup->getAppUsers();
+    
+            foreach ($usersOfGroup as $user){
+                $alerts = $user->getSubscriptions();
+            
+                foreach ($alerts as $alert){
+    
+                    //if the user has subscribed to event creation alert
+                    if ($alert->getAlert()->getName() === "eventDelete" 
+                    && $alert->getHasSubscribed() === true){
+                        
+                        $distanceAccepted = $user->getDistanceKM();
+    
+                        
+                        $userLatitude = floatval($user->getAdress()->getLatitude());
+                        $userLongitude = floatval($user->getAdress()->getLongitude());
+    
+                        $eventLatitude = floatval($frontDatas['latitude']);
+                        $eventLongitude = floatval($frontDatas['longitude']);
+                        
+                        //service to calculate km differences between coordonates 
+                        $distanceCalculator = new DistanceCalculator();
+                        $distanceDifference = $distanceCalculator
+                                            ->distance($userLatitude, $userLongitude, $eventLatitude, $eventLongitude, $unit = 'k');
+    
+                        if ($distanceAccepted <= $distanceDifference){
+    
+                            $usersToMail[] = $user;
+                        }  
+                    }
+                }
+            }
+            
+    
+            foreach($usersToMail as $user){
+                $mail[] = $user->getEmail();
+                
+            }
+    
+            $mail[]= "anais.berton.io@gmail.com";
+            // dd($mail);
+           
+    
+            $message = (new \Swift_Message('Un nouvel Event organisé par un de vos groupes !'))
+                ->setFrom('AperoclockRocket@gmail.com')
+                ->setTo($mail)
+                ->setBody($view);
+        
+            $mailer->send($message);
+
+
+
+        
 
             return new JsonResponse(
                 [
@@ -206,7 +260,7 @@ class EventController extends AbstractController
                 ],
                 JsonResponse::HTTP_OK);
             
-        }
+        
     
     }
 

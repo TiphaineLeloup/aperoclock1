@@ -21,10 +21,10 @@ class GuestController extends AbstractController
     /**
      * @Route("api/guest/choice", name="guest_choice", methods={"POST"})
      */
-    public function choice(Request $request, SerializerInterface $serializer,AppUserRepository $appUserRepository, EventRepository $eventRepository, GuestRepository $guestRepository, ObjectManager $om)
+    public function choice(Request $request, SerializerInterface $serializer, AppUserRepository $appUserRepository, EventRepository $eventRepository, GuestRepository $guestRepository, ObjectManager $om)
     {
         $frontDatas = [];
-        if ( $content = $request->getContent()) {
+        if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
         }
 
@@ -49,10 +49,10 @@ class GuestController extends AbstractController
     /**
      * @Route("api/guest/create", name="guest_new", methods={"POST"})
      */
-    public function new(Request $request, SerializerInterface $serializer,AppUserRepository $appUserRepository, EventRepository $eventRepository, GuestRepository $guestRepository, ObjectManager $om , ValidatorInterface $validator)
+    public function new(Request $request, SerializerInterface $serializer, AppUserRepository $appUserRepository, EventRepository $eventRepository, GuestRepository $guestRepository, ObjectManager $om, ValidatorInterface $validator)
     {
         $frontDatas = [];
-        if ( $content = $request->getContent()) {
+        if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
         }
 
@@ -68,29 +68,26 @@ class GuestController extends AbstractController
         $guest->setEvent($event);
 
         //Validation and send status
-        $errors = $validator->validate($guest);
-
-        if (count($errors) > 0){
-
-            $errorsString = (string) $errors;
-
+        
+        try {
+            if (count($errors) > 0) {
+                $errors = $validator->validate($guest);
+                $errorsString = (string) $errors;
+            }
+    
             return new JsonResponse(
-                [
-                    'status' => 'error',
-                    $errorsString
-                ],
-                JsonResponse::HTTP_BAD_REQUEST);
+            [
+                'status' => 'error',
+                $errorsString
+            ],
+            JsonResponse::HTTP_BAD_REQUEST
+        );
+            $om->persist($guest);
+        
+        
+            $om->flush();
+        } catch (Exception $e) {
+            print($e);
         }
-
-
-        
-        $om->persist($guest);
-        
-        $om->flush();
-
-        return new JsonResponse(['status' => 'ok'], JsonResponse::HTTP_OK);
-
-        
-
     }
 }
