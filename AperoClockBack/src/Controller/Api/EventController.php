@@ -156,7 +156,7 @@ class EventController extends AbstractController
         $mailsToMe = ['anais.berton.io@gmail.com','anaisbx2@hotmail.com'];
         
 
-        //determines if the mail is about creattion or edition
+        //determines if the mail is about creation or edition
         if (!isset($frontDatas['eventId'])){
             $view = $this->renderView('mails/eventCreate.html.twig', 'text/html');
             }else{
