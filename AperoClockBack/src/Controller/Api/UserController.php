@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -60,24 +59,27 @@ class UserController extends AbstractController
             // dd($user);
 
             //Validation and send status
-        $errors = $validator->validate($user);
-
-        if (count($errors) > 0){
-
-            $errorsString = (string) $errors;
-
+        
+            try {
+            if (count($errors) > 0) {
+                $errors = $validator->validate($user);
+                $errorsString = (string) $errors;
+            }
+        
             return new JsonResponse(
                 [
                     'status' => 'error',
                     $errorsString
                 ],
                 JsonResponse::HTTP_BAD_REQUEST);
-        }
-
-
             $om->persist($user);
-
+            
+            
             $om->flush();
+        } catch (Exception $e) {
+        print($e);}
+
+         }
 
             return new JsonResponse(
                 [
@@ -85,7 +87,6 @@ class UserController extends AbstractController
                 ]);
                
         
-        }
         return new JsonResponse(
             [
                 'status' => 'error',

@@ -95,23 +95,27 @@ class EventController extends AbstractController
        
         
         //Validation and send status
-        $errors = $validator->validate($event);
-
-        if (count($errors) > 0){
-
-            $errorsString = (string) $errors;
-
+        
+        try {
+            if (count($errors) > 0) {
+                $errors = $validator->validate($event);
+                $errorsString = (string) $errors;
+            }
+        
             return new JsonResponse(
                 [
                     'status' => 'error',
                     $errorsString
                 ],
                 JsonResponse::HTTP_BAD_REQUEST);
+            $om->persist($event);
+            
+            
+            $om->flush();
         }
-
-        $om->persist($event);
-        $om->flush();
-
+     catch (Exception $e) {
+        print($e);
+    }
 
         //get all users that belong to the group of the event 
         $usersOfGroup = $group->getAppUsers();

@@ -22,18 +22,17 @@ class AlertController extends AbstractController
      */
     public function list(Request $request, SubscriptionRepository $subscriptionRepository, SerializerInterface $serializer)
     {
-     
         $frontDatas = [];
-        if ( $content = $request->getContent()) {
+        if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
         }
 
         $userId = $frontDatas["userId"];
 
         //getting sub to alerts for a user, regarding his userID
-         $subscriptionsDatas = $subscriptionRepository->findByUserId($userId);
+        $subscriptionsDatas = $subscriptionRepository->findByUserId($userId);
 
-         $subscriptionsDatas = $serializer->serialize($subscriptionsDatas, 'json');
+        $subscriptionsDatas = $serializer->serialize($subscriptionsDatas, 'json');
 
         return new JsonResponse($subscriptionsDatas);
     }
@@ -44,53 +43,49 @@ class AlertController extends AbstractController
      *
      * @Route("/api/user/alert/edit", name="user_alert_edit", methods={"POST"})
      */
-    public function edit(Request $request,ObjectManager $om, SubscriptionRepository $subscriptionRepository, SerializerInterface $serializer, ValidatorInterface $validator)
+    public function edit(Request $request, ObjectManager $om, SubscriptionRepository $subscriptionRepository, SerializerInterface $serializer, ValidatorInterface $validator)
     {
-
-       $frontDatas = [];
-       if ($content = $request->getContent()) {
-           $frontDatas = json_decode($content, true);
-       }
+        $frontDatas = [];
+        if ($content = $request->getContent()) {
+            $frontDatas = json_decode($content, true);
+        }
        
-       $userId = $frontDatas['userId'];
-       $alertId = $frontDatas['alertId'];
+        $userId = $frontDatas['userId'];
+        $alertId = $frontDatas['alertId'];
 
-       $subscription = $subscriptionRepository->findByUserAndAlert($userId, $alertId);
+        $subscription = $subscriptionRepository->findByUserAndAlert($userId, $alertId);
        
-       $choice = $subscription->getHasSubscribed();
+        $choice = $subscription->getHasSubscribed();
 
-       if ($choice === true){
+        if ($choice === true) {
             $choice = false;
-       }else{
-           $choice = true;
-       }
+        } else {
+            $choice = true;
+        }
 
-       $subscription->setHasSubscribed($choice);
+        $subscription->setHasSubscribed($choice);
 
-       //Validation and send status
-       $errors = $validator->validate($alert);
-
-       if (count($errors) > 0){
-
-           $errorsString = (string) $errors;
-
-           return new JsonResponse(
-               [
-                   'status' => 'error',
-                   $errorsString
-               ],
-               JsonResponse::HTTP_BAD_REQUEST);
-       }
-
-       $om->persist($subscription);
-       $om->flush();
-
-
-       return new JsonResponse(['status' => 'ok'], JsonResponse::HTTP_OK);
+        //Validation and send status
         
-   }
-
-  
+        try {
+            if (count($errors) > 0) {
+                $errors = $validator->validate($alert);
+                $errorsString = (string) $errors;
+            }
     
-    
+            return new JsonResponse(
+            [
+                'status' => 'error',
+                $errorsString
+            ],
+            JsonResponse::HTTP_BAD_REQUEST
+        );
+            $om->persist($alert);
+        
+        
+            $om->flush();
+        } catch (Exception $e) {
+            print($e);
+        }
+    }
 }
