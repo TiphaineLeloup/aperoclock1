@@ -18,14 +18,19 @@ class Subscription
     private $hasSubscribed;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Alert", inversedBy="subscriptions")
-     * @ORM\joinColumn(nullable=true, onDelete="CASCADE")
+     * @ORM\joinColumn(nullable=false, onDelete="CASCADE")
      */
     private $alert;
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppUser", inversedBy="subscriptions", cascade={"remove"})
-     * @ORM\joinColumn(nullable=true, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppUser", inversedBy="subscriptions", cascade={"persist"})
+     * @ORM\joinColumn(nullable=false, onDelete="CASCADE")
      */
     private $appUser;
+
+    public function __construct()
+    {
+        $this->hasSubscribed = true;
+    }
 
     
     public function getId(): ?int

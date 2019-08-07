@@ -45,6 +45,7 @@ class AppFixtures extends Fixture
             "password" => function() use ($generator) { return $generator->password() ;},
             "isAdmin" => function() use ($generator) { return $generator->boolean(); },
             "lastConnected" => function() use ($generator) { return $generator->datetimeAD(); },
+            "distanceKM" => function() use ($generator) { return $generator->randomNumber(3); },
         ]); 
         $populator->addEntity(AppGroup::class, 10, [
             "name" => function() use ($generator) { return $generator->country(); },
@@ -62,10 +63,7 @@ class AppFixtures extends Fixture
         ]);
        
         
-        $populator->addEntity(Alert::class, 4, [
-            "name" => function() use ($generator) { return $generator->words(4, true); },
-            "description" => function() use ($generator) { return $generator->realText(100); },
-        ]);
+       
         
         $populator->addEntity(Category::class, 10, [
             "name" => function() use ($generator) { return $generator->sentence(); },
@@ -78,9 +76,7 @@ class AppFixtures extends Fixture
         $populator->addEntity(Guest::class, 30, [
             "choice" => function() use ($generator) { return $generator->boolean(); },
         ]);
-        $populator->addEntity(Subscription::class, 120, [
-            "hasSubscribed" => function() use ($generator) { return $generator->boolean(); },
-        ] );
+        
 
         $inserted = $populator->execute();
 
@@ -99,8 +95,35 @@ class AppFixtures extends Fixture
             $manager->persist($event);
         }
 
-        //generated lists for app_group_app_user
+
+        //custom alerts 
         $appUsers = $inserted['App\Entity\AppUser'];
+        $alertNames = ['eventCreate', 'eventEdit', 'eventDelete', 'eventComment'];
+
+        foreach ($alertNames as $alertName){
+
+            $alert = new Alert();
+            $alert->setName($alertName);
+            $alerts[]= $alert;
+
+            
+            $manager->persist($alert);
+        }
+
+        foreach ($appUsers as $user){
+            foreach ($alerts as $alertToPut){
+                
+                $subscription = new Subscription();
+                $subscription->setAppUser($user);
+                $subscription->setAlert($alertToPut);
+               
+                $manager->persist($subscription);
+            }
+            
+        }
+
+        //generated lists for app_group_app_user
+        
         $appGroups = $inserted['App\Entity\AppGroup'];
 
 
@@ -109,12 +132,16 @@ class AppFixtures extends Fixture
             shuffle($appGroups);
             
             $appUser->addAppGroup($appGroups[0]);
+            
             $appUser->addAppGroup($appGroups[1]);
             $appUser->addAppGroup($appGroups[2]);
 
          
             $manager->persist($appUser);
         }
+
+        
+
 
        
 

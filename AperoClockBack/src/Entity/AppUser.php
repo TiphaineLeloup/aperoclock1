@@ -105,9 +105,11 @@ class AppUser implements UserInterface
     private $subscriptions;
 
     /**
-     * @ORM\Column(type="smallint", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $distanceKM;
+
+   
     
     public function __construct()
     {
@@ -358,6 +360,7 @@ class AppUser implements UserInterface
 
         return $this;
     }
+
 
     
 }
