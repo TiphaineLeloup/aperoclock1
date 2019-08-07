@@ -74,7 +74,7 @@ class EventController extends AbstractController
         $om->persist($adress);
 
 
-        //Then, hydrate an object Event, create one if it dosent exist
+        //Then, hydrate an object Event, create one if it doesnt exist
          if (!isset($frontDatas['eventId'])){
             $event = new Event; 
         }else{
@@ -156,15 +156,20 @@ class EventController extends AbstractController
         $mail[]= "anais.berton.io@gmail.com";
         // dd($mail);
         $mailsToMe = ['anais.berton.io@gmail.com','anaisbx2@hotmail.com'];
+
+        //determines if the mail is about creattion or edition
+        if (!isset($frontDatas['eventId'])){
+            $view = $this->renderView('mails/eventCreate.html.twig', 'text/html');
+            }else{
+                $view = $this->renderView('mails/eventEdit.html.twig', 'text/html');
+            }
+
         $message = (new \Swift_Message('Un nouvel Event organisé par un de vos groupes !'))
             ->setFrom('AperoclockRocket@gmail.com')
             ->setTo($mail)
             
-            ->setBody(
-                $this->renderView(
-                    'mails/eventCreate.html.twig'
-                ), 'text/html'
-            );
+            
+            ->setBody($view);
     
         $mailer->send($message);
         
