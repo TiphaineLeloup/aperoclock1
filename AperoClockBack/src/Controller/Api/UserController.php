@@ -2,7 +2,10 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Adress;
 use App\Entity\AppUser;
+use App\Entity\Subscription;
+use App\Repository\AlertRepository;
 use App\Repository\GuestRepository;
 use App\Repository\AppUserRepository;
 use App\Repository\AppGroupRepository;
@@ -15,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 
@@ -40,59 +44,65 @@ class UserController extends AbstractController
     }
 
 
-    /**
-     *
-     * @Route("/api/user/infos/edit", name="user_infos_edit", methods={"POST"})
+     /**
+     *@Route("/api/user/infos/edit", name="user_infos_edit", methods={"POST"})
+     * @Route("/api/user/signup", name="signup", methods={"POST"})
      */
-    public function edit(Request $request, SerializerInterface $serializer, AppUserRepository $userRepository,  ObjectManager $om, ValidatorInterface $validator)
+    public function signUp(Request $request,AlertRepository $alertRepository, AppUserRepository $appUserRepository, SerializerInterface $serializer, ObjectManager $om, UserPasswordEncoderInterface $encoder)
     {
         $frontDatas = [];
         if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
         }
-        if (isset($frontDatas['userId'])) {
-            $id     = $frontDatas['userId'];
-            $user      = $userRepository->find($id);
+        
+        $adress = new Adress();
+        $adress = $serializer->deserialize($content, Adress::class, 'json', [
+            'object_to_populate' => $adress
+            ]);
+        
+        $om->persist($adress);
 
+        if (isset($frontDatas['userId'])){
+
+            $id = $frontDatas['userId'];
+            $user = $appUserRepository->find($id);
+
+        }else{
+
+             $user = new AppUser();
+        }
+       
+        $user = $serializer->deserialize($content, AppUser::class, 'json', [
+            'object_to_populate' => $adress
+        ]);
+       
+        $user->setAdress($adress);
+        $encodedPassword = $encoder->encodePassword(
+            $user, 
+            $user->getPassword() 
+       );
+
+       $user->setPassword($encodedPassword);
+
+       //if new User, he suscribes all mail alerts
+       if (!isset($frontDatas['userId'])){
+            $alerts = $alertRepository->findAll();
             
+            foreach ($alerts as $alert){
+
+                $subscription = new Subscription();
+                $subscription->setAlert($alert);
+                $subscription->setAppUser($user);
+
+                $om->persist($subscription);
+            }
+       }
         
-            $user = $serializer->deserialize($content, AppUser::class, 'json', ['object_to_populate' => $user]);
-            // dd($user);
 
-            //Validation and send status
-        $errors = $validator->validate($user);
+        $om->persist($user);
+        $om->flush();
 
-        if (count($errors) > 0){
-
-            $errorsString = (string) $errors;
-
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    $errorsString
-                ],
-                JsonResponse::HTTP_BAD_REQUEST);
-        }
-
-
-            $om->persist($user);
-
-            $om->flush();
-
-            return new JsonResponse(
-                [
-                'status' => 'ok',
-                ]);
-               
-        
-        }
-        return new JsonResponse(
-            [
-                'status' => 'error',
-                'message' => 'utilisateur inconnu'
-            ],
-            JsonResponse::HTTP_BAD_REQUEST
-        );
+        return new JsonResponse(['status' => 'ok'], JsonResponse::HTTP_CREATED);
     }
 }
 

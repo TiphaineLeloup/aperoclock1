@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\AlertRepository;
 /**
  * @Entity @HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="App\Repository\AppUserRepository")
@@ -116,7 +117,7 @@ class AppUser implements UserInterface
         $this->isAdmin = 0;
         $this->appGroups = new ArrayCollection();
         $this->events = new ArrayCollection();
-       
+  
         
     }
 
