@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Api;
 
+use Exception;
 use App\Entity\Comment;
 use App\Repository\EventRepository;
 use App\Repository\AppUserRepository;
@@ -45,7 +46,6 @@ class CommentController extends AbstractController
  */
     public function newAndEdit(Request $request, SerializerInterface $serializer, EventRepository $eventRepository, AppUserRepository $userRepository, CommentRepository $commentRepository, ObjectManager $om , ValidatorInterface $validator)
     {
-        
         $frontDatas = [];
         if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
@@ -67,34 +67,33 @@ class CommentController extends AbstractController
         }
         $comment = $serializer->deserialize($content, Comment::class, 'json', ['object_to_populate' => $comment]);
 
-          //Validation and send status
-          $errors = $validator->validate($comment);
-
-          if (count($errors) > 0){
-  
-              $errorsString = (string) $errors;
-  
-              return new JsonResponse(
-                  [
-                      'status' => 'error',
-                      $errorsString
-                  ],
-                  JsonResponse::HTTP_BAD_REQUEST);
-          }
-  
-    
-        $om->persist($comment);
- 
- 
-        $om->flush();
- 
-        return new JsonResponse(
-            [
-                'status' => 'ok',
-            ],
-            JsonResponse::HTTP_CREATED
-        );
+        //Validation and send status
+        
+        try {
+            if (count($errors) > 0) {
+                $errors = $validator->validate($comment);
+                $errorsString = (string) $errors;
+            }
+        
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    $errorsString
+                ],
+                JsonResponse::HTTP_BAD_REQUEST);
+            $om->persist($comment);
+            
+            
+            $om->flush();
+        }
+     catch (Exception $e) {
+        print($e);
     }
+}
+
+    
+
+
 
     /**
         * @Route("/api/user/comment/delete", name="comment_delete", methods={"DELETE"})

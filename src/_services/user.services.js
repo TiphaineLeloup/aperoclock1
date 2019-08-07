@@ -7,7 +7,6 @@ function logout() {
 }
 
 function handleResponse(response) {
-  console.log("handle");
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
@@ -25,6 +24,7 @@ function handleResponse(response) {
     return data;
   });
 }
+
 
 function login(username, password) {
   const requestOptions = {

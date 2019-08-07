@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -77,6 +76,7 @@ class UserController extends AbstractController
         ]);
        
         $user->setAdress($adress);
+
         $encodedPassword = $encoder->encodePassword(
             $user, 
             $user->getPassword() 
@@ -97,12 +97,39 @@ class UserController extends AbstractController
                 $om->persist($subscription);
             }
        }
+
         
+            //Validation and send status
+        
+        try {
+            if (count($errors) > 0) {
+                    $errors = $validator->validate($user);
+                    $errorsString = (string) $errors;
+             }
+            
+        return new JsonResponse(
+                    [
+                        'status' => 'error',
+                        $errorsString
+                    ],
+                    JsonResponse::HTTP_BAD_REQUEST);
 
-        $om->persist($user);
-        $om->flush();
+            $om->persist($user);
+            
+            $om->flush();
 
-        return new JsonResponse(['status' => 'ok'], JsonResponse::HTTP_CREATED);
+        } catch (Exception $e) {
+            print($e);}
+
+         
+
+        return new JsonResponse(
+            [
+            'status' => 'ok',
+            ]);
+               
+        
+       
     }
 }
 
