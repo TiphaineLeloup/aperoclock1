@@ -25,19 +25,13 @@ class EventController extends AbstractController
 {
     /**
      * 
-     * @Route("/api/user/events", name="events_user_list", methods={"POST"})
+     * @Route("/api/user/events", name="events_user_list", methods={"GET"})
      */
     public function listByUser(Request $request, GuestRepository $guestRepository, SerializerInterface $serializer)
     {
-        $frontDatas = [];
-        if ( $content = $request->getContent()) {
-            $frontDatas = json_decode($content, true);
-        }
-
-        $userId = $frontDatas["userId"];
 
         //getting invitations to events for a user, regarding his ID
-         $invitationsDatas = $guestRepository->findByUserId($userId);
+         $invitationsDatas = $guestRepository->findByUserId($this->getUser());
 
          $invitationsDatas = $serializer->serialize($invitationsDatas, 'json');
 

@@ -1,30 +1,32 @@
 import React from 'react';
 import { Badge, List } from 'antd';
+import PropTypes from 'prop-types';
 
 import './listevents.scss';
-import datas from 'src/data';
 
 class ListEvents extends React.Component {
-  render() {
-    const fakeEvents = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const dataevent = datas.map(elem => (
-      elem.event
-    ));
+  componentDidMount() {
+    const { dispatchGetAll } = this.props;
+    dispatchGetAll();
+    const { events } = this.props;
+  }
 
+  render() {
+    const { events } = this.props;
     return (
     <div id="listEvents">
       {/* PENSER À LA CLEF */}
       <List
-        dataSource={dataevent}
+        dataSource={events.events}
         itemLayout="horizontal"
         renderItem={
           item => (
             <List.Item>
               <List.Item.Meta
-                avatar={<div className="miniDate">{item.date}</div>}
+                avatar={<div className="miniDate">{new Date(item.event.date).toLocaleDateString()}</div>}
                 title={(
                   <>
-                    <span className="event">{item.name}</span>
+                    <span className="event">{item.event.name}</span>
                     <Badge
                       className="participationTrue"
                       count={5}
@@ -42,7 +44,7 @@ class ListEvents extends React.Component {
                 description={(
                   <>
                     <p>Groupe X</p>
-                    <p>{ item.description }</p>
+                    <p>{ item.event.description }</p>
                   </>
                 )}
               />
@@ -54,5 +56,14 @@ class ListEvents extends React.Component {
     );
   }
 }
+
+ListEvents.propTypes = {
+  dispatchGetAll: PropTypes.func.isRequired,
+  events: PropTypes.object,
+};
+
+ListEvents.defaultProps = {
+  events: [],
+};
 
 export default ListEvents;
