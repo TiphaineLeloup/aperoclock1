@@ -4,13 +4,14 @@ namespace App\Controller\Api;
 use App\Entity\Alert;
 use App\Repository\AlertRepository;
 use App\Repository\AppUserRepository;
+use App\Repository\SubscriptionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\SubscriptionRepository;
 
 
 class AlertController extends AbstractController
@@ -43,7 +44,7 @@ class AlertController extends AbstractController
      *
      * @Route("/api/user/alert/edit", name="user_alert_edit", methods={"POST"})
      */
-    public function edit(Request $request,ObjectManager $om, SubscriptionRepository $subscriptionRepository, SerializerInterface $serializer)
+    public function edit(Request $request,ObjectManager $om, SubscriptionRepository $subscriptionRepository, SerializerInterface $serializer, ValidatorInterface $validator)
     {
 
        $frontDatas = [];
@@ -65,6 +66,21 @@ class AlertController extends AbstractController
        }
 
        $subscription->setHasSubscribed($choice);
+
+       //Validation and send status
+       $errors = $validator->validate($alert);
+
+       if (count($errors) > 0){
+
+           $errorsString = (string) $errors;
+
+           return new JsonResponse(
+               [
+                   'status' => 'error',
+                   $errorsString
+               ],
+               JsonResponse::HTTP_BAD_REQUEST);
+       }
 
        $om->persist($subscription);
        $om->flush();

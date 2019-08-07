@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CommentController extends AbstractController
@@ -42,7 +43,7 @@ class CommentController extends AbstractController
  * @Route("/api/user/comment/create", name="comment_create", methods={"POST"})
  * @Route("/api/user/comment/edit", name="comment_edit", methods={"POST"})
  */
-    public function newAndEdit(Request $request, SerializerInterface $serializer, EventRepository $eventRepository, AppUserRepository $userRepository, CommentRepository $commentRepository, ObjectManager $om)
+    public function newAndEdit(Request $request, SerializerInterface $serializer, EventRepository $eventRepository, AppUserRepository $userRepository, CommentRepository $commentRepository, ObjectManager $om , ValidatorInterface $validator)
     {
         
         $frontDatas = [];
@@ -66,6 +67,21 @@ class CommentController extends AbstractController
         }
         $comment = $serializer->deserialize($content, Comment::class, 'json', ['object_to_populate' => $comment]);
 
+          //Validation and send status
+          $errors = $validator->validate($comment);
+
+          if (count($errors) > 0){
+  
+              $errorsString = (string) $errors;
+  
+              return new JsonResponse(
+                  [
+                      'status' => 'error',
+                      $errorsString
+                  ],
+                  JsonResponse::HTTP_BAD_REQUEST);
+          }
+  
     
         $om->persist($comment);
  

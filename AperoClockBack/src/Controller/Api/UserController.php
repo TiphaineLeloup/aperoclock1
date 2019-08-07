@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -43,7 +44,7 @@ class UserController extends AbstractController
      *
      * @Route("/api/user/infos/edit", name="user_infos_edit", methods={"POST"})
      */
-    public function edit(Request $request, SerializerInterface $serializer, AppUserRepository $userRepository,  ObjectManager $om)
+    public function edit(Request $request, SerializerInterface $serializer, AppUserRepository $userRepository,  ObjectManager $om, ValidatorInterface $validator)
     {
         $frontDatas = [];
         if ($content = $request->getContent()) {
@@ -57,6 +58,22 @@ class UserController extends AbstractController
         
             $user = $serializer->deserialize($content, AppUser::class, 'json', ['object_to_populate' => $user]);
             // dd($user);
+
+            //Validation and send status
+        $errors = $validator->validate($user);
+
+        if (count($errors) > 0){
+
+            $errorsString = (string) $errors;
+
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    $errorsString
+                ],
+                JsonResponse::HTTP_BAD_REQUEST);
+        }
+
 
             $om->persist($user);
 
