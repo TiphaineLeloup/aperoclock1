@@ -97,13 +97,21 @@ class EventController extends AbstractController
         //get all users that belong to the group of the event 
         $usersOfGroup = $group->getAppUsers();
 
+        
+
         foreach ($usersOfGroup as $user){
             $alerts = $user->getSubscriptions();
         
             foreach ($alerts as $alert){
 
+                if(isset($frontDatas['eventId'])){
+                    $alertName = "eventEdit";
+                }else{
+                    $alertName = "eventCreate";
+                }
+
                 //if the user has subscribed to event creation alert
-                if ($alert->getAlert()->getName() === "eventCreate" 
+                if ($alert->getAlert()->getName() === $alertName 
                 && $alert->getHasSubscribed() === true){
                     
                     $distanceAccepted = $user->getDistanceKM();
@@ -128,26 +136,23 @@ class EventController extends AbstractController
             }
         }
         
-
         foreach($usersToMail as $user){
-            $mail[] = $user->getEmail();
-            
+            $mail[] = $user->getEmail();   
         }
 
         $mail[]= "anais.berton.io@gmail.com";
-        // dd($mail);
-        $mailsToMe = ['anais.berton.io@gmail.com','anaisbx2@hotmail.com'];
-        
+                
 
         //determines if the mail is about creation or edition
-        if (!isset($frontDatas['eventId'])){
-            $view = $this->renderView('mails/eventCreate.html.twig');
-            }else{
+        if (isset($frontDatas['eventId'])){
                 $view = $this->renderView('mails/eventEdit.html.twig');
+            }else{
+                $view = $this->renderView('mails/eventCreate.html.twig');
             }
 
+            
 
-        $message = (new \Swift_Message('Un nouvel Event organisé par un de vos groupes !'))
+        $message = (new \Swift_Message('IL y a du nouveau sur un évènement !'))
             ->setFrom('AperoclockRocket@gmail.com')
             ->setTo($mail)
             ->setBody($view, 'text/html');
