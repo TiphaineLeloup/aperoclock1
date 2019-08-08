@@ -88,28 +88,11 @@ class EventController extends AbstractController
         $event->setAppGroup($group);
        
         
-        //Validation and send status
-        
-        try {
-            if (count($errors) > 0) {
-                $errors = $validator->validate($event);
-                $errorsString = (string) $errors;
-            }
-        
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    $errorsString
-                ],
-                JsonResponse::HTTP_BAD_REQUEST);
             $om->persist($event);
             
-            
             $om->flush();
-        }
-     catch (Exception $e) {
-        print($e);
-    }
+        
+     
 
         //get all users that belong to the group of the event 
         $usersOfGroup = $group->getAppUsers();
@@ -158,16 +141,16 @@ class EventController extends AbstractController
 
         //determines if the mail is about creation or edition
         if (!isset($frontDatas['eventId'])){
-            $view = $this->renderView('mails/eventCreate.html.twig', 'text/html');
+            $view = $this->renderView('mails/eventCreate.html.twig');
             }else{
-                $view = $this->renderView('mails/eventEdit.html.twig', 'text/html');
+                $view = $this->renderView('mails/eventEdit.html.twig');
             }
 
 
         $message = (new \Swift_Message('Un nouvel Event organisé par un de vos groupes !'))
             ->setFrom('AperoclockRocket@gmail.com')
             ->setTo($mail)
-            ->setBody($view);
+            ->setBody($view, 'text/html');
     
         $mailer->send($message);
         
