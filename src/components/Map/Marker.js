@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 `;
 
 const Marker = props => (
-  <Wrapper  
+  <Wrapper
     alt={props.text}    
     {...props.onClick ? { onClick: props.onClick } : {}}
   />
