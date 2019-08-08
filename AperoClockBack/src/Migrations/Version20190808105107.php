@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190807115140 extends AbstractMigration
+final class Version20190808105107 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,9 @@ final class Version20190807115140 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE app_user ADD distance_km SMALLINT DEFAULT NULL');
-        $this->addSql('ALTER TABLE adress CHANGE longitude longitude NUMERIC(8, 4) DEFAULT NULL, CHANGE latitude latitude NUMERIC(8, 4) DEFAULT NULL');
+        $this->addSql('ALTER TABLE app_group DROP FOREIGN KEY FK_BB13C908B03A8386');
+        $this->addSql('ALTER TABLE app_group CHANGE created_by_id created_by_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE app_group ADD CONSTRAINT FK_BB13C908B03A8386 FOREIGN KEY (created_by_id) REFERENCES app_user (id) ON DELETE SET NULL');
     }
 
     public function down(Schema $schema) : void
@@ -31,7 +32,8 @@ final class Version20190807115140 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE adress CHANGE longitude longitude INT DEFAULT NULL, CHANGE latitude latitude INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE app_user DROP distance_km');
+        $this->addSql('ALTER TABLE app_group DROP FOREIGN KEY FK_BB13C908B03A8386');
+        $this->addSql('ALTER TABLE app_group CHANGE created_by_id created_by_id INT NOT NULL');
+        $this->addSql('ALTER TABLE app_group ADD CONSTRAINT FK_BB13C908B03A8386 FOREIGN KEY (created_by_id) REFERENCES app_user (id)');
     }
 }

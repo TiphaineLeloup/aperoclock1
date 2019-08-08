@@ -50,7 +50,7 @@ class AppGroup
     /**
      * @Assert\Valid
      * @ORM\ManyToOne(targetEntity="App\Entity\AppUser")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $createdBy;
     /**
