@@ -3,7 +3,6 @@
 namespace App\Controller\Api;
 
 use Exception;
-use App\Entity\Adress;
 use App\Entity\AppUser;
 use App\Entity\Subscription;
 use App\Repository\AlertRepository;
@@ -54,87 +53,38 @@ class UserController extends AbstractController
         $frontDatas = [];
         if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
-        }
-        
-        $adress = new Adress();
-        $adress = $serializer->deserialize($content, Adress::class, 'json', [
-            'object_to_populate' => $adress
-            ]);
-        
-        $om->persist($adress);
-
-        if (isset($frontDatas['userId'])){
-
-            $id = $frontDatas['userId'];
-            $user = $appUserRepository->find($id);
-
-        }else{
-
-             $user = new AppUser();
-        }
-       
-        $user = $serializer->deserialize($content, AppUser::class, 'json', [
-            'object_to_populate' => $adress
-        ]);
-       
-        $user->setAdress($adress);
-
-        $encodedPassword = $encoder->encodePassword(
-            $user, 
-            $user->getPassword() 
-       );
-
-       $user->setPassword($encodedPassword);
-
-       //if new User, he suscribes all mail alerts
-       if (!isset($frontDatas['userId'])){
-            $alerts = $alertRepository->findAll();
+           }
+        if (isset($frontDatas['userId'])) {
+            $id     = $frontDatas['userId'];
+            $user      = $userRepository->find($id);
+            $user = $serializer->deserialize($content, AppUser::class, 'json', ['object_to_populate' => $user]);
             
-            foreach ($alerts as $alert){
 
-                $subscription = new Subscription();
-                $subscription->setAlert($alert);
-                $subscription->setAppUser($user);
-
-                $om->persist($subscription);
-            }
-       }
-
-        
             //Validation and send status
+            try {
+                 if (count($errors) > 0) {
+                 $errors = $validator->validate($user);
+                 $errorsString = (string) $errors;}
         
-        try {
-            
-            $errors = $validator->validate($user);
+                 return new JsonResponse( 
+                 [
+                    'status' => 'error',
+                    $errorsString
+                 ],
+                 JsonResponse::HTTP_BAD_REQUEST);
+                 $om->persist($user);
+                 $om->flush();
+                } catch (Exception $e) {
+                 print($e);}
 
-            if (count($errors) >= 0) {
-                    
-                 $errorsString = (string) $errors;
-                        
-                return new JsonResponse(
-                        [
-                            'status' => 'error',
-                            'message' => $errorsString
-                        ],
-                        JsonResponse::HTTP_BAD_REQUEST);
-             }
-            
-            $om->persist($user);
-            
-            $om->flush();
-
-        } catch (Exception $e) {
-            print($e);}
-
-         
-
-        return new JsonResponse(
-            [
-            'status' => 'ok',
-            ]);
+        }
+               return new JsonResponse(
+                [
+                'status' => 'ok',
+                ],
+                JsonResponse::HTTP_OK);
                
-        
-       
+               
     }
 }
 

@@ -3,6 +3,7 @@
 
 namespace App\Controller\Api;
 
+use Exception;
 use App\Entity\Guest;
 use App\Repository\EventRepository;
 use App\Repository\GuestRepository;

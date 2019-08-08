@@ -12,12 +12,10 @@ function getAll() {
   return fetch(`${process.env.API_URL}/user/events`, requestOptions)
     // eslint-disable-next-line no-use-before-define
     .then(handleResponse)
-    .then((events) => {
-      return JSON.parse(events);
-    },
-    (error) => {
-      console.log(process.env.API_URL);
-    });
+    .then(events => JSON.parse(events),
+      (error) => {
+        console.log(process.env.API_URL);
+      });
 }
 
 const eventService = {

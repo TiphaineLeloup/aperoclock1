@@ -5,21 +5,23 @@ import handleResponseService from './handleresponse.service';
 
 function getAll() {
   const requestOptions = {
-    method: 'POST',
+    method: 'GET',
     headers: authHeader(),
   };
   const { handleResponse } = handleResponseService;
-  return fetch(`${process.env.API_URL}/user/alerts`, requestOptions)
+  return fetch(`${process.env.API_URL}/user/events`, requestOptions)
     // eslint-disable-next-line no-use-before-define
     .then(handleResponse)
-    .then(alerts => JSON.parse(alerts),
-      (error) => {
-        console.log(process.env.API_URL);
-      });
+    .then((groups) => {
+      return JSON.parse(groups);
+    },
+    (error) => {
+      console.log(process.env.API_URL);
+    });
 }
 
-const alertService = {
+const groupService = {
   getAll,
 };
 
-export default alertService;
+export default groupService;
