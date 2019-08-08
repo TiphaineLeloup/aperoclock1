@@ -175,23 +175,30 @@ class EventController extends AbstractController
     public function delete(Request $request, EventRepository $eventRepository, ObjectManager $om)
     {
         if ($content = $request->getContent()){
-            $data = json_decode($content, true);
+            $frontDatas = json_decode($content, true);
         }
 
-        $id = $data['eventId'];
+        $id = $frontDatas['eventId'];
 
         $eventToDelete = $eventRepository->find($id);
+
+        $eventLatitude = floatval($eventToDelete->getAdress()->getLatitude()); 
+        $eventLongitude = floatval($eventToDelete->getAdress()->getLongitude());
     
+       
+           
+        $eventGroup = $eventToDelete->getAppGroup();
+        $usersOfGroup = $eventGroup->getAppUsers();
 
-            $om->remove($eventToDelete);
-            $om->flush();
 
-            $eventGroup = $eventToDelete->getAppGroup();
+        
 
-            $usersOfGroup = $eventGroup->getAppUsers();
-    
+
             foreach ($usersOfGroup as $user){
                 $alerts = $user->getSubscriptions();
+                $adress = $user->getAdress();
+                dd($user);
+
             
                 foreach ($alerts as $alert){
     
@@ -201,13 +208,10 @@ class EventController extends AbstractController
                         
                         $distanceAccepted = $user->getDistanceKM();
     
-                        
-                        $userLatitude = floatval($user->getAdress()->getLatitude());
-                        $userLongitude = floatval($user->getAdress()->getLongitude());
+                        $userLatitude = floatval($adress->getLatitude());
+                        $userLongitude = floatval($adress->getLongitude());
     
-                        $eventLatitude = floatval($frontDatas['latitude']);
-                        $eventLongitude = floatval($frontDatas['longitude']);
-                        
+                       
                         //service to calculate km differences between coordonates 
                         $distanceCalculator = new DistanceCalculator();
                         $distanceDifference = $distanceCalculator
@@ -221,7 +225,9 @@ class EventController extends AbstractController
                 }
             }
             
-    
+            $om->remove($eventToDelete);
+            // $om->flush();
+            
             foreach($usersToMail as $user){
                 $mail[] = $user->getEmail();
                 
@@ -231,14 +237,14 @@ class EventController extends AbstractController
             // dd($mail);
            
     
-            $message = (new \Swift_Message('Un nouvel Event organisé par un de vos groupes !'))
+            $message = (new \Swift_Message('Un évènement vient d\'être annulé ! '))
                 ->setFrom('AperoclockRocket@gmail.com')
                 ->setTo($mail)
-                ->setBody($view);
+                ->setBody($this->renderView('mails/eventDelete.html.twig'), 'text/html');
         
             $mailer->send($message);
 
-
+            
 
         
 
