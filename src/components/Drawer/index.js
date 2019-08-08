@@ -22,10 +22,10 @@ class DrawerMarker extends React.Component {
     return (
       <div>
         <Button type="primary" onClick={this.showDrawer}>
-          Open
+          plus d'info
         </Button>
         <Drawer
-          title="Basic Drawer"
+          title="Titre évènement"
           placement="right"
           closable={false}
           onClose={this.onClose}
