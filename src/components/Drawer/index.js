@@ -22,17 +22,17 @@ class DrawerMarker extends React.Component {
     return (
       <div>
         <Button type="primary" onClick={this.showDrawer}>
-          Open
+          Event
         </Button>
         <Drawer
-          title="Basic Drawer"
+          title="Détail de l'event"
           placement="right"
           closable={false}
           onClose={this.onClose}
           visible={this.state.visible}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          <p>Anniversaire de jacky</p>
+          <p>.....</p>
           <p>Some contents...</p>
         </Drawer>
       </div>
