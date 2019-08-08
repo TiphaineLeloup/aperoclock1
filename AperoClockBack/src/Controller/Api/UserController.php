@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use Exception;
 use App\Entity\AppUser;
 use App\Repository\GuestRepository;
 use App\Repository\AppUserRepository;
@@ -48,52 +49,38 @@ class UserController extends AbstractController
         $frontDatas = [];
         if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
-        }
+           }
         if (isset($frontDatas['userId'])) {
             $id     = $frontDatas['userId'];
             $user      = $userRepository->find($id);
-
-            
-        
             $user = $serializer->deserialize($content, AppUser::class, 'json', ['object_to_populate' => $user]);
-            // dd($user);
+            
 
             //Validation and send status
-        
             try {
-            if (count($errors) > 0) {
-                $errors = $validator->validate($user);
-                $errorsString = (string) $errors;
-            }
+                 if (count($errors) > 0) {
+                 $errors = $validator->validate($user);
+                 $errorsString = (string) $errors;}
         
-            return new JsonResponse(
-                [
+                 return new JsonResponse( 
+                 [
                     'status' => 'error',
                     $errorsString
-                ],
-                JsonResponse::HTTP_BAD_REQUEST);
-            $om->persist($user);
-            
-            
-            $om->flush();
-        } catch (Exception $e) {
-        print($e);}
+                 ],
+                 JsonResponse::HTTP_BAD_REQUEST);
+                 $om->persist($user);
+                 $om->flush();
+                } catch (Exception $e) {
+                 print($e);}
 
-         }
-
-            return new JsonResponse(
+        }
+               return new JsonResponse(
                 [
                 'status' => 'ok',
-                ]);
+                ],
+                JsonResponse::HTTP_OK);
                
-        
-        return new JsonResponse(
-            [
-                'status' => 'error',
-                'message' => 'utilisateur inconnu'
-            ],
-            JsonResponse::HTTP_BAD_REQUEST
-        );
+               
     }
 }
 
