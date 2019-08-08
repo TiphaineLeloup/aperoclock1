@@ -53,8 +53,7 @@ const App = () => {
             <PrivateRoute path="/evenements" exact component={Events} />
             <PrivateRoute path="/profil" exact component={Profile} />
             <Route path="/contact" exact component={Contact} />
-            <Route path="/login" component={LoginForm} /> 
-            <Route path="/Drawer" component={DrawerMarker} />            
+            <Route path="/login" component={LoginForm} />                         
 
           </Content>
           <AntdFooter className="footer">
