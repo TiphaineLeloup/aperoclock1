@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
@@ -47,7 +48,7 @@ class GroupController extends AbstractController
      * @Route("/api/user/group/edit", name="group_edit", methods={"POST"})
      * @Route("/api/user/group/create", name="group_new", methods={"POST"})
      */
-    public function new(Request $request, SerializerInterface $serializer, AppUserRepository $appUserRepository, ObjectManager $om, AppGroupRepository $appGroupRepository)
+    public function new(Request $request, SerializerInterface $serializer, AppUserRepository $appUserRepository, ObjectManager $om, AppGroupRepository $appGroupRepository, ValidatorInterface $validator)
     {
         $frontDatas = [];
         if($content = $request-> getContent()){
@@ -67,6 +68,29 @@ class GroupController extends AbstractController
 
         $group = $serializer->deserialize($content, AppGroup::class, 'json', ['object_to_populate' => $group]);
         $group->setCreatedBy($user);
+
+           //Validation and send status
+        
+        try {
+            if (count($errors) > 0) {
+                $errors = $validator->validate($group);
+                $errorsString = (string) $errors;
+            }
+        
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    $errorsString
+                ],
+                JsonResponse::HTTP_BAD_REQUEST);
+            $om->persist($group);
+            
+            
+            $om->flush();
+        }
+     catch (Exception $e) {
+        print($e);
+    }
         
 
         //ici, utiliser le validator, et si y a des erreurs, on strigify et on envoie un return json error

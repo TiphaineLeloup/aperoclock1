@@ -4,13 +4,14 @@ namespace App\Controller\Api;
 use App\Entity\Alert;
 use App\Repository\AlertRepository;
 use App\Repository\AppUserRepository;
+use App\Repository\SubscriptionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\SubscriptionRepository;
 
 
 class AlertController extends AbstractController
@@ -21,18 +22,17 @@ class AlertController extends AbstractController
      */
     public function list(Request $request, SubscriptionRepository $subscriptionRepository, SerializerInterface $serializer)
     {
-     
         $frontDatas = [];
-        if ( $content = $request->getContent()) {
+        if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
         }
 
         $userId = $frontDatas["userId"];
 
         //getting sub to alerts for a user, regarding his userID
-         $subscriptionsDatas = $subscriptionRepository->findByUserId($userId);
+        $subscriptionsDatas = $subscriptionRepository->findByUserId($userId);
 
-         $subscriptionsDatas = $serializer->serialize($subscriptionsDatas, 'json');
+        $subscriptionsDatas = $serializer->serialize($subscriptionsDatas, 'json');
 
         return new JsonResponse($subscriptionsDatas);
     }
@@ -43,38 +43,49 @@ class AlertController extends AbstractController
      *
      * @Route("/api/user/alert/edit", name="user_alert_edit", methods={"POST"})
      */
-    public function edit(Request $request,ObjectManager $om, SubscriptionRepository $subscriptionRepository, SerializerInterface $serializer)
+    public function edit(Request $request, ObjectManager $om, SubscriptionRepository $subscriptionRepository, SerializerInterface $serializer, ValidatorInterface $validator)
     {
-
-       $frontDatas = [];
-       if ($content = $request->getContent()) {
-           $frontDatas = json_decode($content, true);
-       }
+        $frontDatas = [];
+        if ($content = $request->getContent()) {
+            $frontDatas = json_decode($content, true);
+        }
        
-       $userId = $frontDatas['userId'];
-       $alertId = $frontDatas['alertId'];
+        $userId = $frontDatas['userId'];
+        $alertId = $frontDatas['alertId'];
 
-       $subscription = $subscriptionRepository->findByUserAndAlert($userId, $alertId);
+        $subscription = $subscriptionRepository->findByUserAndAlert($userId, $alertId);
        
-       $choice = $subscription->getHasSubscribed();
+        $choice = $subscription->getHasSubscribed();
 
-       if ($choice === true){
+        if ($choice === true) {
             $choice = false;
-       }else{
-           $choice = true;
-       }
+        } else {
+            $choice = true;
+        }
 
-       $subscription->setHasSubscribed($choice);
+        $subscription->setHasSubscribed($choice);
 
-       $om->persist($subscription);
-       $om->flush();
-
-
-       return new JsonResponse(['status' => 'ok'], JsonResponse::HTTP_OK);
+        //Validation and send status
         
-   }
-
-  
+        try {
+            if (count($errors) > 0) {
+                $errors = $validator->validate($alert);
+                $errorsString = (string) $errors;
+            }
     
-    
+            return new JsonResponse(
+            [
+                'status' => 'error',
+                $errorsString
+            ],
+            JsonResponse::HTTP_BAD_REQUEST
+        );
+            $om->persist($alert);
+        
+        
+            $om->flush();
+        } catch (Exception $e) {
+            print($e);
+        }
+    }
 }

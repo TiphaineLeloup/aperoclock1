@@ -1,9 +1,16 @@
 // == Import : npm
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import {
+  applyMiddleware,
+  combineReducers,
+  compose,
+  createStore,
+} from 'redux';
 
 // == Import : local
 import reducerBase from 'src/store/reducer';
 import authentication from './authentication.reducer';
+import events from './event.reducer';
+import alerts from './alert.reducer';
 import logMiddleware from './logMiddleware';
 
 // == Store
@@ -14,7 +21,9 @@ const enhancers = composeEnhancers(
 );
 
 const reducer = combineReducers({
+  alerts,
   authentication,
+  events,
   reducerBase,
 });
 

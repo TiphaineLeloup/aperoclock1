@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Event;
 use App\Entity\Adress;
 use App\Form\EventType;
+use App\Utils\DistanceCalculator;
 use App\Repository\EventRepository;
 use App\Repository\GuestRepository;
 use App\Repository\AppUserRepository;
@@ -24,19 +25,13 @@ class EventController extends AbstractController
 {
     /**
      * 
-     * @Route("/api/user/events", name="events_user_list", methods={"POST"})
+     * @Route("/api/user/events", name="events_user_list", methods={"GET"})
      */
     public function listByUser(Request $request, GuestRepository $guestRepository, SerializerInterface $serializer)
     {
-        $frontDatas = [];
-        if ( $content = $request->getContent()) {
-            $frontDatas = json_decode($content, true);
-        }
-
-        $userId = $frontDatas["userId"];
 
         //getting invitations to events for a user, regarding his ID
-         $invitationsDatas = $guestRepository->findByUserId($userId);
+         $invitationsDatas = $guestRepository->findByUserId($this->getUser());
 
          $invitationsDatas = $serializer->serialize($invitationsDatas, 'json');
 
@@ -94,56 +89,85 @@ class EventController extends AbstractController
        
         
         //Validation and send status
-        $errors = $validator->validate($event);
-
-        if (count($errors) > 0){
-
-            $errorsString = (string) $errors;
-
+        
+        try {
+            if (count($errors) > 0) {
+                $errors = $validator->validate($event);
+                $errorsString = (string) $errors;
+            }
+        
             return new JsonResponse(
                 [
                     'status' => 'error',
                     $errorsString
                 ],
                 JsonResponse::HTTP_BAD_REQUEST);
+            $om->persist($event);
+            
+            
+            $om->flush();
         }
-
-        $om->persist($event);
-        $om->flush();
-
+     catch (Exception $e) {
+        print($e);
+    }
 
         //get all users that belong to the group of the event 
         $usersOfGroup = $group->getAppUsers();
 
-        //Pour chaque user, parmis leurs alertes
         foreach ($usersOfGroup as $user){
             $alerts = $user->getSubscriptions();
+        
             foreach ($alerts as $alert){
-                //si une a le nom creéation d'un event
+
+                //if the user has subscribed to event creation alert
                 if ($alert->getAlert()->getName() === "eventCreate" 
                 && $alert->getHasSubscribed() === true){
-                    $usersToMail[] = $user;
+                    
+                    $distanceAccepted = $user->getDistanceKM();
+
+                    
+                    $userLatitude = floatval($user->getAdress()->getLatitude());
+                    $userLongitude = floatval($user->getAdress()->getLongitude());
+
+                    $eventLatitude = floatval($frontDatas['latitude']);
+                    $eventLongitude = floatval($frontDatas['longitude']);
+                    
+                    //service to calculate km differences between coordonates 
+                    $distanceCalculator = new DistanceCalculator();
+                    $distanceDifference = $distanceCalculator
+                                        ->distance($userLatitude, $userLongitude, $eventLatitude, $eventLongitude, $unit = 'k');
+
+                    if ($distanceAccepted <= $distanceDifference){
+
+                        $usersToMail[] = $user;
+                    }  
                 }
             }
         }
         
 
-        //et que son adresse et l'adresse de l'event ne sont pas séparés par plus de ... km
-
-        //ON envoit un mail aux users retenus
         foreach($usersToMail as $user){
             $mail[] = $user->getEmail();
             
         }
-        dd($mail);
+
+        $mail[]= "anais.berton.io@gmail.com";
+        // dd($mail);
+        $mailsToMe = ['anais.berton.io@gmail.com','anaisbx2@hotmail.com'];
+        
+
+        //determines if the mail is about creation or edition
+        if (!isset($frontDatas['eventId'])){
+            $view = $this->renderView('mails/eventCreate.html.twig', 'text/html');
+            }else{
+                $view = $this->renderView('mails/eventEdit.html.twig', 'text/html');
+            }
+
+
         $message = (new \Swift_Message('Un nouvel Event organisé par un de vos groupes !'))
             ->setFrom('AperoclockRocket@gmail.com')
-            ->setTo('anaisbx2@hotmail.com')
-            ->setBody(
-                $this->renderView(
-                    'event.html.twig'
-                ), 'text/html'
-            );
+            ->setTo($mail)
+            ->setBody($view);
     
         $mailer->send($message);
         
@@ -168,17 +192,67 @@ class EventController extends AbstractController
 
         $id = $data['eventId'];
 
-        if (!$eventToDelete = $eventRepository->find($id)){
+        $eventToDelete = $eventRepository->find($id);
+    
 
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    
-                ],
-                JsonResponse::HTTP_BAD_REQUEST);
-        }else{
             $om->remove($eventToDelete);
             $om->flush();
+
+            $eventGroup = $eventToDelete->getAppGroup();
+
+            $usersOfGroup = $eventGroup->getAppUsers();
+    
+            foreach ($usersOfGroup as $user){
+                $alerts = $user->getSubscriptions();
+            
+                foreach ($alerts as $alert){
+    
+                    //if the user has subscribed to event creation alert
+                    if ($alert->getAlert()->getName() === "eventDelete" 
+                    && $alert->getHasSubscribed() === true){
+                        
+                        $distanceAccepted = $user->getDistanceKM();
+    
+                        
+                        $userLatitude = floatval($user->getAdress()->getLatitude());
+                        $userLongitude = floatval($user->getAdress()->getLongitude());
+    
+                        $eventLatitude = floatval($frontDatas['latitude']);
+                        $eventLongitude = floatval($frontDatas['longitude']);
+                        
+                        //service to calculate km differences between coordonates 
+                        $distanceCalculator = new DistanceCalculator();
+                        $distanceDifference = $distanceCalculator
+                                            ->distance($userLatitude, $userLongitude, $eventLatitude, $eventLongitude, $unit = 'k');
+    
+                        if ($distanceAccepted <= $distanceDifference){
+    
+                            $usersToMail[] = $user;
+                        }  
+                    }
+                }
+            }
+            
+    
+            foreach($usersToMail as $user){
+                $mail[] = $user->getEmail();
+                
+            }
+    
+            $mail[]= "anais.berton.io@gmail.com";
+            // dd($mail);
+           
+    
+            $message = (new \Swift_Message('Un nouvel Event organisé par un de vos groupes !'))
+                ->setFrom('AperoclockRocket@gmail.com')
+                ->setTo($mail)
+                ->setBody($view);
+        
+            $mailer->send($message);
+
+
+
+        
 
             return new JsonResponse(
                 [
@@ -186,7 +260,7 @@ class EventController extends AbstractController
                 ],
                 JsonResponse::HTTP_OK);
             
-        }
+        
     
     }
 

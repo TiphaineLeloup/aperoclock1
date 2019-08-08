@@ -1,5 +1,6 @@
 <?php
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
@@ -16,18 +17,22 @@ class Comment
      */
     private $id;
     /**
+     * @Assert\Length(min=5)
      * @ORM\Column(type="text")
      */
     private $content;
     /**
+     *  @Assert\DateTime
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
     /**
+     *  @Assert\DateTime
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
     /**
+     * 
      * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="comments")
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */

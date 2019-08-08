@@ -73,7 +73,7 @@ class Event
    
     /**
      * @Assert\Valid
-     * @ORM\ManyToOne(targetEntity="App\Entity\AppUser", inversedBy="events", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\AppUser", inversedBy="events")
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $createdBy;

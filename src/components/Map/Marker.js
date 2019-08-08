@@ -9,8 +9,8 @@ const Wrapper = styled.div`
   left: 50%;
   width: 18px;
   height: 18px;
-  background-color: #b50011ff;
-  border: 2px solid #fa3e50ff;
+  background-color: #fa3e50ff;
+  border: 2px solid #b50011ff;
   border-radius: 100%;
   user-select: none;
   transform: translate(-50%, -50%);

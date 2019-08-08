@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import {
   Input,
   Button,
@@ -6,6 +7,7 @@ import {
   Icon,
   Form,
 } from 'antd';
+
 import './signin.scss';
 
 
@@ -106,7 +108,7 @@ class SignInUnwrap extends React.Component {
           <TextArea type="text" id="userDesc" name="userDesc" placeholder="Petite biographie rigolote (facultatif)" rows={4} />
         </Form.Item>
 
-        <Button name="sendForm">Valider</Button>
+        <Button name="sendForm"><NavLink to="/">Valider</NavLink></Button>
       </Form>
     );
   }

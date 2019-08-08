@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\Common\Collections\Collection;
@@ -22,21 +23,26 @@ class Alert
     private $id;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(max=180)
      * @ORM\Column(type="string", length=180)
      */
     private $name;
 
     /**
+     * @Assert\Length(max=255)
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
 
     /**
+     * @Assert\DateTime
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
+     * @Assert\DateTime
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;

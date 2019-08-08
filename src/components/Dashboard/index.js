@@ -4,7 +4,7 @@ import { Switch } from 'antd';
 
 // == Import : local
 import ListGroups from 'src/components/ListGroups';
-import ListEvents from 'src/components/ListEvents';
+import ListEvents from 'src/containers/ListEvents';
 import './dashboard.scss';
 
 // == Composant

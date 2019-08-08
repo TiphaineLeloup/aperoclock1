@@ -12,6 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -20,10 +21,10 @@ class GuestController extends AbstractController
     /**
      * @Route("api/guest/choice", name="guest_choice", methods={"POST"})
      */
-    public function choice(Request $request, SerializerInterface $serializer,AppUserRepository $appUserRepository, EventRepository $eventRepository, GuestRepository $guestRepository, ObjectManager $om)
+    public function choice(Request $request, SerializerInterface $serializer, AppUserRepository $appUserRepository, EventRepository $eventRepository, GuestRepository $guestRepository, ObjectManager $om)
     {
         $frontDatas = [];
-        if ( $content = $request->getContent()) {
+        if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
         }
 
@@ -48,10 +49,10 @@ class GuestController extends AbstractController
     /**
      * @Route("api/guest/create", name="guest_new", methods={"POST"})
      */
-    public function new(Request $request, SerializerInterface $serializer,AppUserRepository $appUserRepository, EventRepository $eventRepository, GuestRepository $guestRepository, ObjectManager $om)
+    public function new(Request $request, SerializerInterface $serializer, AppUserRepository $appUserRepository, EventRepository $eventRepository, GuestRepository $guestRepository, ObjectManager $om, ValidatorInterface $validator)
     {
         $frontDatas = [];
-        if ( $content = $request->getContent()) {
+        if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
         }
 
@@ -66,14 +67,27 @@ class GuestController extends AbstractController
         $guest->setAppUser($user);
         $guest->setEvent($event);
 
+        //Validation and send status
         
-        $om->persist($guest);
+        try {
+            if (count($errors) > 0) {
+                $errors = $validator->validate($guest);
+                $errorsString = (string) $errors;
+            }
+    
+            return new JsonResponse(
+            [
+                'status' => 'error',
+                $errorsString
+            ],
+            JsonResponse::HTTP_BAD_REQUEST
+        );
+            $om->persist($guest);
         
-        $om->flush();
-
-        return new JsonResponse(['status' => 'ok'], JsonResponse::HTTP_OK);
-
         
-
+            $om->flush();
+        } catch (Exception $e) {
+            print($e);
+        }
     }
 }

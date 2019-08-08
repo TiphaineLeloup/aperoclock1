@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 import './loginform.scss';
 
@@ -24,7 +25,7 @@ class LoginFormUnwrap extends React.Component {
     const username = this.usernameInput.current.state.value;
     const password = this.passwordInput.current.state.value;
     const { dispatchLogin } = this.props;
-
+    console.log("test");
     if (username && password) {
       console.log('submit');
       dispatchLogin(username, password);
@@ -42,7 +43,7 @@ class LoginFormUnwrap extends React.Component {
           })(
             <Input
               onChange={this.handleChange}
-              placeholder="Username"
+              placeholder="Identifiant"
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
               ref={this.usernameInput}
             />,
@@ -54,7 +55,7 @@ class LoginFormUnwrap extends React.Component {
           })(
             <Input
               onChange={this.handleChange}
-              placeholder="Password"
+              placeholder="Mot de passe"
               prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
               ref={this.passwordInput}
               type="password"
@@ -62,14 +63,16 @@ class LoginFormUnwrap extends React.Component {
           )}
         </Form.Item>
         <Form.Item>
-          <Checkbox>Remember me</Checkbox>
+          <Checkbox>Mémoriser mes informations</Checkbox>
           <a className="login-form-forgot" href="">
-            Forgot password
+            Mot de passe oublié ?
           </a>
           <Button type="primary" htmlType="submit" className="login-form-button">
-            Log in
+            <NavLink to="/">
+            Connexion
+            </NavLink>
           </Button>
-          Or <a href="">register now!</a>
+          Ou <NavLink to="/inscription">inscrivez-vous dès maintenant !</NavLink>
         </Form.Item>
       </Form>
     );

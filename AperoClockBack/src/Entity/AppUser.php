@@ -1,11 +1,13 @@
 <?php
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\AlertRepository;
 /**
  * @Entity @HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="App\Repository\AppUserRepository")
@@ -19,35 +21,53 @@ class AppUser implements UserInterface
      */
     private $id;
     /**
+     *  @Assert\NotBlank(
+     *       message = "Ce champs est requis")
+     * @Assert\Length(max=60)
      * @ORM\Column(type="string", length=60)
      */
     private $firstname;
     /**
+     *  @Assert\NotBlank(
+     *       message = "Ce champs est requis")
+     * @Assert\Length(max=60)
      * @ORM\Column(type="string", length=60)
      */
     private $lastname;
     
     /**
+     * @Assert\NotBlank(
+     *       message = "Ce champs est requis")
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.")
+     * @Assert\Length(max=255)
      * @ORM\Column(type="string", length=255)
      */
     private $email;
     /**
+     * @Assert\NotBlank(
+     *       message = "Ce champs est requis")
+     * @Assert\Length(max=255)
      * @ORM\Column(type="string", length=255)
      */
     private $password;
     /**
+     * @Assert\Length(min=5)
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
     /**
+     * @Assert\Length(max=255)
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
     /**
+     * @Assert\DateTime
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
     /**
+     * @Assert\DateTime
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
@@ -56,6 +76,7 @@ class AppUser implements UserInterface
      */
     private $isAdmin;
     /**
+     * @Assert\DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $lastConnected;
@@ -83,13 +104,20 @@ class AppUser implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Subscription", mappedBy="appUser")
      */
     private $subscriptions;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $distanceKM;
+
+   
     
     public function __construct()
     {
         $this->isAdmin = 0;
         $this->appGroups = new ArrayCollection();
         $this->events = new ArrayCollection();
-       
+  
         
     }
 
@@ -321,6 +349,19 @@ class AppUser implements UserInterface
 
         return $this;
     }
+
+    public function getDistanceKM(): ?int
+    {
+        return $this->distanceKM;
+    }
+
+    public function setDistanceKM(?int $distanceKM): self
+    {
+        $this->distanceKM = $distanceKM;
+
+        return $this;
+    }
+
 
     
 }

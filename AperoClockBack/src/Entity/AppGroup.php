@@ -2,6 +2,7 @@
 namespace App\Entity;
 use App\Utils\Slugger;
 use App\Entity\AppUser;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\Common\Collections\Collection;
@@ -20,19 +21,24 @@ class AppGroup
      */
     private $id;
     /**
+     * @Assert\NotBlank(message = "Vous devez renseigner ce champs")
+     *  @Assert\Length(max=100)
      * @ORM\Column(type="string", length=100)
      */
     private $name;
     /**
+     * @Assert\Length(max=255)
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
     
     /**
+     * @Assert\DateTime
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
     /**
+     * @Assert\DateTime
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
@@ -42,6 +48,7 @@ class AppGroup
     private $slug;
     
     /**
+     * @Assert\Valid
      * @ORM\ManyToOne(targetEntity="App\Entity\AppUser")
      * @ORM\JoinColumn(nullable=false)
      */
