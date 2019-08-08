@@ -1,0 +1,7 @@
+const commentConstants = {
+  COMMENT_GET_ALL: 'COMMENT_GET_ALL',
+  COMMENT_GET_ALL_FAILURE: 'COMMENT_GET_ALL_FAILURE',
+  COMMENT_GET_ALL_SUCCESS: 'COMMENT_GET_ALL_SUCCESS',
+};
+
+export default commentConstants;

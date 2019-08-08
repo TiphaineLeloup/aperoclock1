@@ -9,17 +9,17 @@ function getAll() {
     headers: authHeader(),
   };
   const { handleResponse } = handleResponseService;
-  return fetch(`${process.env.API_URL}/user/alerts`, requestOptions)
+  return fetch(`${process.env.API_URL}/guests`, requestOptions)
     // eslint-disable-next-line no-use-before-define
     .then(handleResponse)
-    .then(alerts => JSON.parse(alerts),
+    .then(guests => JSON.parse(guests),
       (error) => {
         console.log(process.env.API_URL);
       });
 }
 
-const alertService = {
+const guestService = {
   getAll,
 };
 
-export default alertService;
+export default guestService;
