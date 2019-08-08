@@ -7,7 +7,6 @@ const guestConstants = {
   LOGIN_SUCCESS: 'GUEST_LOGIN_SUCCESS',
   LOGIN_FAILURE: 'GUEST_LOGIN_FAILURE',
 
-  LOGOUT: 'GUEST_LOGOUT',
 };
 
 export default guestConstants;

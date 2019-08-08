@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190807134311 extends AbstractMigration
+final class Version20190808114404 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,7 @@ final class Version20190807134311 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE comment (id INT AUTO_INCREMENT NOT NULL, event_id INT DEFAULT NULL, app_user_id INT DEFAULT NULL, content LONGTEXT NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_9474526C71F7E88B (event_id), INDEX IDX_9474526C4A3353D8 (app_user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE comment (id INT AUTO_INCREMENT NOT NULL, event_id INT NOT NULL, app_user_id INT DEFAULT NULL, content LONGTEXT NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_9474526C71F7E88B (event_id), INDEX IDX_9474526C4A3353D8 (app_user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE guest (id INT AUTO_INCREMENT NOT NULL, app_user_id INT NOT NULL, event_id INT NOT NULL, choice TINYINT(1) DEFAULT NULL, INDEX IDX_ACB79A354A3353D8 (app_user_id), INDEX IDX_ACB79A3571F7E88B (event_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE adress (id INT AUTO_INCREMENT NOT NULL, numero SMALLINT DEFAULT NULL, type_voie VARCHAR(50) DEFAULT NULL, street VARCHAR(255) DEFAULT NULL, postal_code INT NOT NULL, city VARCHAR(255) NOT NULL, country VARCHAR(255) NOT NULL, longitude NUMERIC(8, 4) DEFAULT NULL, latitude NUMERIC(8, 4) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE event (id INT AUTO_INCREMENT NOT NULL, created_by_id INT DEFAULT NULL, adress_id INT DEFAULT NULL, app_group_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, description VARCHAR(255) DEFAULT NULL, date DATETIME NOT NULL, website VARCHAR(255) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, slug VARCHAR(255) DEFAULT NULL, INDEX IDX_3BAE0AA7B03A8386 (created_by_id), UNIQUE INDEX UNIQ_3BAE0AA78486F9AC (adress_id), INDEX IDX_3BAE0AA7F6D4B9EA (app_group_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
@@ -33,7 +33,7 @@ final class Version20190807134311 extends AbstractMigration
         $this->addSql('CREATE TABLE app_user_app_group (app_user_id INT NOT NULL, app_group_id INT NOT NULL, INDEX IDX_6409D6124A3353D8 (app_user_id), INDEX IDX_6409D612F6D4B9EA (app_group_id), PRIMARY KEY(app_user_id, app_group_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE app_user_event (app_user_id INT NOT NULL, event_id INT NOT NULL, INDEX IDX_8F775A834A3353D8 (app_user_id), INDEX IDX_8F775A8371F7E88B (event_id), PRIMARY KEY(app_user_id, event_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE alert (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(180) NOT NULL, description VARCHAR(255) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE app_group (id INT AUTO_INCREMENT NOT NULL, created_by_id INT NOT NULL, name VARCHAR(100) NOT NULL, description VARCHAR(255) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, slug VARCHAR(255) DEFAULT NULL, INDEX IDX_BB13C908B03A8386 (created_by_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE app_group (id INT AUTO_INCREMENT NOT NULL, created_by_id INT DEFAULT NULL, name VARCHAR(100) NOT NULL, description VARCHAR(255) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, slug VARCHAR(255) DEFAULT NULL, INDEX IDX_BB13C908B03A8386 (created_by_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('ALTER TABLE comment ADD CONSTRAINT FK_9474526C71F7E88B FOREIGN KEY (event_id) REFERENCES event (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE comment ADD CONSTRAINT FK_9474526C4A3353D8 FOREIGN KEY (app_user_id) REFERENCES app_user (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE guest ADD CONSTRAINT FK_ACB79A354A3353D8 FOREIGN KEY (app_user_id) REFERENCES app_user (id) ON DELETE CASCADE');
@@ -50,7 +50,7 @@ final class Version20190807134311 extends AbstractMigration
         $this->addSql('ALTER TABLE app_user_app_group ADD CONSTRAINT FK_6409D612F6D4B9EA FOREIGN KEY (app_group_id) REFERENCES app_group (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE app_user_event ADD CONSTRAINT FK_8F775A834A3353D8 FOREIGN KEY (app_user_id) REFERENCES app_user (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE app_user_event ADD CONSTRAINT FK_8F775A8371F7E88B FOREIGN KEY (event_id) REFERENCES event (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE app_group ADD CONSTRAINT FK_BB13C908B03A8386 FOREIGN KEY (created_by_id) REFERENCES app_user (id)');
+        $this->addSql('ALTER TABLE app_group ADD CONSTRAINT FK_BB13C908B03A8386 FOREIGN KEY (created_by_id) REFERENCES app_user (id) ON DELETE SET NULL');
     }
 
     public function down(Schema $schema) : void

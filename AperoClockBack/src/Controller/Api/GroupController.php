@@ -210,4 +210,29 @@ class GroupController extends AbstractController
 
         return new JsonResponse($jsonContent);
     }
+
+     /**
+     * @Route("/api/user/group/add", name="group_add_user", methods={"GET"})
+     */
+    public function addUser(Request $request,AppUserRepository $appUserRepository, AppGroupRepository $appGroupRepository,
+     SerializerInterface $serializer, ObjectManager $om)
+    {
+        $frontDatas = [];
+
+        if ($content = $request->getContent()){
+            $frontDatas = json_decode($content, true);
+        }
+
+        $id = $frontDatas['userId'];
+        $user = $appUserRepository->find($id);
+        $id  = $frontDatas['groupId'];
+        $group = $appGroupRepository->find($id);
+
+        $group->addAppUser($user);
+
+        $om->persist($group);
+        $om->flush();
+    }
+
+
 }
