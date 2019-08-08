@@ -7,7 +7,6 @@ function logout() {
 }
 
 function handleResponse(response) {
-  console.log("handle");
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
@@ -26,18 +25,19 @@ function handleResponse(response) {
   });
 }
 
+
 function login(username, password) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password }),
   };
-  console.log("service");
+  console.log('service');
   return fetch(`${process.env.API_URL}/login_check`, requestOptions)
     // eslint-disable-next-line no-use-before-define
     .then(handleResponse)
     .then((user) => {
-      console.log("second then");
+      console.log('second then');
       // store user details and jwt token in local storage
       // to keep user logged in between page refreshes
       localStorage.setItem('user', JSON.stringify(user));

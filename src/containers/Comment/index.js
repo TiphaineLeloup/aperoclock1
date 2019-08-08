@@ -2,25 +2,25 @@
 import { connect } from 'react-redux';
 
 // == Import : local
-import eventActions from 'src/_actions/event.actions';
-import ListEvents from 'src/components/ListEvents';
+import commentActions from 'src/_actions/comment.actions';
+import Comment from 'src/components/Comment';
 
 
 const mapStateToProps = state => ({
-  events: state.events,
+  comments: state.comments,
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatchGetAll: () => {
-    const result = eventActions.getAllEvents();
+    const result = commentActions.getAllComments();
     result(dispatch);
   },
 });
 
 // Container
-const ListEventsContainer = connect(
+const CommentsContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ListEvents);
+)(Comment);
 
-export default ListEventsContainer;
+export default CommentsContainer;

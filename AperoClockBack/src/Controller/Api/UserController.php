@@ -4,6 +4,8 @@ namespace App\Controller\Api;
 
 use Exception;
 use App\Entity\AppUser;
+use App\Entity\Subscription;
+use App\Repository\AlertRepository;
 use App\Repository\GuestRepository;
 use App\Repository\AppUserRepository;
 use App\Repository\AppGroupRepository;
@@ -14,7 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 
@@ -40,11 +44,11 @@ class UserController extends AbstractController
     }
 
 
-    /**
-     *
-     * @Route("/api/user/infos/edit", name="user_infos_edit", methods={"POST"})
+     /**
+     *@Route("/api/user/infos/edit", name="user_infos_edit", methods={"POST"})
+     * @Route("/api/user/signup", name="signup", methods={"POST"})
      */
-    public function edit(Request $request, SerializerInterface $serializer, AppUserRepository $userRepository,  ObjectManager $om, ValidatorInterface $validator)
+    public function signUp(Request $request, AlertRepository $alertRepository, AppUserRepository $appUserRepository, ValidatorInterface $validator, SerializerInterface $serializer, ObjectManager $om, UserPasswordEncoderInterface $encoder)
     {
         $frontDatas = [];
         if ($content = $request->getContent()) {
