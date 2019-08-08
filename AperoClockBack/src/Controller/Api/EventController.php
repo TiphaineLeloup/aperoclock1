@@ -172,7 +172,7 @@ class EventController extends AbstractController
     /**
      * @Route("/api/user/event/delete", name="event_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, EventRepository $eventRepository, ObjectManager $om)
+    public function delete(Request $request, EventRepository $eventRepository, ObjectManager $om, \Swift_Mailer $mailer)
     {
         if ($content = $request->getContent()){
             $frontDatas = json_decode($content, true);
@@ -197,7 +197,7 @@ class EventController extends AbstractController
             foreach ($usersOfGroup as $user){
                 $alerts = $user->getSubscriptions();
                 $adress = $user->getAdress();
-                dd($user);
+                // dd($adress);
 
             
                 foreach ($alerts as $alert){
