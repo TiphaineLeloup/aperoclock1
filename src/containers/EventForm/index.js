@@ -6,7 +6,7 @@ import EventForm from 'src/components/EventForm';
 
 
 const mapStateToProps = state => ({
-  recipes: state.recipes,
+  AddEvent: state.AddEvent,
 });
 
 const mapDispatchToProps = {};

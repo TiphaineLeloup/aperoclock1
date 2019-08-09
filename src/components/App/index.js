@@ -20,7 +20,6 @@ import Profile from 'src/components/Profile';
 import Contact from 'src/components/Contact';
 import AlertColor from 'src/components/Alert';
 import DrawerMarker from 'src/components/Drawer';
-import data from 'src/data/index';
 import PrivateRoute from './PrivateRoute';
 import Logo from 'src/img/logo.svg';
 import './app.scss';

@@ -14,12 +14,12 @@ class ListEvents extends React.Component {
   render() {
     const { events } = this.props;
     return (
-    <div id="listEvents">
-      {/* PENSER À LA CLEF */}
-      <List
-        dataSource={events.events}
-        itemLayout="horizontal"
-        renderItem={
+      <div id="listEvents">
+        {/* PENSER À LA CLEF */}
+        <List
+          dataSource={events.events}
+          itemLayout="horizontal"
+          renderItem={
           item => (
             <List.Item>
               <List.Item.Meta
@@ -51,8 +51,8 @@ class ListEvents extends React.Component {
             </List.Item>
           )
         }
-      />
-    </div>
+        />
+      </div>
     );
   }
 }

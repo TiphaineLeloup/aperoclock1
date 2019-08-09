@@ -5,11 +5,11 @@ import handleResponseService from './handleresponse.service';
 
 function getAll() {
   const requestOptions = {
-    method: 'GET',
+    method: 'POST',
     headers: authHeader(),
   };
   const { handleResponse } = handleResponseService;
-  return fetch(`${process.env.API_URL}/user/events`, requestOptions)
+  return fetch(`${process.env.API_URL}/user/groups`, requestOptions)
     // eslint-disable-next-line no-use-before-define
     .then(handleResponse)
     .then(groups => JSON.parse(groups),
