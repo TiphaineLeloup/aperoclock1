@@ -44,7 +44,7 @@ class AlertController extends AbstractController
             $frontDatas = json_decode($content, true);
         }
        
-        $userId = $frontDatas['userId'];
+        $userId = $this->getUser();
         $alertId = $frontDatas['alertId'];
 
         $subscription = $subscriptionRepository->findByUserAndAlert($userId, $alertId);
@@ -60,8 +60,13 @@ class AlertController extends AbstractController
         $subscription->setHasSubscribed($choice);
 
        
-            $om->persist($alert);
+            $om->persist($subscription);
             $om->flush();
+
+        return new JsonResponse([
+            'status' => 'ok'
+        ],
+        JsonResponse::HTTP_OK);
         
     }
 }

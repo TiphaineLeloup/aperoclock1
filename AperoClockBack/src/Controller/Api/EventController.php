@@ -52,7 +52,7 @@ class EventController extends AbstractController
             $frontDatas = json_decode($content, true);
         }
 
-        $id = $frontDatas['userId'];
+        $id = $this->getUser();
         $user = $userRepository->find($id); 
 
         $id= $frontDatas['groupId'];
@@ -140,8 +140,6 @@ class EventController extends AbstractController
         foreach($usersToMail as $user){
             $mail[] = $user->getEmail();   
         }
-
-        $mail[]= "anais.berton.io@gmail.com";
                 
 
         //determines if the mail is about creation or edition
@@ -198,7 +196,6 @@ class EventController extends AbstractController
             foreach ($usersOfGroup as $user){
                 $alerts = $user->getSubscriptions();
                 $adress = $user->getAdress();
-                // dd($adress);
 
             
                 foreach ($alerts as $alert){
@@ -227,15 +224,13 @@ class EventController extends AbstractController
             }
             
             $om->remove($eventToDelete);
-            // $om->flush();
+            $om->flush();
             
             foreach($usersToMail as $user){
                 $mail[] = $user->getEmail();
                 
             }
     
-            $mail[]= "anais.berton.io@gmail.com";
-            // dd($mail);
            
     
             $message = (new \Swift_Message('Un évènement vient d\'être annulé ! '))
