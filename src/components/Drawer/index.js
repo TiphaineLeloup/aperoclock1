@@ -1,4 +1,3 @@
-
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Drawer, Button } from 'antd';
@@ -22,10 +21,6 @@ class DrawerMarker extends React.Component {
     return (
       <div>
         <Button type="primary" onClick={this.showDrawer}>
-          plus d'info
-        </Button>
-        <Drawer
-          title="Titre évènement"
           Event
         />
         <Drawer

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Switch } from 'antd';
 
 // == Import : local
-import ListGroups from 'src/components/ListGroups';
+import ListGroups from 'src/containers/ListGroups';
 import ListEvents from 'src/containers/ListEvents';
 import './dashboard.scss';
 
@@ -11,7 +11,7 @@ import './dashboard.scss';
 const Dashboard = () => {
   const VIEW_GROUPS = true;
   const VIEW_EVENTS = false;
-  const [view, setView] = useState(VIEW_EVENTS);
+  const [view, setView] = useState(VIEW_GROUPS);
 
   return (
     <div id="dashboard">

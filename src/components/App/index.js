@@ -10,9 +10,18 @@ import Dashboard from 'src/containers/Dashboard';
 import Events from 'src/components/Events';
 import Footer from 'src/components/Footer';
 import Groups from 'src/components/Groups';
+<<<<<<< HEAD
 import Header from 'src/components/Header';
 import Home from 'src/components/Home';
 import LoginForm from 'src/containers/LoginForm';
+=======
+import SimpleMap from 'src/components/Map';
+import Profile from 'src/components/Profile';
+import Contact from 'src/components/Contact';
+import AlertColor from 'src/components/Alert';
+import DrawerMarker from 'src/components/Drawer';
+import PrivateRoute from './PrivateRoute';
+>>>>>>> a6854d2e77980528da127f0e42ffd964fd7b3746
 import Logo from 'src/img/logo.svg';
 import Nav from 'src/containers/Nav';
 import Profile from 'src/components/Profile';
