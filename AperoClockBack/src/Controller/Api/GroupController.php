@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use Exception;
 use App\Entity\AppUser;
 use App\Entity\AppGroup;
 use App\Repository\AppUserRepository;

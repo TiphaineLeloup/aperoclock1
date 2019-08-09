@@ -18,7 +18,7 @@ const GoogleMap = ({ children, ...props }) => (
     >
       {children}
     </GoogleMapReact>
-  </Wrapper>
+    </Wrapper>
 );
 
 GoogleMap.propTypes = {

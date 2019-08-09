@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use Exception;
 use App\Entity\Event;
 use App\Entity\Adress;
 use App\Form\EventType;
