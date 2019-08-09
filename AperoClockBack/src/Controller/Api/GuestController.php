@@ -22,23 +22,26 @@ class GuestController extends AbstractController
     /**
      * @Route("api/guest/choice", name="guest_choice", methods={"POST"})
      */
-    public function choice(Request $request, SerializerInterface $serializer, AppUserRepository $appUserRepository, EventRepository $eventRepository, GuestRepository $guestRepository, ObjectManager $om)
+    public function choice(Request $request, SerializerInterface $serializer, EventRepository $eventRepository, GuestRepository $guestRepository, ObjectManager $om)
     {
         $frontDatas = [];
         if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
         }
 
-        $userId = $frontDatas['userId'];
+        $user = $this->getUser();
         $eventId = $frontDatas['eventId'];
 
 
 
-        $guest = $guestRepository->findByUserAndEvent($userId, $eventId);
+        $guest = $guestRepository->findByUserAndEvent($user, $eventId);
         $guest = $guest[0];
 
 
         $guestChoice = $frontDatas['choice'];
+        if ($guestChoice === "NULL"){
+            $guestChoice = NULL;
+        }
 
         $guest->setChoice($guestChoice);
 
@@ -57,38 +60,27 @@ class GuestController extends AbstractController
             $frontDatas = json_decode($content, true);
         }
 
-        $userId = $frontDatas['userId'];
-        $eventId = $frontDatas['eventId'];
+        $user = $this->getUser();
 
-        $user = $appUserRepository->find($userId);
-        $event = $eventRepository->find($eventId);
+        $eventId = $frontDatas['eventId'];
+         $event = $eventRepository->find($eventId);
 
         $guest = new Guest();
 
         $guest->setAppUser($user);
         $guest->setEvent($event);
 
-        //Validation and send status
-        
-        try {
-            if (count($errors) > 0) {
-                $errors = $validator->validate($guest);
-                $errorsString = (string) $errors;
-            }
+        $om->persist($guest);
+        $om->flush();
     
             return new JsonResponse(
             [
-                'status' => 'error',
-                $errorsString
+                'status' => 'ok'
+                
             ],
-            JsonResponse::HTTP_BAD_REQUEST
+            JsonResponse::HTTP_CREATED
         );
-            $om->persist($guest);
-        
-        
-            $om->flush();
-        } catch (Exception $e) {
-            print($e);
-        }
+            
+       
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use Exception;
+use App\Entity\Adress;
 use App\Entity\AppUser;
 use App\Entity\Subscription;
 use App\Repository\AlertRepository;
@@ -28,14 +29,16 @@ class UserController extends AbstractController
 
        /**
      *
-     * @Route("/api/user/infos/list/{id}", name="user_infos_list", methods={"GET"})
+     * @Route("/api/user/infos/list/", name="user_infos_list", methods={"GET"})
      */
 
-    public function list(AppUserRepository $userRepository, SerializerInterface $serializer, AppUser $user)
+    public function list(SerializerInterface $serializer)
     {
-         $userInfos = $serializer->serialize($user, 'json', [
+         $userInfos = $serializer->serialize($this->getUser(), 'json', [
             'ignored_attributes' => [
-                'appGroups', 'events'
+                'appGroups',
+                 'events',
+                 'subscriptions'
                 ]
             ]);
         return new JsonResponse($userInfos);
@@ -51,39 +54,60 @@ class UserController extends AbstractController
     public function signUp(Request $request, AlertRepository $alertRepository, AppUserRepository $appUserRepository, ValidatorInterface $validator, SerializerInterface $serializer, ObjectManager $om, UserPasswordEncoderInterface $encoder)
     {
         $frontDatas = [];
+
         if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
-           }
-        if (isset($frontDatas['userId'])) {
-            $id     = $frontDatas['userId'];
-            $user      = $userRepository->find($id);
-            $user = $serializer->deserialize($content, AppUser::class, 'json', ['object_to_populate' => $user]);
-            
-
-            //Validation and send status
-            try {
-                 if (count($errors) > 0) {
-                 $errors = $validator->validate($user);
-                 $errorsString = (string) $errors;}
-        
-                 return new JsonResponse( 
-                 [
-                    'status' => 'error',
-                    $errorsString
-                 ],
-                 JsonResponse::HTTP_BAD_REQUEST);
-                 $om->persist($user);
-                 $om->flush();
-                } catch (Exception $e) {
-                 print($e);}
-
         }
-               return new JsonResponse(
-                [
-                'status' => 'ok',
-                ],
-                JsonResponse::HTTP_OK);
-               
+        
+        $adress = new Adress();
+        $adress = $serializer->deserialize($content, Adress::class, 'json', [
+            'object_to_populate' => $adress
+            ]);
+        
+        $om->persist($adress);
+
+        
+        if ($this->getUser()){
+            $user = $this->getUser(); 
+
+        }else{
+             $user = new AppUser();
+        }
+       
+        $user = $serializer->deserialize($content, AppUser::class, 'json', [
+            'object_to_populate' => $adress,
+            
+        ]);
+       
+        $user->setAdress($adress);
+
+       
+        $encodedPassword = $encoder->encodePassword(
+            $user, 
+            $user->getPassword() 
+       );
+       $user->setPassword($encodedPassword);
+
+       //if new User, he suscribes all mail alerts
+       if (!$this->getUser()){
+            $alerts = $alertRepository->findAll();
+            
+            foreach ($alerts as $alert){
+                $subscription = new Subscription();
+                $subscription->setAlert($alert);
+                $subscription->setAppUser($user);
+                $om->persist($subscription);
+            }
+       }
+
+       $om->persist($user);
+       $om->flush();
+
+       return new JsonResponse(
+        [
+        'status' => 'ok',
+        ]);
+           
                
     }
 }

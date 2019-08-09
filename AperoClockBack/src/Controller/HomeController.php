@@ -16,40 +16,50 @@ class HomeController extends AbstractController
     /**
      * @Route("/contact", name="contact", methods={"POST"})
      */
-    public function contact( \Swift_Mailer $mailer, Request $request)
+    public function contact( \Swift_Mailer $mailer, Request $request, $email="rime.zahir")
     {
         $frontDatas = [];
         if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
            }
 
-           $email = $frontDatas['email'];
-           $subject = $frontDatas['subject'];
-           $content = $frontDatas['content'];
+          $email = $frontDatas['email'];
+          $subject = $frontDatas['subject'];
+          $content = $frontDatas['content'];
 
+           $email="rime.zahir@yahoo.fr";
+           $subject="an apple";
+           $content="yesterday i ate an apple and it was soo good";
            
-        
-        
-        
-       
-               
-            $message = (new \Swift_Message('subject'))
+            //$mailer =  new \Swift_Mailer($transport);
+            $message = (new \Swift_Message('Nouveau mail user/visiteur: '.$subject.''))
          
-            ->setFrom('aperoclock@gmail.com')
-            ->setTo('aperoclock@gmail.com')
-            ->setBody($email, $subject, $content);
-           
+             ->setFrom('aperoclockRocket@gmail.com')
+             ->setTo('aperoclockRocket@gmail.com')
+             ->setBody($this->render('mails/contact.html.twig', ['email'=>$email,  'content'=>$content]))
+
+             ->addPart(
+                $this->renderView(
+                    // templates/emails/registration.txt.twig
+                    'mails/contact.html.twig',
+                    ['email' => $email,   'content'=>$content]
+                ),
+                'text/plain'
+            );
+                
              
                
-               $mailer->send($message);
+             $mailer->send($message);
                
                
                
-               return new JsonResponse(
-                   [
-                       'status' => 'ok'
-                    ],
-                    JsonResponse::HTTP_OK);
+             return new JsonResponse(
+                [
+                    'status' => 'ok'
+                ],
+                JsonResponse::HTTP_CREATED
+            );
+    
                     
             
             
