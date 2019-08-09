@@ -15,8 +15,8 @@ function login(username, password) {
       .then(
         (user) => {
           console.log("success");
-          history.push('/');
           dispatch(success(user));
+          history.push('/');
         },
         (error) => {
           console.log("error");

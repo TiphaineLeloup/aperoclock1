@@ -27,7 +27,7 @@ class DrawerMarker extends React.Component {
         <Drawer
           title="Titre évènement"
           Event
-        </Button>
+        />
         <Drawer
           title="Détail de l'event"
           placement="right"

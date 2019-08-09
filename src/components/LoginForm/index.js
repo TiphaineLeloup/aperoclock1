@@ -25,9 +25,7 @@ class LoginFormUnwrap extends React.Component {
     const username = this.usernameInput.current.state.value;
     const password = this.passwordInput.current.state.value;
     const { dispatchLogin } = this.props;
-    console.log("test");
     if (username && password) {
-      console.log('submit');
       dispatchLogin(username, password);
     }
   }
