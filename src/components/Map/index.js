@@ -28,7 +28,7 @@ class SimpleMap extends Component {
             lng={2.333333}
             text="My Marker"            
           />
-          <DrawerMarker />
+          {/* <DrawerMarker /> */}
         
         </GoogleMap>
       </div>

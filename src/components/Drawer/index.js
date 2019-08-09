@@ -26,13 +26,17 @@ class DrawerMarker extends React.Component {
         </Button>
         <Drawer
           title="Titre évènement"
+          Event
+        </Button>
+        <Drawer
+          title="Détail de l'event"
           placement="right"
           closable={false}
           onClose={this.onClose}
           visible={this.state.visible}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          <p>Anniversaire de jacky</p>
+          <p>.....</p>
           <p>Some contents...</p>
         </Drawer>
       </div>

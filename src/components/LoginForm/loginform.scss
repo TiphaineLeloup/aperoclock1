@@ -1,0 +1,12 @@
+#app-home .ant-layout {
+  .login-actions {
+    button {
+      &[type=submit] {
+        margin-right: 1em;
+      }
+      &:not([type=submit]) {
+        margin-left: 1em;
+      }
+    }
+  }
+}

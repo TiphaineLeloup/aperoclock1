@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Api;
 
+use Exception;
 use App\Entity\Alert;
 use App\Repository\AlertRepository;
 use App\Repository\AppUserRepository;

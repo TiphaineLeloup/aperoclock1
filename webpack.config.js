@@ -132,22 +132,7 @@ module.exports = {
         ],
       },
       // LESS
-      {
-        test: /\.less$/,
-        use: [{
-          loader: 'style-loader',
-        }, {
-          loader: 'css-loader',
-        }, {
-          loader: 'less-loader',
-          options: {
-            modifyVars: {
-              'primary-color': 'pink',
-            },
-            javascriptEnabled: true,
-          },
-        }],
-      },
+    
     ],
   },
   devServer: {

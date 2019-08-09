@@ -3,6 +3,7 @@ namespace App\Controller\Api;
 
 use Exception;
 use App\Entity\Comment;
+use App\Utils\DistanceCalculator;
 use App\Repository\EventRepository;
 use App\Repository\AppUserRepository;
 use App\Repository\CommentRepository;
@@ -44,51 +45,90 @@ class CommentController extends AbstractController
  * @Route("/api/user/comment/create", name="comment_create", methods={"POST"})
  * @Route("/api/user/comment/edit", name="comment_edit", methods={"POST"})
  */
-    public function newAndEdit(Request $request, SerializerInterface $serializer, EventRepository $eventRepository, AppUserRepository $userRepository, CommentRepository $commentRepository, ObjectManager $om , ValidatorInterface $validator)
+    public function newAndEdit(Request $request, SerializerInterface $serializer, EventRepository $eventRepository, \Swift_Mailer $mailer,
+    AppUserRepository $userRepository, CommentRepository $commentRepository, ObjectManager $om , ValidatorInterface $validator)
     {
         $frontDatas = [];
         if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
         }
  
-        
+        $eventId    = $frontDatas["eventId"];
+        $userId     = $frontDatas['userId'];
+        $event      = $eventRepository->find($eventId);
+        $user       = $userRepository->find($userId);
+
         if (!isset($frontDatas['commentId'])) {
+
             $comment    = new Comment();
-            $eventId    = $frontDatas["eventId"];
-            $userId     = $frontDatas['userId'];
-            $event      = $eventRepository->find($eventId);
-            $user       = $userRepository->find($userId);
-     
             $comment->setAppUser($user);
             $comment->setEvent($event);
+
         } else {
+
             $id = $frontDatas['commentId'];
             $comment = $commentRepository->find($id);
         }
         $comment = $serializer->deserialize($content, Comment::class, 'json', ['object_to_populate' => $comment]);
 
-        //Validation and send status
+         $om->persist($comment);
+         $om->flush();
+
+         $eventGroup = $event->getAppGroup(); 
+         $usersGroup = $eventGroup->getAppUsers(); 
+
+         foreach ($usersGroup as $user) {
+             $alerts = $user->getSubscriptions();
         
-        try {
-            if (count($errors) > 0) {
-                $errors = $validator->validate($comment);
-                $errorsString = (string) $errors;
-            }
+             foreach ($alerts as $alert) {
+                 $alertName = "eventComment";
+                    
+
+                 //if the user has subscribed to event creation alert
+                 if ($alert->getAlert()->getName() === $alertName
+                    && $alert->getHasSubscribed() === true) {
+                     $distanceAccepted = $user->getDistanceKM();
+
+                        
+                     $userLatitude = floatval($user->getAdress()->getLatitude());
+                     $userLongitude = floatval($user->getAdress()->getLongitude());
+
+                     $eventLatitude = floatval($event->getAdress()->getLatitude()); 
+                    $eventLongitude = floatval($event->getAdress()->getLongitude());
+                        
+                     //service to calculate km differences between coordonates
+                     $distanceCalculator = new DistanceCalculator();
+                     $distanceDifference = $distanceCalculator
+                                            ->distance($userLatitude, $userLongitude, $eventLatitude, $eventLongitude, $unit = 'k');
+
+                     if ($distanceAccepted <= $distanceDifference) {
+                         $usersToMail[] = $user;
+                     }
+                 }
+             }
+
+             foreach ($usersToMail as $user) {
+                 $mail[] = $user->getEmail();
+             }
         
-            return new JsonResponse(
+             $mail[]= "anais.berton.io@gmail.com";
+
+
+             $message = (new \Swift_Message(' Nouveau post sur un évènement !'))
+                ->setFrom('AperoclockRocket@gmail.com')
+                ->setTo($mail)
+                ->setBody($this->renderView('mails/eventComment.html.twig'), 'text/html');
+        
+             $mailer->send($message);
+            
+             return new JsonResponse(
                 [
-                    'status' => 'error',
-                    $errorsString
+                    'status' => 'ok'
                 ],
-                JsonResponse::HTTP_BAD_REQUEST);
-            $om->persist($comment);
-            
-            
-            $om->flush();
-        }
-     catch (Exception $e) {
-        print($e);
-    }
+                JsonResponse::HTTP_CREATED
+            );
+     }      
+    
 }
 
     

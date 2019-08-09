@@ -22,6 +22,7 @@ import AlertColor from 'src/components/Alert';
 import DrawerMarker from 'src/components/Drawer';
 import data from 'src/data/index';
 import PrivateRoute from './PrivateRoute';
+import Logo from 'src/img/logo.svg';
 import './app.scss';
 
 
@@ -66,12 +67,14 @@ const App = () => {
           </div>
         ) : (
           // if not logged
-          <div>
+          <div id="app-home">
             <Layout>
               <Content>
-                <Route path="/" component={Home} />
-                <Route path="/login" component={LoginForm} />
-                <Route path="/inscription" component={SignIn} />
+                <img className="logo" src={Logo} alt="logo" />
+                <p>AperO'Clock vous permet de vous retrouver entre amis, entre collègues, entre famille, avec des alertes intelligentes !</p>
+                <Route path="/" exact component={Home} />
+                <Route path="/login" exact component={LoginForm} />
+                <Route path="/inscription" exact component={SignIn} />
               </Content>
             </Layout>
           </div>
