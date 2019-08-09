@@ -70,33 +70,12 @@ class GroupController extends AbstractController
         $group = $serializer->deserialize($content, AppGroup::class, 'json', ['object_to_populate' => $group]);
         $group->setCreatedBy($user);
 
-           //Validation and send status
-        
-        try {
-            if (count($errors) > 0) {
-                $errors = $validator->validate($group);
-                $errorsString = (string) $errors;
-            }
-        
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    $errorsString
-                ],
-                JsonResponse::HTTP_BAD_REQUEST);
+           
             $om->persist($group);
-            
-            
             $om->flush();
-        }
-     catch (Exception $e) {
-        print($e);
-    }
         
-
-        //ici, utiliser le validator, et si y a des erreurs, on strigify et on envoie un return json error
-        $om->persist($group);
-        $om->flush();
+    
+    
 
         return new JsonResponse(
             [
