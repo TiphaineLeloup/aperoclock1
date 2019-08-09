@@ -211,7 +211,7 @@ class GroupController extends AbstractController
     }
 
      /**
-     * @Route("/api/user/group/add", name="group_add_user", methods={"GET"})
+     * @Route("/api/user/group/add", name="group_add_user", methods={"POST"})
      */
     public function addUser(Request $request,AppUserRepository $appUserRepository, AppGroupRepository $appGroupRepository,
      SerializerInterface $serializer, ObjectManager $om)
