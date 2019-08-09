@@ -54,7 +54,7 @@ class CommentController extends AbstractController
         }
  
         $eventId    = $frontDatas["eventId"];
-        $userId     = $frontDatas['userId'];
+        $userId     = $this->getUser();
         $event      = $eventRepository->find($eventId);
         $user       = $userRepository->find($userId);
 

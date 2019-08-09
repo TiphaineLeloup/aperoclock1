@@ -1,11 +1,13 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {
-  Input,
   Button,
-  Upload,
-  Icon,
+  DatePicker,
   Form,
+  Icon,
+  Input,
+  Upload,
 } from 'antd';
 
 import './signin.scss';
@@ -13,99 +15,98 @@ import './signin.scss';
 
 // FORMULAIRE D'INSCRIPTION
 
+// eslint-disable-next-line react/prefer-stateless-function
 class SignInUnwrap extends React.Component {
   render() {
     const { TextArea } = Input;
     const {
-      getFieldDecorator, getFieldsError, getFieldError, isFieldTouched,
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
     } = this.props.form;
-
-    const formItemLayout = {
-      labelCol: { span: 4 },
-      wrapperCol: { span: 12 },
-    };
 
     return (
       <Form layout="horizontal">
 
-        <Form.Item label="Nom d'Utilisateur" {...formItemLayout}>
+        <Form.Item label="Nom d'Utilisateur">
           {getFieldDecorator('name', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
           })(
             <Input type="text" id="name" name="name" placeholder="Pseudo" />,
           )}
         </Form.Item>
-        <Form.Item label="Mot de passe" {...formItemLayout}>
+        <Form.Item label="Mot de passe">
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
           })(
-            <Input type="text" id="password" name="password" placeholder="Mot de passe" />,
+            <Input type="password" id="password" name="password" placeholder="Mot de passe" />,
           )}
         </Form.Item>
-        <Form.Item label="Confirmation Mot de passe" {...formItemLayout}>
+        <Form.Item label="Confirmez votre mot de passe">
           {getFieldDecorator('confirmPassword', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
           })(
-            <Input type="text" id="confirmPassword" name="confirmPassword" placeholder="confirmation mot de passe" />,
+            <Input type="password" id="confirmPassword" name="confirmPassword" placeholder="confirmez votre mot de passe" />,
           )}
         </Form.Item>
-        <Form.Item label="Email" {...formItemLayout}>
+        <Form.Item label="Email">
           {getFieldDecorator('email', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
           })(
-            <Input type="text" id="email" name="email" placeholder="Email" />,
+            <Input type="email" id="email" name="email" placeholder="Email" />,
           )}
         </Form.Item>
-        <Form.Item label="Date de naissance" {...formItemLayout}>
+        <Form.Item label="Date de naissance">
           {getFieldDecorator('birthDate', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
           })(
-            <Input type="text" id="birthDate" name="birthDate" placeholder="00/00/0000" />,
+            <DatePicker format="DD/MM/YYYY" />
           )}
         </Form.Item>
-        <Form.Item label="Nom Prénom" {...formItemLayout}>
+        <Form.Item label="Nom Prénom">
           <Input type="text" id="fullName" name="fullName" placeholder="Nom prénom (facultatif)" />
         </Form.Item>
-        <Form.Item label="Adresse" {...formItemLayout}>
+        <Form.Item label="Adresse">
           {getFieldDecorator('addressComplementInside', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
           })(
             <Input type="text" id="addressComplementInside" name="addressComplementInside" placeholder="Adresse" />,
           )}
         </Form.Item>
-        <Form.Item label="Complément d'adresse" {...formItemLayout}>
+        <Form.Item label="Complément d'adresse">
           <Input type="text" id="addressComplementOutside" name="fullName" placeholder="Bis, Ter, etc... (facultatif)" />
         </Form.Item>
-        <Form.Item label="Code postal" {...formItemLayout}>
+        <Form.Item label="Code postal">
           {getFieldDecorator('addressePostalCode', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
           })(
             <Input type="text" id="addressePostalCode" name="addressePostalCode" placeholder="Code postal" />,
           )}
         </Form.Item>
-        <Form.Item label="Ville" {...formItemLayout}>
+        <Form.Item label="Ville">
           {getFieldDecorator('addressCity', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
           })(
             <Input type="text" id="addressCity" name="addressCity" placeholder="Ville" />,
           )}
         </Form.Item>
-        <Form.Item label="Pays" {...formItemLayout}>
+        <Form.Item label="Pays">
           {getFieldDecorator('country', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
           })(
             <Input type="text" id="country" name="country" placeholder="Pays" />,
           )}
         </Form.Item>
-        <Form.Item label="Photo de profil" {...formItemLayout}>
+        <Form.Item label="Photo de profil">
           <Upload id="logo" name="logo" action="/upload.do" listType="picture">
             <Button id="profilePic" name="profilePic">
               <Icon type="upload" /> Depuis votre ordinateur
             </Button>
           </Upload>
         </Form.Item>
-        <Form.Item label="Biographie" {...formItemLayout}>
-          <TextArea type="text" id="userDesc" name="userDesc" placeholder="Petite biographie rigolote (facultatif)" rows={4} />
+        <Form.Item label="Biographie">
+          <TextArea type="text" id="userDesc" name="userDesc" placeholder="Quels types d'événements vous intéressent ? Qu'aimez-vous faire dans la vie ? Pain au chocolat ou chocolatine ? (facultatif)" rows={4} />
         </Form.Item>
 
         <Button name="sendForm"><NavLink to="/">Valider</NavLink></Button>

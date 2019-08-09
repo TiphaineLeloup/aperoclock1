@@ -36,7 +36,7 @@ class LoginFormUnwrap extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
+      <Form layout="horizontal" onSubmit={this.handleSubmit}>
         <Form.Item label="Nom d'utilisateur">
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
@@ -62,17 +62,20 @@ class LoginFormUnwrap extends React.Component {
             />,
           )}
         </Form.Item>
-        <Form.Item>
-          <Checkbox>Mémoriser mes informations</Checkbox>
-          <a className="login-form-forgot" href="">
-            Mot de passe oublié ?
-          </a>
+        <Form.Item className="login-actions">
           <Button type="primary" htmlType="submit" className="login-form-button">
-            <NavLink to="/">
-            Connexion
+              Connexion
+          </Button>
+          <Button type="primary">
+            <NavLink to="/inscription">
+              Inscription
             </NavLink>
           </Button>
-          Ou <NavLink to="/inscription">inscrivez-vous dès maintenant !</NavLink>
+          <div>
+            <a className="login-form-forgot" href="">
+              Mot de passe oublié ?
+            </a>
+          </div>
         </Form.Item>
       </Form>
     );

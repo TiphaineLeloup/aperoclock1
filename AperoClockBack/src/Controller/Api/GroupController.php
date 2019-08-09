@@ -23,18 +23,11 @@ use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 class GroupController extends AbstractController
 {
     /**
-     * @Route("/api/user/groups", name="user_groups", methods={"POST"})
+     * @Route("/api/user/groups", name="user_groups", methods={"GET"})
      */
     public function userGroups(Request $request, AppUserRepository $appUserRepository, SerializerInterface $serializer)
     {
-        $frontDatas = [];
-        if ( $content = $request->getContent()) {
-            $frontDatas = json_decode($content, true);
-        }
-
-        $id = $frontDatas["userId"];
-
-        $user = $appUserRepository->find($id);
+        $user = $this->getUser();
 
         $persistentCollectionGroups= $user->getAppGroups();
         
@@ -56,8 +49,8 @@ class GroupController extends AbstractController
             $frontDatas = json_decode($content, true);
         }
 
-        $id = $frontDatas['userId'];
-        $user = $appUserRepository->find($id);
+        
+        $user = $this->getUser();
 
         if (!isset($frontDatas['groupId'])){
             $group = new AppGroup();
@@ -70,33 +63,12 @@ class GroupController extends AbstractController
         $group = $serializer->deserialize($content, AppGroup::class, 'json', ['object_to_populate' => $group]);
         $group->setCreatedBy($user);
 
-           //Validation and send status
-        
-        try {
-            if (count($errors) > 0) {
-                $errors = $validator->validate($group);
-                $errorsString = (string) $errors;
-            }
-        
-            return new JsonResponse(
-                [
-                    'status' => 'error',
-                    $errorsString
-                ],
-                JsonResponse::HTTP_BAD_REQUEST);
+           
             $om->persist($group);
-            
-            
             $om->flush();
-        }
-     catch (Exception $e) {
-        print($e);
-    }
         
-
-        //ici, utiliser le validator, et si y a des erreurs, on strigify et on envoie un return json error
-        $om->persist($group);
-        $om->flush();
+    
+    
 
         return new JsonResponse(
             [
@@ -139,25 +111,20 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @Route("/api/user/groups/created", name="user_groups_created", methods={"POST"})
+     * @Route("/api/user/groups/created", name="user_groups_created", methods={"GET"})
      */
     public function eventsCreated(Request $request, AppGroupRepository $appGroupRepository, SerializerInterface $serializer)
     {
-        $frontDatas = [];
 
-        if ($content = $request->getContent()){
-            $frontDatas = json_decode($content, true);
-        }
-
-        if ($userId = $frontDatas['userId'])
+        if ($user = $this->getUser())
         {
-                $groupsCreated = $appGroupRepository->findByCreatedBy($userId);
+                $groupsCreated = $appGroupRepository->findByCreatedBy($user);
 
                 $jsonContent = $serializer->serialize($groupsCreated, 'json', ['ignored_attributes' => ['appUsers', 'createdBy', 'events']]);
 
                 return new JsonResponse($jsonContent);
 
-        }else if(!$userId){
+        }else{
 
             return new JsonResponse(['status' => 'error'], JsonResponse::HTTP_BAD_REQUEST);
         }
@@ -204,7 +171,6 @@ class GroupController extends AbstractController
 
         $groupEvents = $group->getEvents();
 
-        // dd($groupEvents);
 
         $jsonContent = $serializer->serialize($groupEvents, 'json', ['ignored_attributes' => ['appUsers', 'createdBy', 'appGroup', 'categories', 'adress']]);
 
@@ -212,7 +178,7 @@ class GroupController extends AbstractController
     }
 
      /**
-     * @Route("/api/user/group/add", name="group_add_user", methods={"GET"})
+     * @Route("/api/user/group/add", name="group_add_user", methods={"POST"})
      */
     public function addUser(Request $request,AppUserRepository $appUserRepository, AppGroupRepository $appGroupRepository,
      SerializerInterface $serializer, ObjectManager $om)
@@ -223,8 +189,8 @@ class GroupController extends AbstractController
             $frontDatas = json_decode($content, true);
         }
 
-        $id = $frontDatas['userId'];
-        $user = $appUserRepository->find($id);
+        $user = $this->getUser();
+        
         $id  = $frontDatas['groupId'];
         $group = $appGroupRepository->find($id);
 
@@ -232,6 +198,11 @@ class GroupController extends AbstractController
 
         $om->persist($group);
         $om->flush();
+
+        return new JsonResponse([
+            'status' => 'ok'
+        ],
+        JsonResponse::HTTP_OK);
     }
 
 

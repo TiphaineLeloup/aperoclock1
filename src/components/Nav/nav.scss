@@ -2,13 +2,18 @@
 
 .ant-layout-sider, .ant-menu {
   background-color: $lightergreen;
-  font-family: Stratum;
+  font-family: "Stratum", 'Courier New', Courier, monospace;
 }
 
-.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
-.ant-menu:active,
-.ant-menu-item:active {
-  background-color : transparent;
+nav {
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
+  .ant-menu:active,
+  .ant-menu-item:active {
+    background-color : transparent;
+  }
+  .ant-menu-inline li.ant-menu-item::after {
+    display : none;
+  }
 }
 
 .ant-menu-inline .ant-menu-selected::after, .ant-menu-inline .ant-menu-item-selected::after {
@@ -39,10 +44,12 @@ nav .ant-menu-inline li.ant-menu-item {
     padding-left: 0.75em;
     transition: border-width 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
     
-    &:hover:not(:active){
-      border-bottom-width: 8px;
+    &:hover, &:focus{
       color: $yellow;
       cursor: pointer;
+    }
+    &:hover:not(:active), &:focus:not(:active) {
+      border-bottom-width: 8px;
     }
   }
 }

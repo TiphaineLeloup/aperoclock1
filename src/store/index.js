@@ -13,6 +13,7 @@ import authentication from './authentication.reducer';
 import comments from './comment.reducer';
 import events from './event.reducer';
 import guests from './guest.reducer';
+import groups from './group.reducer';
 import logMiddleware from './logMiddleware';
 
 // == Store
@@ -27,6 +28,7 @@ const reducer = combineReducers({
   authentication,
   comments,
   events,
+  groups,
   guests,
   reducerBase,
 });
