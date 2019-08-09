@@ -51,7 +51,7 @@ class UserController extends AbstractController
      *@Route("/api/user/infos/edit", name="user_infos_edit", methods={"POST"})
      * @Route("/api/user/signup", name="signup", methods={"POST"})
      */
-    public function signUp(Request $request, AlertRepository $alertRepository, AppUserRepository $appUserRepository, ValidatorInterface $validator, SerializerInterface $serializer, ObjectManager $om, UserPasswordEncoderInterface $encoder)
+    public function signUp(Request $request, AlertRepository $alertRepository, AppGroupRepository $appGroupRepository, ValidatorInterface $validator, SerializerInterface $serializer, ObjectManager $om, UserPasswordEncoderInterface $encoder)
     {
         $frontDatas = [];
 
@@ -93,12 +93,19 @@ class UserController extends AbstractController
             $alerts = $alertRepository->findAll();
             
             foreach ($alerts as $alert){
+
                 $subscription = new Subscription();
                 $subscription->setAlert($alert);
                 $subscription->setAppUser($user);
                 $om->persist($subscription);
+                
+                $id = $frontDatas['groupId'];
+                $group = $appGroupRepository->find($id);
+                $group->addAppUser($user);
             }
        }
+
+       
 
        $om->persist($user);
        $om->flush();

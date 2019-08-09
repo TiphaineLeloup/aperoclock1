@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use Exception;
 use App\Entity\Event;
+use App\Entity\Guest;
 use App\Entity\Adress;
 use App\Form\EventType;
 use App\Utils\DistanceCalculator;
@@ -91,7 +92,7 @@ class EventController extends AbstractController
         
             $om->persist($event);
             
-            $om->flush();
+            
         
      
 
@@ -101,6 +102,17 @@ class EventController extends AbstractController
         
 
         foreach ($usersOfGroup as $user){
+            
+           if (!isset($frontDatas['eventId'])){
+
+                $invitedUser = new Guest();
+                $invitedUser->setEvent($event);
+                $invitedUser->setAppUser($user);
+                $om->persist($invitedUser);
+           }
+            
+            $om->flush();
+
             $alerts = $user->getSubscriptions();
         
             foreach ($alerts as $alert){
@@ -140,7 +152,7 @@ class EventController extends AbstractController
         foreach($usersToMail as $user){
             $mail[] = $user->getEmail();   
         }
-                
+         
 
         //determines if the mail is about creation or edition
         if (isset($frontDatas['eventId'])){
@@ -151,7 +163,7 @@ class EventController extends AbstractController
 
             
 
-        $message = (new \Swift_Message('IL y a du nouveau sur un évènement !'))
+        $message = (new \Swift_Message('IL y a du nouveau dans un de vos groupes !'))
             ->setFrom('AperoclockRocket@gmail.com')
             ->setTo($mail)
             ->setBody($view, 'text/html');
