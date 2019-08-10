@@ -117,6 +117,43 @@ class UserController extends AbstractController
            
                
     }
+
+     /**
+     * @Route("/api/invite/website", name="invite_website", methods={"POST"})
+     */
+    public function inviteWebsite( \Swift_Mailer $mailer, Request $request)
+    {
+        $frontDatas = [];
+        if ($content = $request->getContent()) {
+            $frontDatas = json_decode($content, true);
+           }
+
+         if (isset($frontDatas['email']) && ($frontDatas['groupToken'])){
+             $email = $frontDatas['email'];
+            $groupToken = $frontDatas['groupToken'];
+
+         }  
+
+         $userName = $this->getUser()->getUsername();
+
+
+        $message = (new \Swift_Message('Invitation à rejoindre un groupe ! '))
+        ->setFrom('AperoclockRocket@gmail.com')
+        ->setTo($email)
+        ->setBody($this->renderView('mails/inviteWebsite.html.twig', 
+                                [
+                                    'groupToken' => $groupToken,
+                                    'username' => $userName
+                                ]), 'text/html');
+
+        $mailer->send($message);
+
+        return new JsonResponse([
+            'statut' => 'ok'
+        ],
+        JsonResponse::HTTP_OK);
+
+    }
 }
 
      

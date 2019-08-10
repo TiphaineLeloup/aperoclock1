@@ -26,6 +26,7 @@ class Guest
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $event;
+    
     public function __construct()
     {
         $this->choice = null;

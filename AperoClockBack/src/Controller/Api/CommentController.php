@@ -111,7 +111,6 @@ class CommentController extends AbstractController
                  $mail[] = $user->getEmail();
              }
         
-             $mail[]= "anais.berton.io@gmail.com";
 
 
              $message = (new \Swift_Message(' Nouveau post sur un évènement !'))
