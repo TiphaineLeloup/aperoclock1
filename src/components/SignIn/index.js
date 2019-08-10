@@ -109,7 +109,7 @@ class SignInUnwrap extends React.Component {
           <TextArea type="text" id="userDesc" name="userDesc" placeholder="Quels types d'événements vous intéressent ? Qu'aimez-vous faire dans la vie ? Pain au chocolat ou chocolatine ? (facultatif)" rows={4} />
         </Form.Item>
 
-        <Button name="sendForm"><NavLink to="/">Valider</NavLink></Button>
+        <Button name="sendForm" type="primary"><NavLink to="/">Valider</NavLink></Button>
       </Form>
     );
   }

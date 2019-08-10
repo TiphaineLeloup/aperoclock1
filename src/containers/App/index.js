@@ -11,9 +11,12 @@ import App from 'src/components/App';
  *  - ownProps : les props passées au container
  * Pas de data à transmettre ? const mapStateToProps = null;
  */
-const mapStateToProps = state => ({
-  loading: state.loading,
-});
+const mapStateToProps = (state) => {
+  const { loggedIn } = state.authentication;
+  return {
+    loggedIn,
+  };
+};
 
 /* === Actions ===
  * - mapDispatchToProps retroune un objet de props pour le composant de présentation

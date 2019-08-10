@@ -6,7 +6,7 @@ import MyEvent from 'src/components/MyEvent';
 
 
 const mapStateToProps = state => ({
-  recipes: state.recipes,
+  myEvent: state.myEvent,
 });
 
 const mapDispatchToProps = {};

@@ -6,7 +6,7 @@ import GroupForm from 'src/components/GroupForm';
 
 
 const mapStateToProps = state => ({
-  recipes: state.recipes,
+  AddGroup: state.AddGroup,
 });
 
 const mapDispatchToProps = {};

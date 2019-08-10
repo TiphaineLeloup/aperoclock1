@@ -18,8 +18,72 @@ function getAll() {
       });
 }
 
+function editEvent() {
+  const requestOptions = {
+    method: 'POST',
+    headers: authHeader(),
+  };
+  const { handleResponse } = handleResponseService;
+  return fetch(`${process.env.API_URL}/user/events/edit`, requestOptions)
+    // eslint-disable-next-line no-use-before-define
+    .then(handleResponse)
+    .then(events => JSON.parse(events),
+      (error) => {
+        console.log(process.env.API_URL);
+      });
+}
+
+function createEvent() {
+  const requestOptions = {
+    method: 'POST',
+    headers: authHeader(),
+  };
+  const { handleResponse } = handleResponseService;
+  return fetch(`${process.env.API_URL}/user/events/create`, requestOptions)
+    // eslint-disable-next-line no-use-before-define
+    .then(handleResponse)
+    .then(events => JSON.parse(events),
+      (error) => {
+        console.log(process.env.API_URL);
+      });
+}
+
+function deleteEvent() {
+  const requestOptions = {
+    method: 'DELETE',
+    headers: authHeader(),
+  };
+  const { handleResponse } = handleResponseService;
+  return fetch(`${process.env.API_URL}/user/events/delete`, requestOptions)
+    // eslint-disable-next-line no-use-before-define
+    .then(handleResponse)
+    .then(events => JSON.parse(events),
+      (error) => {
+        console.log(process.env.API_URL);
+      });
+}
+
+function infoEvent() {
+  const requestOptions = {
+    method: 'POST',
+    headers: authHeader(),
+  };
+  const { handleResponse } = handleResponseService;
+  return fetch(`${process.env.API_URL}/user/events/infos`, requestOptions)
+    // eslint-disable-next-line no-use-before-define
+    .then(handleResponse)
+    .then(events => JSON.parse(events),
+      (error) => {
+        console.log(process.env.API_URL);
+      });
+}
+
 const eventService = {
   getAll,
+  editEvent,
+  createEvent,
+  deleteEvent,
+  infoEvent,
 };
 
 export default eventService;

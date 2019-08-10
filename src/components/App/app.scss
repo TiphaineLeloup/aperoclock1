@@ -25,8 +25,46 @@
 }
 
 // OVERRIDE AND CUSTOMIZATION OF ANT DESIGN
+a {
+  color : $lightorange;
+  &:hover {
+    color : $orange;
+  }
+  &:focus {
+    color : $darkorange;
+  }
+}
 .ant-btn {
   border-radius : 1em;
+  &-primary {
+    background-color: $lightergreen;
+    border: $lightergreen;
+    border-bottom : 3px solid $green;
+    color : white!important;
+    &:focus {
+      background-color : $lightgreen;
+      border-color : $darkgreen!important;
+      color : darken(white, 10%);
+    }
+    &:hover {
+      background-color: $green;
+      border-color : $darkgreen!important;
+      color : darken(white, 20%);
+    }
+  }
+}
+
+.ant-input-affix-wrapper {
+  .ant-input {
+    &:not(:first-child){
+      &:focus {
+        box-shadow : 0 0 0 2px $lightergreen;
+      }
+      &:hover {
+        border-color : $lightgreen;
+      }
+    }
+  }
 }
 
 .ant-switch {
@@ -40,7 +78,6 @@
 
   // NOT LOGGED IN
   &-home {
-    background-color : white;
     height : 100%;
     min-height : 100vh;
     text-align : center;
@@ -51,7 +88,7 @@
       content : '.';
       height : 100vh;
       left: 0;
-      opacity : 0.5;
+      mix-blend-mode: hard-light;
       position : fixed;
       top : 0;
       width : 100%;
