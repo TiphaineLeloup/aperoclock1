@@ -2,22 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // == Import : local
-import Header from 'src/components/Header';
 import './header.scss';
 
-const HeaderTitle = () => (
-  <div className="header">
-    <Header
-    name={nomdelaprops}
-    />
-    {/* <h1 className="header-title">Apero'Clock</h1> */}
-  </div>
-);
+// eslint-disable-next-line react/prefer-stateless-function
+class Header extends React.Component {
+  render() {
+    const { baseTitle, title } = this.props;
+    return (
+      <div className="header">
+        <h1 className="header-title">{ title } { title !== '' ? ' - ' : ''} { baseTitle } </h1>
+      </div>
+    );
+  }
+}
 
-Header.propTypes = {
-  title: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }).isRequired,
-};
 
-export default HeaderTitle;
+export default Header;

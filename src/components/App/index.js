@@ -12,8 +12,8 @@ import Dashboard from 'src/containers/Dashboard';
 // import DrawerMarker from 'src/components/Drawer';
 import Events from 'src/components/Events';
 import Footer from 'src/components/Footer';
-import Groups from 'src/components/Groups';
-import Header from 'src/components/Header';
+import Groups from 'src/containers/Groups';
+import Header from 'src/containers/Header';
 import Home from 'src/components/Home';
 import LoginForm from 'src/containers/LoginForm';
 import Logo from 'src/img/logo.svg';
@@ -57,7 +57,7 @@ class App extends React.Component {
                     <Route path="/" exact component={Dashboard} />
                     <Route path="/map" exact component={SimpleMap} />
                     <Route path="/groupes" exact component={Groups} />
-                    <Route path="/evenements" exact component={Events} />
+                    {/* <Route path="/evenements" exact component={Events} /> */}
                     <Route path="/profil" exact component={Profile} />
                   </Content>
                   <AntdFooter className="footer">

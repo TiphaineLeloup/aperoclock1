@@ -42,7 +42,7 @@ class ListGroups extends React.Component {
 
 ListGroups.propTypes = {
   dispatchGetAll: PropTypes.func.isRequired,
-  groups: PropTypes.array,
+  groups: PropTypes.object,
 };
 
 ListGroups.defaultProps = {
