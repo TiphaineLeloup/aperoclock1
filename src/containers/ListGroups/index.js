@@ -2,14 +2,20 @@
 import { connect } from 'react-redux';
 
 // == Import : local
+import groupActions from 'src/_actions/group.actions';
 import ListGroups from 'src/components/ListGroups';
 
 
 const mapStateToProps = state => ({
-  recipes: state.recipes,
+  events: state.groups,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch => ({
+  dispatchGetAll: () => {
+    const result = groupActions.getAllGroups();
+    result(dispatch);
+  },
+});
 
 // Container
 const ListGroupsContainer = connect(
