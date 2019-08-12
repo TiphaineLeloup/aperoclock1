@@ -15,35 +15,35 @@ const Contact = () => (
     <Card
       hoverable
       style={{ width: 240 }}
-      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+      cover={<img alt="product-owner" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
     >
       <Meta title="Rime Z. - Product owner" description="sarahconnor@gmail.com" />
     </Card>
     <Card
       hoverable
       style={{ width: 240 }}
-      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+      cover={<img alt="project-manager" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
     >
       <Meta title="Tiphaine L. - Project manager" description="sarahconnor@gmail.com" />
     </Card>
     <Card
       hoverable
       style={{ width: 240 }}
-      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+      cover={<img alt="dev-front" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
     >
       <Meta title="Gabriel AL. - Lead dev Front" description="sarahconnor@gmail.com" />
     </Card>
     <Card
       hoverable
       style={{ width: 240 }}
-      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+      cover={<img alt="dev-back" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
     >
       <Meta title="Anaïs B. - Lead dev Back" description="sarahconnor@gmail.com" />
     </Card>
     <Card
       hoverable
       style={{ width: 240 }}
-      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+      cover={<img alt="scrum-master" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
     >
       <Meta title="Kevin B. - Scrum Master" description="sarahconnor@gmail.com" />
     </Card>
