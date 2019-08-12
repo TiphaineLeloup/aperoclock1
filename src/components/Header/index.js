@@ -1,11 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
+// == Import : local
+import Header from 'src/components/Header';
 import './header.scss';
 
-const Header = () => (
+const HeaderTitle = () => (
   <div className="header">
-    <h1 className="header-title">Apero'Clock</h1>
+    <Header
+    name={nomdelaprops}
+    />
+    {/* <h1 className="header-title">Apero'Clock</h1> */}
   </div>
 );
 
-export default Header;
+Header.propTypes = {
+  title: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default HeaderTitle;
