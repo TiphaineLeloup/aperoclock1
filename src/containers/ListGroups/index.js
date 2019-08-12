@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   dispatchGetAll: () => {
-    const result = groupActions.getAllGroups();
+    const result = groupActions.getAllgroups();
     result(dispatch);
   },
 });

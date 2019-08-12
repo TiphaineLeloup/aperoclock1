@@ -4,16 +4,12 @@ import { connect } from 'react-redux';
 // == Import : local
 import Contact from 'src/components/Contact';
 
-const mapStateToProps = (state, ownProps) => ({
-  message: state.message,
+
+const mapStateToProps = state => ({
+  contact: state.contact,
 });
 
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  doSomething: () => {
-    dispatch(doSomething('Coucou'));
-  },
-});
+const mapDispatchToProps = {};
 
 // Container
 const ContactContainer = connect(
