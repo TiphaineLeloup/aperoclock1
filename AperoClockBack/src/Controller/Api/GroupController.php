@@ -31,8 +31,22 @@ class GroupController extends AbstractController
 
         $persistentCollectionGroups= $user->getAppGroups();
         
+        $encoder = new JsonEncoder();
+        $defaultContext = [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                return $object->getName();
+            },
+        ];
 
-        $jsonContent = $serializer->serialize($persistentCollectionGroups, 'json', ['ignored_attributes' => ['appUsers', 'createdBy', 'events']]);
+        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
+
+        $serializer = new Serializer([$normalizer], [$encoder]);
+
+        $jsonContent = $serializer->serialize(
+            $persistentCollectionGroups,
+            'json',
+            ['ignored_attributes' => ['appUsers', 'createdBy']]
+        );
 
         return new JsonResponse($jsonContent); 
          
