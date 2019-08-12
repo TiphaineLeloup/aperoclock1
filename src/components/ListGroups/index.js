@@ -18,6 +18,7 @@ class ListGroups extends React.Component {
     return (
       <div id="listGroups">
         {
+          /* PENSER À LA CLEF */
           groups.map(group => (
             <Card
               extra={<a href="#">Voir le groupe</a>}

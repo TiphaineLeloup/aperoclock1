@@ -3,13 +3,28 @@ import authHeader from 'src/_helpers/auth-header';
 import handleResponseService from './handleresponse.service';
 
 
-function getAll() {
+function alertList() {
   const requestOptions = {
     method: 'POST',
     headers: authHeader(),
   };
   const { handleResponse } = handleResponseService;
-  return fetch(`${process.env.API_URL}/user/alerts`, requestOptions)
+  return fetch(`${process.env.API_URL}/user/alerts/list`, requestOptions)
+    // eslint-disable-next-line no-use-before-define
+    .then(handleResponse)
+    .then(alerts => JSON.parse(alerts),
+      (error) => {
+        console.log(process.env.API_URL);
+      });
+}
+
+function alertEdit() {
+  const requestOptions = {
+    method: 'POST',
+    headers: authHeader(),
+  };
+  const { handleResponse } = handleResponseService;
+  return fetch(`${process.env.API_URL}/user/alerts/edit`, requestOptions)
     // eslint-disable-next-line no-use-before-define
     .then(handleResponse)
     .then(alerts => JSON.parse(alerts),
@@ -19,7 +34,8 @@ function getAll() {
 }
 
 const alertService = {
-  getAll,
+  alertList,
+  alertEdit,
 };
 
 export default alertService;

@@ -6,7 +6,7 @@ import Dashboard from 'src/components/Dashboard';
 
 
 const mapStateToProps = state => ({
-  recipes: state.recipes,
+  dashboard: state.dashboard,
 });
 
 const mapDispatchToProps = {};

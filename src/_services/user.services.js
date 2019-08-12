@@ -49,9 +49,73 @@ function login(username, password) {
     });
 }
 
+function editUser() {
+  const requestOptions = {
+    method: 'POST',
+    headers: authHeader(),
+  };
+  const { handleResponse } = handleResponseService;
+  return fetch(`${process.env.API_URL}/user/users/edit`, requestOptions)
+    // eslint-disable-next-line no-use-before-define
+    .then(handleResponse)
+    .then(events => JSON.parse(events),
+      (error) => {
+        console.log(process.env.API_URL);
+      });
+}
+
+function createUser() {
+  const requestOptions = {
+    method: 'POST',
+    headers: authHeader(),
+  };
+  const { handleResponse } = handleResponseService;
+  return fetch(`${process.env.API_URL}/user/users/create`, requestOptions)
+    // eslint-disable-next-line no-use-before-define
+    .then(handleResponse)
+    .then(events => JSON.parse(events),
+      (error) => {
+        console.log(process.env.API_URL);
+      });
+}
+
+function deleteUser() {
+  const requestOptions = {
+    method: 'DELETE',
+    headers: authHeader(),
+  };
+  const { handleResponse } = handleResponseService;
+  return fetch(`${process.env.API_URL}/user/users/delete`, requestOptions)
+    // eslint-disable-next-line no-use-before-define
+    .then(handleResponse)
+    .then(events => JSON.parse(events),
+      (error) => {
+        console.log(process.env.API_URL);
+      });
+}
+
+function infoUser() {
+  const requestOptions = {
+    method: 'POST',
+    headers: authHeader(),
+  };
+  const { handleResponse } = handleResponseService;
+  return fetch(`${process.env.API_URL}/user/users/infos`, requestOptions)
+    // eslint-disable-next-line no-use-before-define
+    .then(handleResponse)
+    .then(events => JSON.parse(events),
+      (error) => {
+        console.log(process.env.API_URL);
+      });
+}
+
 const userService = {
   login,
   logout,
+  editUser,
+  createUser,
+  deleteUser,
+  infoUser,
 };
 
 export default userService;

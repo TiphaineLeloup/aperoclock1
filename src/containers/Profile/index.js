@@ -3,13 +3,20 @@ import { connect } from 'react-redux';
 
 // == Import : local
 import Profile from 'src/components/Profile';
+import profileActions from 'src/_actions/group.actions';
 
 
 const mapStateToProps = state => ({
-  recipes: state.recipes,
+  profile: state.profile,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch => ({
+  dispatchGetAll: () => {
+    const result = profileActions.getAllGuests();
+    result(dispatch);
+  },
+});
+
 
 // Container
 const ProfileContainer = connect(

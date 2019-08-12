@@ -7,7 +7,7 @@ import ListGroups from 'src/components/ListGroups';
 
 
 const mapStateToProps = state => ({
-  events: state.groups,
+  groups: state.groups,
 });
 
 const mapDispatchToProps = dispatch => ({

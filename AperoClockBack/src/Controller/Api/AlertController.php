@@ -19,19 +19,12 @@ class AlertController extends AbstractController
 {
     /**
      *
-     * @Route("/api/user/alerts/list", name="user_alerts_list", methods={"POST"})
+     * @Route("/api/user/alerts/list", name="user_alerts_list", methods={"GET"})
      */
     public function list(Request $request, SubscriptionRepository $subscriptionRepository, SerializerInterface $serializer)
     {
-        $frontDatas = [];
-        if ($content = $request->getContent()) {
-            $frontDatas = json_decode($content, true);
-        }
-
-        $userId = $frontDatas["userId"];
-
-        //getting sub to alerts for a user, regarding his userID
-        $subscriptionsDatas = $subscriptionRepository->findByUserId($userId);
+       
+        $subscriptionsDatas = $subscriptionRepository->findByUserId($this->getUser());
 
         $subscriptionsDatas = $serializer->serialize($subscriptionsDatas, 'json');
 
@@ -51,7 +44,7 @@ class AlertController extends AbstractController
             $frontDatas = json_decode($content, true);
         }
        
-        $userId = $frontDatas['userId'];
+        $userId = $this->getUser();
         $alertId = $frontDatas['alertId'];
 
         $subscription = $subscriptionRepository->findByUserAndAlert($userId, $alertId);
@@ -66,27 +59,14 @@ class AlertController extends AbstractController
 
         $subscription->setHasSubscribed($choice);
 
-        //Validation and send status
-        
-        try {
-            if (count($errors) > 0) {
-                $errors = $validator->validate($alert);
-                $errorsString = (string) $errors;
-            }
-    
-            return new JsonResponse(
-            [
-                'status' => 'error',
-                $errorsString
-            ],
-            JsonResponse::HTTP_BAD_REQUEST
-        );
-            $om->persist($alert);
-        
-        
+       
+            $om->persist($subscription);
             $om->flush();
-        } catch (Exception $e) {
-            print($e);
-        }
+
+        return new JsonResponse([
+            'status' => 'ok'
+        ],
+        JsonResponse::HTTP_OK);
+        
     }
 }

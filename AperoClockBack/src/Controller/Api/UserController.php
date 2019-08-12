@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use Exception;
+use App\Entity\Adress;
 use App\Entity\AppUser;
 use App\Entity\Subscription;
 use App\Repository\AlertRepository;
@@ -28,14 +29,16 @@ class UserController extends AbstractController
 
        /**
      *
-     * @Route("/api/user/infos/list/{id}", name="user_infos_list", methods={"GET"})
+     * @Route("/api/user/infos/list/", name="user_infos_list", methods={"GET"})
      */
 
-    public function list(AppUserRepository $userRepository, SerializerInterface $serializer, AppUser $user)
+    public function list(SerializerInterface $serializer)
     {
-         $userInfos = $serializer->serialize($user, 'json', [
+         $userInfos = $serializer->serialize($this->getUser(), 'json', [
             'ignored_attributes' => [
-                'appGroups', 'events'
+                'appGroups',
+                 'events',
+                 'subscriptions'
                 ]
             ]);
         return new JsonResponse($userInfos);
@@ -48,43 +51,108 @@ class UserController extends AbstractController
      *@Route("/api/user/infos/edit", name="user_infos_edit", methods={"POST"})
      * @Route("/api/user/signup", name="signup", methods={"POST"})
      */
-    public function signUp(Request $request, AlertRepository $alertRepository, AppUserRepository $appUserRepository, ValidatorInterface $validator, SerializerInterface $serializer, ObjectManager $om, UserPasswordEncoderInterface $encoder)
+    public function signUp(Request $request, AlertRepository $alertRepository, AppGroupRepository $appGroupRepository, ValidatorInterface $validator, SerializerInterface $serializer, ObjectManager $om, UserPasswordEncoderInterface $encoder)
+    {
+        $frontDatas = [];
+
+        if ($content = $request->getContent()) {
+            $frontDatas = json_decode($content, true);
+        }
+        
+        $adress = new Adress();
+        $adress = $serializer->deserialize($content, Adress::class, 'json', [
+            'object_to_populate' => $adress
+            ]);
+        
+        $om->persist($adress);
+
+        
+        if ($this->getUser()){
+            $user = $this->getUser(); 
+
+        }else{
+             $user = new AppUser();
+        }
+       
+        $user = $serializer->deserialize($content, AppUser::class, 'json', [
+            'object_to_populate' => $adress,
+            
+        ]);
+       
+        $user->setAdress($adress);
+
+       
+        $encodedPassword = $encoder->encodePassword(
+            $user, 
+            $user->getPassword() 
+       );
+       $user->setPassword($encodedPassword);
+
+       //if new User, he suscribes all mail alerts
+       if (!$this->getUser()){
+            $alerts = $alertRepository->findAll();
+            
+            foreach ($alerts as $alert){
+
+                $subscription = new Subscription();
+                $subscription->setAlert($alert);
+                $subscription->setAppUser($user);
+                $om->persist($subscription);
+                
+                $id = $frontDatas['groupId'];
+                $group = $appGroupRepository->find($id);
+                $group->addAppUser($user);
+            }
+       }
+
+       
+
+       $om->persist($user);
+       $om->flush();
+
+       return new JsonResponse(
+        [
+        'status' => 'ok',
+        ]);
+           
+               
+    }
+
+     /**
+     * @Route("/api/invite/website", name="invite_website", methods={"POST"})
+     */
+    public function inviteWebsite( \Swift_Mailer $mailer, Request $request)
     {
         $frontDatas = [];
         if ($content = $request->getContent()) {
             $frontDatas = json_decode($content, true);
            }
-        if (isset($frontDatas['userId'])) {
-            $id     = $frontDatas['userId'];
-            $user      = $userRepository->find($id);
-            $user = $serializer->deserialize($content, AppUser::class, 'json', ['object_to_populate' => $user]);
-            
 
-            //Validation and send status
-            try {
-                 if (count($errors) > 0) {
-                 $errors = $validator->validate($user);
-                 $errorsString = (string) $errors;}
-        
-                 return new JsonResponse( 
-                 [
-                    'status' => 'error',
-                    $errorsString
-                 ],
-                 JsonResponse::HTTP_BAD_REQUEST);
-                 $om->persist($user);
-                 $om->flush();
-                } catch (Exception $e) {
-                 print($e);}
+         if (isset($frontDatas['email']) && ($frontDatas['groupToken'])){
+             $email = $frontDatas['email'];
+            $groupToken = $frontDatas['groupToken'];
 
-        }
-               return new JsonResponse(
-                [
-                'status' => 'ok',
-                ],
-                JsonResponse::HTTP_OK);
-               
-               
+         }  
+
+         $userName = $this->getUser()->getUsername();
+
+
+        $message = (new \Swift_Message('Invitation à rejoindre un groupe ! '))
+        ->setFrom('AperoclockRocket@gmail.com')
+        ->setTo($email)
+        ->setBody($this->renderView('mails/inviteWebsite.html.twig', 
+                                [
+                                    'groupToken' => $groupToken,
+                                    'username' => $userName
+                                ]), 'text/html');
+
+        $mailer->send($message);
+
+        return new JsonResponse([
+            'statut' => 'ok'
+        ],
+        JsonResponse::HTTP_OK);
+
     }
 }
 
