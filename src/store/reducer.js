@@ -24,6 +24,7 @@ const reducer = (state = initialState, action = {}) => {
         actualGroup: action.newActualGroup,
       };
     case globalConstants.CHANGE_TITLE:
+      document.title = action.newTitle + (action.newTitle !== '' ? ' - ' : '') + state.baseTitle;
       return {
         ...state,
         title: action.newTitle,

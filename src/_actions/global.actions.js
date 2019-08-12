@@ -10,7 +10,7 @@ function changeActualEvent(newActualEvent) {
 
 function changeActualGroup(newActualGroup) {
   return {
-    type: globalConstants.CHANGE_ActualGroup,
+    type: globalConstants.CHANGE_ACTUAL_GROUP,
     newActualGroup,
   };
 }

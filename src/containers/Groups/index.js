@@ -6,6 +6,8 @@ import Groups from 'src/components/Groups';
 import globalActions from 'src/_actions/global.actions';
 
 const mapStateToProps = state => ({
+  actualGroup: state.reducerBase.actualGroup,
+  groups: state.groups.groups,
   title: state.reducerBase.title,
 });
 
