@@ -13,40 +13,40 @@ const { Meta } = Card;
 const Contact = () => (
   <div id="contact">
     <Card
-    hoverable
-    style={{ width: 240 }}
-    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-  >
-    <Meta title="Sarah Connor" description="sarahconnor@gmail.com" />
-  </Card>
-  <Card
-    hoverable
-    style={{ width: 240 }}
-    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-  >
-    <Meta title="Sarah Connor" description="sarahconnor@gmail.com" />
-  </Card>
-  <Card
-    hoverable
-    style={{ width: 240 }}
-    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-  >
-    <Meta title="Sarah Connor" description="sarahconnor@gmail.com" />
-  </Card>
-  <Card
-    hoverable
-    style={{ width: 240 }}
-    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-  >
-    <Meta title="Sarah Connor" description="sarahconnor@gmail.com" />
-  </Card>
-  <Card
-    hoverable
-    style={{ width: 240 }}
-    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-  >
-    <Meta title="Sarah Connor" description="sarahconnor@gmail.com" />
-  </Card>
+      hoverable
+      style={{ width: 240 }}
+      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+    >
+      <Meta title="Sarah Connor" description="sarahconnor@gmail.com" />
+    </Card>
+    <Card
+      hoverable
+      style={{ width: 240 }}
+      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+    >
+      <Meta title="Sarah Connor" description="sarahconnor@gmail.com" />
+    </Card>
+    <Card
+      hoverable
+      style={{ width: 240 }}
+      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+    >
+      <Meta title="Sarah Connor" description="sarahconnor@gmail.com" />
+    </Card>
+    <Card
+      hoverable
+      style={{ width: 240 }}
+      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+    >
+      <Meta title="Sarah Connor" description="sarahconnor@gmail.com" />
+    </Card>
+    <Card
+      hoverable
+      style={{ width: 240 }}
+      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+    >
+      <Meta title="Sarah Connor" description="sarahconnor@gmail.com" />
+    </Card>
   </div>
 );
 

@@ -28,6 +28,7 @@ class DrawerMarker extends React.Component {
           placement="right"
           closable={false}
           onClose={this.onClose}
+          // eslint-disable-next-line react/destructuring-assignment
           visible={this.state.visible}
         >
           <p>Anniversaire de jacky</p>

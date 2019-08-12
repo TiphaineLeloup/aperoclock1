@@ -22,7 +22,6 @@ class SignInUnwrap extends React.Component {
     const {
       getFieldDecorator,
       getFieldsError,
-      getFieldError,
       isFieldTouched,
     } = this.props.form;
 
