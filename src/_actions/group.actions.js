@@ -1,5 +1,5 @@
-import groupConstants from 'src/constants/eventConstants';
-import groupService from 'src/_services/event.services';
+import groupConstants from 'src/constants/groupConstants';
+import groupService from 'src/_services/group.services';
 
 function getAllgroups() {
   function success(groups) {

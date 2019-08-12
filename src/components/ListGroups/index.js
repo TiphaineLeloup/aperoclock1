@@ -9,12 +9,10 @@ class ListGroups extends React.Component {
   componentDidMount() {
     const { dispatchGetAll } = this.props;
     dispatchGetAll();
-    const { groups } = this.props;
-    console.log(groups);
   }
 
   render() {
-    const { groups } = this.props;
+    const { groups } = this.props.groups;
     return (
       <div id="listGroups">
         {
@@ -22,15 +20,16 @@ class ListGroups extends React.Component {
           groups && groups.length > 0
           && groups.map(group => (
             <Card
+              actions={
+                [<a href="#">Voir tous les événements du groupe</a>]
+              }
               extra={<a href="#">Voir le groupe</a>}
+              key={group.id}
               title={group.name}
             >
               <List
-                dataSource={groups}
-                footer={
-                  <a href="#">Voir tous les événements du groupe</a>
-                }
-                renderItem={item => <List.Item>{item}</List.Item>}
+                dataSource={group.events.slice(0, 3)}
+                renderItem={item => <List.Item>{item.name}</List.Item>}
                 size="small"
               />
             </Card>
@@ -43,7 +42,7 @@ class ListGroups extends React.Component {
 
 ListGroups.propTypes = {
   dispatchGetAll: PropTypes.func.isRequired,
-  groups: PropTypes.object,
+  groups: PropTypes.array,
 };
 
 ListGroups.defaultProps = {

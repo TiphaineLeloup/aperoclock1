@@ -59,7 +59,6 @@ class App extends React.Component {
                     <Route path="/groupes" exact component={Groups} />
                     <Route path="/evenements" exact component={Events} />
                     <Route path="/profil" exact component={Profile} />
-                    <Route path="/contact" exact component={Contact} />
                   </Content>
                   <AntdFooter className="footer">
                     <Footer />

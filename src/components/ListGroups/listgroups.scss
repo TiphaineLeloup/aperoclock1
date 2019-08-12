@@ -1,6 +1,9 @@
 @import 'src/styles/vars';
 
 #listGroups {
+  align-items : flex-start;
+  display : flex;
+  justify-content : center;
   padding: 1em;
   text-align: center;
 

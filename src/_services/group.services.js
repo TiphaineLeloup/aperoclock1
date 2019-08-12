@@ -5,7 +5,7 @@ import handleResponseService from './handleresponse.service';
 
 function getAll() {
   const requestOptions = {
-    method: 'POST',
+    method: 'GET',
     headers: authHeader(),
   };
   const { handleResponse } = handleResponseService;

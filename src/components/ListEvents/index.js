@@ -8,7 +8,6 @@ class ListEvents extends React.Component {
   componentDidMount() {
     const { dispatchGetAll } = this.props;
     dispatchGetAll();
-    const { events } = this.props;
   }
 
   render() {

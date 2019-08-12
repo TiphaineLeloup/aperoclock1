@@ -1,18 +1,25 @@
 // == Initial State
 const initialState = {
-  message: 'Hello',
+  actualGroup: null,
+  actualEvent: null,
 };
 
 // == Types
-const DO_SOMETHING = 'DO_SOMETHING';
+const CHANGE_ACTUAL_EVENT = 'CHANGE_ACTUAL_EVENT';
+const CHANGE_ACTUAL_GROUP = 'CHANGE_ACTUAL_GROUP';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case DO_SOMETHING:
+    case CHANGE_ACTUAL_EVENT:
       return {
         ...state,
-        message: action.message,
+        actualEvent: action.event,
+      };
+    case CHANGE_ACTUAL_GROUP:
+      return {
+        ...state,
+        actualGroup: action.group,
       };
 
     default:
@@ -21,9 +28,14 @@ const reducer = (state = initialState, action = {}) => {
 };
 
 // == Action Creators
-export const doSomething = message => ({
-  type: DO_SOMETHING,
-  message,
+export const changeEvent = event => ({
+  type: CHANGE_ACTUAL_EVENT,
+  event,
+});
+
+export const changeGroup = group => ({
+  type: CHANGE_ACTUAL_GROUP,
+  group,
 });
 
 
