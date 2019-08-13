@@ -37,11 +37,9 @@ function login(username, password) {
     // eslint-disable-next-line no-use-before-define
     .then(handleResponse)
     .then((user) => {
-      console.log('second then');
       // store user details and jwt token in local storage
       // to keep user logged in between page refreshes
       localStorage.setItem('user', JSON.stringify(user));
-
       return user;
     },
     (error) => {

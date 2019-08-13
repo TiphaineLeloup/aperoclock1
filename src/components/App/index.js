@@ -36,6 +36,7 @@ class App extends React.Component {
     const { loggedIn, dispatchAll } = this.props;
     if (loggedIn) {
       dispatchAll();
+      
     }
   }
 
@@ -48,6 +49,7 @@ class App extends React.Component {
     } = Layout;
 
     const { loggedIn } = this.props;
+    console.log(loggedIn);
     return (
       <>
         {loggedIn === true
@@ -63,11 +65,11 @@ class App extends React.Component {
                     <Header />
                   </AntdHeader>
                   <Content>
-                    <Route path="/" exact component={Dashboard} />
                     <Route path="/map" exact component={Map} />
                     <Route path="/groupes" exact component={Groups} />
                     <Route path="/evenements" exact component={Events} />
                     <Route path="/profil" exact component={Profile} />
+                    <Route exact component={Dashboard} />
                   </Content>
                   <AntdFooter className="footer">
                     <Footer />
@@ -82,9 +84,9 @@ class App extends React.Component {
                 <Content>
                   <img className="logo" src={Logo} alt="logo" />
                   <p>AperO'Clock vous permet de vous retrouver entre amis, entre collègues, entre famille, avec des alertes intelligentes !</p>
-                  <Route path="/" exact component={Home} />
                   <Route path="/login" exact component={LoginForm} />
                   <Route path="/inscription" exact component={SignIn} />
+                  <Route exact component={Home} />
                 </Content>
               </Layout>
             </div>
