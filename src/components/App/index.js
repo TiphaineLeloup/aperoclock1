@@ -8,12 +8,14 @@ import PropTypes from 'prop-types';
 
 // import AlertColor from 'src/components/Alert';
 // import Contact from 'src/components/Contact';
+// import CreateEventForm from 'src/components/CreateEventForm';
+// import CreateGroupForm from 'src/components/CreateGroupForm';
 import Dashboard from 'src/containers/Dashboard';
 // import DrawerMarker from 'src/components/Drawer';
-import Events from 'src/components/Events';
+import Events from 'src/containers/Events';
 import Footer from 'src/components/Footer';
-import Groups from 'src/components/Groups';
-import Header from 'src/components/Header';
+import Groups from 'src/containers/Groups';
+import Header from 'src/containers/Header';
 import Home from 'src/components/Home';
 import LoginForm from 'src/containers/LoginForm';
 import Logo from 'src/img/logo.svg';

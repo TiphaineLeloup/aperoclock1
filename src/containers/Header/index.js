@@ -6,7 +6,8 @@ import Header from 'src/components/Header';
 
 
 const mapStateToProps = state => ({
-  headerTitle: state.headerTitle,
+  baseTitle: state.reducerBase.baseTitle,
+  title: state.reducerBase.title,
 });
 
 const mapDispatchToProps = {};

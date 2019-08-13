@@ -1,45 +1,39 @@
+// == Types
+import globalConstants from 'src/constants/globalConstants';
+
 // == Initial State
 const initialState = {
   actualGroup: null,
   actualEvent: null,
+  baseTitle: 'AperO\'Clock',
+  title: '',
 };
 
-// == Types
-const CHANGE_ACTUAL_EVENT = 'CHANGE_ACTUAL_EVENT';
-const CHANGE_ACTUAL_GROUP = 'CHANGE_ACTUAL_GROUP';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case CHANGE_ACTUAL_EVENT:
+    case globalConstants.CHANGE_ACTUAL_EVENT:
       return {
         ...state,
-        actualEvent: action.event,
+        actualEvent: action.newActualvent,
       };
-    case CHANGE_ACTUAL_GROUP:
+    case globalConstants.CHANGE_ACTUAL_GROUP:
       return {
         ...state,
-        actualGroup: action.group,
+        actualGroup: action.newActualGroup,
+      };
+    case globalConstants.CHANGE_TITLE:
+      document.title = action.newTitle + (action.newTitle !== '' ? ' - ' : '') + state.baseTitle;
+      return {
+        ...state,
+        title: action.newTitle,
       };
 
     default:
       return state;
   }
 };
-
-// == Action Creators
-export const changeEvent = event => ({
-  type: CHANGE_ACTUAL_EVENT,
-  event,
-});
-
-export const changeGroup = group => ({
-  type: CHANGE_ACTUAL_GROUP,
-  group,
-});
-
-
-// == Selectors
 
 
 // == Export

@@ -1,77 +1,49 @@
-// // == Import : npm
-// import React from 'react';
-// import { Menu, Dropdown, Icon, Button, Radio, Input } from 'antd';
+// == Import : npm
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Card } from 'antd';
 
-// // == Import : local
+// == Import : local
+import SelectSpecialEvent from 'src/containers/SelectSpecialEvent';
 
 
-// // == Composant
-// // const Events = () => (
-// //   <div id="events">
-   
-// class App extends React.Component {
-//   state = {
-//     value: 1,
-//   };
+// == Composant
+class Events extends React.Component {
+  componentDidMount() {
+    const { dispatchNewTitle } = this.props;
+    dispatchNewTitle('Mes Evénements');
+  }
 
-//   onChange = e => {
-//     console.log('radio checked', e.target.value);
-//     this.setState({
-//       value: e.target.value,
-//     });
-//   };
+  render() {
+    const { actualEvent, events } = this.props;
 
-//   render() {
-//     const radioStyle = {
-//       display: 'block',
-//       height: '30px',
-//       lineHeight: '30px',
-//     };
-//     return (
-//       <div id="events">
-//       <Menu>
-//       <Menu.Item>
-//         <a target="_blank" rel="noopener noreferrer" href="#">
-//         1st menu item
-//         </a>
-//       </Menu.Item>
-//       <Menu.Item>
-//         <a target="_blank" rel="noopener noreferrer" href="#">
-//         2nd menu item
-//         </a>
-//       </Menu.Item>
-//       <Menu.Item>
-//         <a target="_blank" rel="noopener noreferrer" href="#">
-//         3rd menu item
-//         </a>
-//       </Menu.Item>
-//     </Menu>
+    const actualEventFull = events.find(event => (event.id === actualEvent));
 
-//     <Dropdown overlay={Menu}>
-//       <a className="ant-dropdown-link" href="#">
-//       Hover me <Icon type="down" />
-//       </a>
-//     </Dropdown>
-//     <Button className="add-event-button" exact activeClassName="add-event-button--active">Ajouter</Button>
-//     Page des évènements
-//       <Radio.Group onChange={this.onChange} value={this.state.value}>
-//         <Radio style={radioStyle} value={1}>
-//           Option A
-//         </Radio>
-//         <Radio style={radioStyle} value={2}>
-//           Option B
-//         </Radio>
-//         <Radio style={radioStyle} value={3}>
-//           Option C
-//         </Radio>
-//         <Radio style={radioStyle} value={4}>
-//           More...
-//           {this.state.value === 4 ? <Input style={{ width: 100, marginLeft: 10 }} /> : null}
-//         </Radio>
-//       </Radio.Group>
-// </div>
-// );
-// }
+    return (
+      <div id="events">
+        <SelectSpecialEvent />
+        {
+          actualEvent !== null && (
+            <Card title={actualEventFull.name}>
+              <p>{actualEventFull.description}</p>
+            </Card>
+          )
+        }
+      </div>
+    );
+  }
+}
 
-// // == Export
-// export default Events;
+Events.propTypes = {
+  actualEvent: PropTypes.number,
+  events: PropTypes.array,
+  dispatchNewTitle: PropTypes.func.isRequired,
+};
+
+Events.defaultProps = {
+  actualEvent: null,
+  events: [],
+};
+
+// == Export
+export default Events;
