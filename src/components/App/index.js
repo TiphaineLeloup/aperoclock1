@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 // == Import : local
 
 // import AlertColor from 'src/components/Alert';
-import Contact from 'src/components/Contact';
+// import Contact from 'src/components/Contact';
 import Dashboard from 'src/containers/Dashboard';
 // import DrawerMarker from 'src/components/Drawer';
 import Events from 'src/components/Events';

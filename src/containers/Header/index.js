@@ -2,19 +2,19 @@
 import { connect } from 'react-redux';
 
 // == Import : local
-import MyGroup from 'src/components/MyGroup';
+import Header from 'src/components/Header';
 
 
 const mapStateToProps = state => ({
-  myGroup: state.myGroup,
+  headerTitle: state.headerTitle,
 });
 
 const mapDispatchToProps = {};
 
 // Container
-const MyGroupContainer = connect(
+const HeaderContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(MyGroup);
+)(Header);
 
-export default MyGroupContainer;
+export default HeaderContainer;
