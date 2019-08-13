@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { Card, Button } from 'antd';
 
 // == Import : local
-import SelectSpecialEvent from 'src/containers/SelectSpecialEvent';
+import SelectSpecial from 'src/containers/SelectSpecial';
 
 
 // == Composant
@@ -22,7 +22,7 @@ class Events extends React.Component {
 
     return (
       <div id="events">
-        <SelectSpecialEvent />
+        <SelectSpecial showEvents />
         {
           actualEvent !== null && (
             <Card title={actualEventFull.name}>

@@ -36,7 +36,6 @@ class App extends React.Component {
     const { loggedIn, dispatchAll } = this.props;
     if (loggedIn) {
       dispatchAll();
-      
     }
   }
 

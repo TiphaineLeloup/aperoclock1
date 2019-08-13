@@ -22,7 +22,7 @@ class Groups extends React.Component {
 
     return (
       <div id="groups">
-        <SelectSpecial />
+        <SelectSpecial showGroups />
         {
           actualGroup !== null && (
             <Card title={actualGroupFull.name}>
