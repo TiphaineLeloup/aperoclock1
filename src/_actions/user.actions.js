@@ -13,6 +13,7 @@ function login(username, password) {
     userService.login(username, password)
       .then(
         (user) => {
+          history.push('/');
           dispatch(success(user));
         },
         (error) => {

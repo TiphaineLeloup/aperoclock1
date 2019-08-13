@@ -1,7 +1,7 @@
 // == Import : npm
 import React from 'react';
 import { Layout } from 'antd';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // == Import : local
@@ -65,11 +65,13 @@ class App extends React.Component {
                     <Header />
                   </AntdHeader>
                   <Content>
-                    <Route path="/map" exact component={Map} />
-                    <Route path="/groupes" exact component={Groups} />
-                    <Route path="/evenements" exact component={Events} />
-                    <Route path="/profil" exact component={Profile} />
-                    <Route exact component={Dashboard} />
+                    <Switch>
+                      <Route path="/map" exact component={Map} />
+                      <Route path="/groupes" exact component={Groups} />
+                      <Route path="/evenements" exact component={Events} />
+                      <Route path="/profil" exact component={Profile} />
+                      <Route exact component={Dashboard} />
+                    </Switch>
                   </Content>
                   <AntdFooter className="footer">
                     <Footer />
@@ -84,9 +86,11 @@ class App extends React.Component {
                 <Content>
                   <img className="logo" src={Logo} alt="logo" />
                   <p>AperO'Clock vous permet de vous retrouver entre amis, entre collègues, entre famille, avec des alertes intelligentes !</p>
-                  <Route path="/login" exact component={LoginForm} />
-                  <Route path="/inscription" exact component={SignIn} />
-                  <Route exact component={Home} />
+                  <Switch>
+                    <Route path="/login" exact component={LoginForm} />
+                    <Route path="/inscription" exact component={SignIn} />
+                    <Route exact component={Home} />
+                  </Switch>
                 </Content>
               </Layout>
             </div>
