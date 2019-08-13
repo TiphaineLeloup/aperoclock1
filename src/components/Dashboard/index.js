@@ -12,7 +12,6 @@ const Dashboard = () => {
   const VIEW_GROUPS = true;
   const VIEW_EVENTS = false;
   const [view, setView] = useState(VIEW_GROUPS);
-
   return (
     <div id="dashboard">
       <Switch

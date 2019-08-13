@@ -6,11 +6,6 @@ import PropTypes from 'prop-types';
 import './listgroups.scss';
 
 class ListGroups extends React.Component {
-  componentDidMount() {
-    const { dispatchGetAll } = this.props;
-    dispatchGetAll();
-  }
-
   render() {
     const { groups } = this.props.groups;
     return (

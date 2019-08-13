@@ -29,6 +29,13 @@ import './app.scss';
 // == Composant
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends React.Component {
+  componentDidMount() {
+    const { loggedIn, dispatchAll } = this.props;
+    if (loggedIn) {
+      dispatchAll();
+    }
+  }
+
   render() {
     const {
       Header: AntdHeader,
@@ -38,10 +45,9 @@ class App extends React.Component {
     } = Layout;
 
     const { loggedIn } = this.props;
-
     return (
       <>
-        {loggedIn
+        {loggedIn === true
           ? (
             // if logged
             <div id="app">
@@ -89,7 +95,9 @@ class App extends React.Component {
 
 App.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
+  dispatchAll: PropTypes.func.isRequired,
 };
+
 
 // == Export
 export default App;
