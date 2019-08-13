@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 import DrawerMarker from 'src/components/Drawer';
 import GoogleMap from './GoogleMap';
 import Marker from './Marker';
@@ -12,6 +12,11 @@ class SimpleMap extends Component {
     },
     zoom: 11,
   };
+
+  componentDidMount() {
+    const { dispatchNewTitle } = this.props;
+    dispatchNewTitle('La Map');
+  }
 
   render() {
     return (
@@ -35,5 +40,9 @@ class SimpleMap extends Component {
     );
   }
 }
+
+SimpleMap.propTypes = {
+  dispatchNewTitle: PropTypes.func.isRequired,
+};
 
 export default SimpleMap;

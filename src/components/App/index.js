@@ -23,7 +23,7 @@ import Nav from 'src/containers/Nav';
 // import PrivateRoute from './PrivateRoute';
 import Profile from 'src/components/Profile';
 import SignIn from 'src/components/SignIn';
-import SimpleMap from 'src/components/Map';
+import Map from 'src/containers/Map';
 
 import './app.scss';
 
@@ -57,7 +57,7 @@ class App extends React.Component {
                   </AntdHeader>
                   <Content>
                     <Route path="/" exact component={Dashboard} />
-                    <Route path="/map" exact component={SimpleMap} />
+                    <Route path="/map" exact component={Map} />
                     <Route path="/groupes" exact component={Groups} />
                     <Route path="/evenements" exact component={Events} />
                     <Route path="/profil" exact component={Profile} />
