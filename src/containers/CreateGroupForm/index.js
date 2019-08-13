@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 
 // == Import : local
-import GroupForm from 'src/components/GroupForm';
+import CreateGroupForm from 'src/components/CreateGroupForm';
 
 
 const mapStateToProps = state => ({
@@ -12,9 +12,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {};
 
 // Container
-const GroupFormContainer = connect(
+const CreateGroupFormContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(GroupForm);
+)(CreateGroupForm);
 
-export default GroupFormContainer;
+export default CreateGroupFormContainer;

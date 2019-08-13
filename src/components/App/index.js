@@ -8,8 +8,8 @@ import PropTypes from 'prop-types';
 
 // import AlertColor from 'src/components/Alert';
 // import Contact from 'src/components/Contact';
-// import CreateEventForm from 'src/components/CreateEventForm';
-// import CreateGroupForm from 'src/components/CreateGroupForm';
+import CreateEventForm from 'src/components/CreateEventForm';
+import CreateGroupForm from 'src/components/CreateGroupForm';
 import Dashboard from 'src/containers/Dashboard';
 // import DrawerMarker from 'src/components/Drawer';
 import Events from 'src/containers/Events';
@@ -19,11 +19,12 @@ import Header from 'src/containers/Header';
 import Home from 'src/components/Home';
 import LoginForm from 'src/containers/LoginForm';
 import Logo from 'src/img/logo.svg';
+import Map from 'src/containers/Map';
 import Nav from 'src/containers/Nav';
 // import PrivateRoute from './PrivateRoute';
-import Profile from 'src/components/Profile';
+import Profile from 'src/containers/Profile';
 import SignIn from 'src/components/SignIn';
-import Map from 'src/containers/Map';
+
 
 import './app.scss';
 

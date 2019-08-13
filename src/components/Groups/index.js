@@ -1,7 +1,8 @@
 // == Import : npm
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
+import { NavLink } from 'react-router-dom';
+import { Card, Button } from 'antd';
 
 // == Import : local
 import SelectSpecial from 'src/containers/SelectSpecial';
@@ -29,6 +30,11 @@ class Groups extends React.Component {
             </Card>
           )
         }
+        <Button type="primary">
+          <NavLink to="/creation-groupe">
+              Créer un groupe
+          </NavLink>
+        </Button>
       </div>
     );
   }

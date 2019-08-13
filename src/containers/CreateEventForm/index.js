@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 
 // == Import : local
-import EventForm from 'src/components/EventForm';
+import CreateEventForm from 'src/components/CreateEventForm';
 
 
 const mapStateToProps = state => ({
@@ -12,9 +12,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {};
 
 // Container
-const EventFormContainer = connect(
+const CreateEventFormContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(EventForm);
+)(CreateEventForm);
 
-export default EventFormContainer;
+export default CreateEventFormContainer;

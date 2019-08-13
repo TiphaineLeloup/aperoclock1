@@ -1,7 +1,8 @@
 // == Import : npm
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
+import { NavLink } from 'react-router-dom';
+import { Card, Button } from 'antd';
 
 // == Import : local
 import SelectSpecialEvent from 'src/containers/SelectSpecialEvent';
@@ -11,7 +12,7 @@ import SelectSpecialEvent from 'src/containers/SelectSpecialEvent';
 class Events extends React.Component {
   componentDidMount() {
     const { dispatchNewTitle } = this.props;
-    dispatchNewTitle('Mes Evénements');
+    dispatchNewTitle('Mes Événements');
   }
 
   render() {
@@ -29,6 +30,11 @@ class Events extends React.Component {
             </Card>
           )
         }
+        <Button type="primary">
+          <NavLink to="/creation-evenement">
+              Créer un événement
+          </NavLink>
+        </Button>
       </div>
     );
   }
