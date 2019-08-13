@@ -1,5 +1,6 @@
 // == Import : npm
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Input,
   Button,
@@ -14,6 +15,11 @@ import './profile.scss';
 
 // == Composant
 class ProfileUnwrap extends React.Component {
+  componentDidMount() {
+    const { dispatchNewTitle } = this.props;
+    dispatchNewTitle('Ma page profil');
+  }
+
   render() {
     const { TextArea } = Input;
     const {
@@ -83,6 +89,10 @@ class ProfileUnwrap extends React.Component {
   }
 }
 const Profile = Form.create({ name: 'form_profile' })(ProfileUnwrap);
+
+Profile.propTypes = {
+  dispatchNewTitle: PropTypes.func.isRequired,
+};
 
 // == Export
 export default Profile;

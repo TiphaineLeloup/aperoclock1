@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 
 // == Import : local
-import Profile from 'src/components/Profile';
+import Map from 'src/components/Map';
 import globalActions from 'src/_actions/global.actions';
 
 const mapStateToProps = state => ({
@@ -16,10 +16,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // Container
-const ProfileContainer = connect(
+const MapContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Profile);
+)(Map);
 
 // == Export
-export default ProfileContainer;
+export default MapContainer;

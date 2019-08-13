@@ -2,10 +2,12 @@
 import { connect } from 'react-redux';
 
 // == Import : local
-import Profile from 'src/components/Profile';
+import Events from 'src/components/Events';
 import globalActions from 'src/_actions/global.actions';
 
 const mapStateToProps = state => ({
+  actualEvent: state.reducerBase.actualEvent,
+  events: state.events.events,
   title: state.reducerBase.title,
 });
 
@@ -16,10 +18,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // Container
-const ProfileContainer = connect(
+const EventsContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Profile);
+)(Events);
 
 // == Export
-export default ProfileContainer;
+export default EventsContainer;

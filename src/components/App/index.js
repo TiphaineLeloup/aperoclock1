@@ -7,21 +7,24 @@ import PropTypes from 'prop-types';
 // == Import : local
 
 // import AlertColor from 'src/components/Alert';
-import Contact from 'src/components/Contact';
+// import Contact from 'src/components/Contact';
+import CreateEventForm from 'src/components/CreateEventForm';
+import CreateGroupForm from 'src/components/CreateGroupForm';
 import Dashboard from 'src/containers/Dashboard';
 // import DrawerMarker from 'src/components/Drawer';
-import Events from 'src/components/Events';
+import Events from 'src/containers/Events';
 import Footer from 'src/components/Footer';
 import Groups from 'src/containers/Groups';
 import Header from 'src/containers/Header';
 import Home from 'src/components/Home';
 import LoginForm from 'src/containers/LoginForm';
 import Logo from 'src/img/logo.svg';
+import Map from 'src/containers/Map';
 import Nav from 'src/containers/Nav';
 // import PrivateRoute from './PrivateRoute';
-import Profile from 'src/components/Profile';
+import Profile from 'src/containers/Profile';
 import SignIn from 'src/components/SignIn';
-import SimpleMap from 'src/components/Map';
+
 
 import './app.scss';
 
@@ -61,9 +64,9 @@ class App extends React.Component {
                   </AntdHeader>
                   <Content>
                     <Route path="/" exact component={Dashboard} />
-                    <Route path="/map" exact component={SimpleMap} />
+                    <Route path="/map" exact component={Map} />
                     <Route path="/groupes" exact component={Groups} />
-                    {/* <Route path="/evenements" exact component={Events} /> */}
+                    <Route path="/evenements" exact component={Events} />
                     <Route path="/profil" exact component={Profile} />
                   </Content>
                   <AntdFooter className="footer">

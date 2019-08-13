@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 // == Composant
 // eslint-disable-next-line react/prefer-stateless-function
 class SelectSpecial extends React.Component {
-
   handleChange(value) {
     const { dispatchNewGroup } = this.props;
     dispatchNewGroup(value);

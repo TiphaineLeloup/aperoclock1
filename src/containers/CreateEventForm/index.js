@@ -2,19 +2,19 @@
 import { connect } from 'react-redux';
 
 // == Import : local
-import MyGroup from 'src/components/MyEvent';
+import CreateEventForm from 'src/components/CreateEventForm';
 
 
 const mapStateToProps = state => ({
-  myEvent: state.myEvent,
+  AddEvent: state.AddEvent,
 });
 
 const mapDispatchToProps = {};
 
 // Container
-const MyGroupContainer = connect(
+const CreateEventFormContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(MyGroup);
+)(CreateEventForm);
 
-export default MyGroupContainer;
+export default CreateEventFormContainer;
