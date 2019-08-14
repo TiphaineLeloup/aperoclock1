@@ -20,23 +20,31 @@ const Wrapper = styled.div`
   }
 `;
 
-const Marker = props => (
-  <div id="markerandDrawer">
-    <Wrapper
-      alt={props.text}    
-      {...props.onClick ? { onClick: props.onClick } : {}}
-    />
-    <DrawerMarker />
-  </div>
-);
+// eslint-disable-next-line react/prefer-stateless-function
+class Marker extends React.Component {
+  render() {
+    const { object, title } = this.props;
+    return (
+      <div id="markerandDrawer">
+        <Wrapper
+          alt={title}
+          {...this.props.onClick ? { onClick: this.props.onClick } : {}}
+        />
+        <DrawerMarker object={object} title={title} />
+      </div>
+    );
+
+  }
+}
 
 Marker.defaultProps = {
   onClick: null,
 };
 
 Marker.propTypes = {
+  object: PropTypes.object.isRequired,
   onClick: PropTypes.func,
-  text: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default Marker;

@@ -12,7 +12,9 @@ function getAll() {
   return fetch(`${process.env.API_URL}/user/groups`, requestOptions)
     // eslint-disable-next-line no-use-before-define
     .then(handleResponse)
-    .then(groups => JSON.parse(groups),
+    .then((groups) => {
+      return JSON.parse(groups);
+    },
       (error) => {
         console.log(process.env.API_URL);
       });
@@ -63,16 +65,19 @@ function deleteGroup() {
       });
 }
 
-function infoGroup() {
+function getDetails(idGroup) {
   const requestOptions = {
-    method: 'POST',
+    method: 'GET',
     headers: authHeader(),
   };
   const { handleResponse } = handleResponseService;
-  return fetch(`${process.env.API_URL}/user/groups/infos`, requestOptions)
+  return fetch(`${process.env.API_URL}/group/infos/${idGroup}`, requestOptions)
     // eslint-disable-next-line no-use-before-define
     .then(handleResponse)
-    .then(events => JSON.parse(events),
+    .then((details) => {
+      localStorage.setItem('details', JSON.stringify(details));
+      return JSON.parse(details);
+    },
       (error) => {
         console.log(process.env.API_URL);
       });
@@ -83,7 +88,7 @@ const groupService = {
   editGroup,
   createGroup,
   deleteGroup,
-  infoGroup,
+  getDetails,
 };
 
 export default groupService;

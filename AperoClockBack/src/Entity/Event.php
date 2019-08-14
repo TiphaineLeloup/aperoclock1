@@ -249,6 +249,10 @@ class Event
         }
         return $this;
     }
+    public function resetAppUser():void
+    {
+        $this->appUsers = new ArrayCollection();
+    }
     public function getAppGroup(): ?AppGroup
     {
         return $this->appGroup;

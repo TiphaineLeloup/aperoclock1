@@ -7,7 +7,7 @@ import groupConstants from 'src/constants/groupConstants';
 
 function changeActualEvent(newActualEvent) {
   return {
-    type: globalConstants.CHANGE_ActualEvent,
+    type: globalConstants.CHANGE_ACTUAL_EVENT,
     newActualEvent,
   };
 }

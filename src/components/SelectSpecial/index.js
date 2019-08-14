@@ -46,7 +46,7 @@ class SelectSpecial extends React.Component {
             placeholder="Sélectionnez un événement"
             showSearch
             style={{ width: '200px' }}
-            value={actualEvent !== null ? actualEvent : undefined}
+            defaultValue={actualEvent !== null ? actualEvent : undefined}
           >
             {childrenEvent}
           </Select>
@@ -60,7 +60,7 @@ class SelectSpecial extends React.Component {
             placeholder="Sélectionnez un groupe"
             showSearch
             style={{ width: '200px' }}
-            value={actualGroup !== null ? actualGroup : undefined}
+            defaultValue={actualGroup !== null ? actualGroup : undefined}
           >
             {childrenGroup}
           </Select>

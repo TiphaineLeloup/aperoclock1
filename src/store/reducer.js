@@ -3,8 +3,10 @@ import globalConstants from 'src/constants/globalConstants';
 
 // == Initial State
 const initialState = {
-  actualGroup: null,
-  actualEvent: null,
+  actualGroup: localStorage.getItem('actualGroup')
+    ? JSON.parse(localStorage.getItem('actualGroup')) : null,
+  actualEvent: localStorage.getItem('actualEvent')
+    ? JSON.parse(localStorage.getItem('actualEvent')) : null,
   baseTitle: 'AperO\'Clock',
   title: '',
 };

@@ -32,13 +32,6 @@ import './app.scss';
 // == Composant
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends React.Component {
-  componentDidMount() {
-    const { loggedIn, dispatchAll } = this.props;
-    if (loggedIn) {
-      dispatchAll();
-    }
-  }
-
   render() {
     const {
       Header: AntdHeader,
@@ -47,8 +40,12 @@ class App extends React.Component {
       Content,
     } = Layout;
 
-    const { loggedIn } = this.props;
-    console.log(loggedIn);
+    const { dispatchAll, loggedIn } = this.props;
+
+    if (loggedIn) {
+      dispatchAll();
+    }
+
     return (
       <>
         {loggedIn === true

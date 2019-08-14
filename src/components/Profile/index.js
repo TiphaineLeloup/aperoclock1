@@ -2,12 +2,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Input,
   Button,
-  Upload,
-  Icon,
+  Col,
   Form,
+  Icon,
+  Input,
+  InputNumber,
+  Row,
+  Slider,
   Switch,
+  Upload,
 } from 'antd';
 
 // == Import : local
@@ -15,10 +19,21 @@ import './profile.scss';
 
 // == Composant
 class ProfileUnwrap extends React.Component {
+  state= {
+    inputValue: 0,
+  }
+
   componentDidMount() {
     const { dispatchNewTitle } = this.props;
     dispatchNewTitle('Ma page profil');
   }
+
+  onChange = (value) => {
+    this.setState({
+      inputValue: value,
+    });
+  };
+
 
   render() {
     const { TextArea } = Input;
@@ -27,12 +42,26 @@ class ProfileUnwrap extends React.Component {
     } = this.props.form;
 
     const formItemLayout = {
-      labelCol: { span: 4 },
-      wrapperCol: { span: 12 },
+      labelCol: { span: 8 },
+      wrapperCol: { span: 8 },
     };
 
     return (
       <Form layout="horizontal">
+        <Form.Item label="E-mail" {...formItemLayout}>
+          {getFieldDecorator('mailInside', {
+            rules: [{ required: true, message: 'Ce champ est requis' }],
+          })(
+            <Input type="text" id="emailInside" name="emailInside" placeholder="Votre e-mail" />,
+          )}
+        </Form.Item>
+        <Form.Item label="Mot de passe" {...formItemLayout}>
+          {getFieldDecorator('passwordInside', {
+            rules: [{ required: true, message: 'Ce champ est requis' }],
+          })(
+            <Input type="password" id="passwordInside" name="passwordInside" />,
+          )}
+        </Form.Item>
         <Form.Item label="Date de naissance" {...formItemLayout}>
           {getFieldDecorator('birthDate', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
@@ -84,6 +113,30 @@ class ProfileUnwrap extends React.Component {
         <Form.Item label="Alerte par mail" {...formItemLayout}>
           <Switch size="small" defaultChecked />
         </Form.Item>
+        <Form.Item label="Alertes uniquement en-dessous de" {...formItemLayout}>
+          <Row>
+            <Col span={12}>
+              <Slider
+                min={1}
+                max={300}
+                onChange={this.onChange}
+                value={typeof this.state.inputValue === 'number' ? this.state.inputValue : 0}
+              />
+            </Col>
+            <Col span={4}>
+              <InputNumber
+                min={1}
+                max={300}
+                style={{ marginLeft: 16 }}
+                value={this.state.inputValue}
+                onChange={this.onChange}
+              />
+            </Col>
+          </Row>
+        </Form.Item>
+        <Button type="primary">
+          Envoyer
+        </Button>
       </Form>
     );
   }

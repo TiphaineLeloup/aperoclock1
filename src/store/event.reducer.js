@@ -2,7 +2,8 @@ import eventConstants from 'src/constants/eventConstants';
 import globalConstants from 'src/constants/globalConstants';
 
 const initialState = {
-  events: [],
+  events: []
+  ,
 };
 
 const evenements = (state = initialState, action) => {

@@ -42,7 +42,9 @@ function createEvent() {
   return fetch(`${process.env.API_URL}/user/events/create`, requestOptions)
     // eslint-disable-next-line no-use-before-define
     .then(handleResponse)
-    .then(events => JSON.parse(events),
+    .then((events) => {
+      return JSON.parse(events);
+    }, 
       (error) => {
         console.log(process.env.API_URL);
       });

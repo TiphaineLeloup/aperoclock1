@@ -1,0 +1,13 @@
+form.ant-form {
+  align-items: flex-start;
+  max-width: none;
+}
+
+.ant-form{
+  &-item {
+    width: 100%;
+    &-label {
+      text-align: left;
+    }
+  }
+}

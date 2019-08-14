@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use Exception;
 use App\Entity\AppUser;
 use App\Entity\AppGroup;
+use App\Entity\Guest;
 use App\Repository\AppUserRepository;
 use App\Repository\AppGroupRepository;
 use Symfony\Component\Serializer\Serializer;
@@ -17,6 +18,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 
@@ -146,24 +148,59 @@ class GroupController extends AbstractController
     }
 
      /**
-     * @Route("/api/group/infos", name="group_infos", methods={"POST"})
+     * @Route("/api/group/infos/{id}", name="group_infos", methods={"GET"})
      */
-    public function infos(Request $request, AppGroupRepository $appGroupRepository, SerializerInterface $serializer)
+    public function infos(Request $request, AppGroupRepository $appGroupRepository, SerializerInterface $serializer, AppGroup $appgroup)
     {
-        $frontDatas = [];
 
-        if ($content = $request->getContent()){
-            $frontDatas = json_decode($content, true);
+        if($this->getUser()->hasAppGroup($appgroup)){
+            $userCallback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
+                foreach($innerObject as $user){
+                    $user->setPassword("");
+                    $user->setEmail("");
+                    $user->resetAppGroups();
+                    $user->resetSubscriptions();
+                    $user->resetEvents();
+                }
+                    return $innerObject;
+            };
+            $eventCallback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
+                foreach($innerObject as $event) {
+                    $event->resetAppUser();
+                    $event->setAppGroup(null);
+                }                
+
+                return $innerObject;
+            };
+            
+            $defaultContext = [
+                AbstractNormalizer::CALLBACKS => [
+                    'appUsers' => $userCallback,
+                    'events' => $eventCallback,
+                ],
+            ];
+            
+            $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
+            
+            $serializer = new Serializer([$normalizer], [new JsonEncoder()]);
+            
+            $jsonContent = $serializer->serialize($appgroup, 'json', ['ignored_attributes' => ['createdBy']]);
+
+            $subscriptions = [];
+            $guestRepo = $this->getDoctrine()->getRepository(Guest::class);
+            foreach($appgroup->getEvents() as $event) {
+                $guests = $guestRepo->findBy(['event'=>$event]);
+                $subscriptions[$event->getId()] = [];
+                foreach($guests as $guest) {
+                    array_push($subscriptions[$event->getId()], ['choice'=>$guest->getChoice(), 'user'=>$guest->getAppUser()->getId()]);
+                } 
+            }
+
+            $jsonResponse = json_encode(array_merge_recursive( json_decode($jsonContent, true), $subscriptions ));
+
+            return new JsonResponse($jsonResponse);
         }
 
-        $id = $frontDatas['groupId'];
-        
-
-        $groupInfos = $appGroupRepository->find($id);
-
-        $jsonContent = $serializer->serialize($groupInfos, 'json', ['ignored_attributes' => ['appUsers', 'createdBy', 'events']]);
-
-        return new JsonResponse($jsonContent);
     }
 
 

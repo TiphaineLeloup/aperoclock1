@@ -4,6 +4,7 @@
 .ant-layout{
   background-color: white;
   &-content {
+    margin: 1em;
     min-height: 43.35vh;
   }
   &-header {
@@ -36,6 +37,7 @@ a {
 }
 .ant-btn {
   border-radius : 1em;
+  margin: 0 1em;
   &-primary {
     background-color: $lightergreen;
     border: $lightergreen;
@@ -53,7 +55,9 @@ a {
     }
   }
 }
-
+.ant-card {
+  margin: 1em 0;
+}
 .ant-input-affix-wrapper {
   .ant-input {
     &:not(:first-child){
@@ -69,6 +73,7 @@ a {
 
 .ant-switch {
   background-color: $orange;
+  margin: 0 1em;
   &-checked {
     background-color: $yellow;
   }

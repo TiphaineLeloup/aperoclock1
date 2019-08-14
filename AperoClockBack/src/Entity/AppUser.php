@@ -271,6 +271,14 @@ class AppUser implements UserInterface
         }
         return $this;
     }
+    public function hasAppGroup(AppGroup $appGroup): bool
+    {
+        return $this->appGroups->contains($appGroup);
+    }
+    public function resetAppGroups(): void
+    {
+        $this->appGroups = new ArrayCollection();
+    }
     /**
      * @return Collection|Event[]
      */
@@ -292,7 +300,10 @@ class AppUser implements UserInterface
         }
         return $this;
     }
-
+    public function resetEvents():void
+    {
+        $this->events = new ArrayCollection();
+    }
     public function getUsername(): ?string
     {
         return $this->username;
@@ -348,6 +359,11 @@ class AppUser implements UserInterface
         }
 
         return $this;
+    }
+
+    public function resetSubscriptions():void
+    {
+        $this->subscriptions = new ArrayCollection();
     }
 
     public function getDistanceKM(): ?int

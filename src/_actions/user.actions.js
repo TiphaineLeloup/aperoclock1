@@ -26,6 +26,8 @@ function login(username, password) {
 function logout() {
   userService.logout();
   history.push('/');
+  localStorage.removeItem('actualEvent');
+  localStorage.removeItem('actualGroup');
   return { type: userConstants.LOGOUT };
 }
 

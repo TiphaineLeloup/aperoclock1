@@ -21,8 +21,29 @@ function getAllgroups() {
   };
 }
 
+function getDetails(idGroup) {
+  function success(details) {
+    return { type: groupConstants.GROUP_GET_INFOS_SUCCESS, details };
+  }
+  function failure(error) {
+    return { type: groupConstants.GROUP_GET_INFOS_FAILURE, error };
+  }
+  return (dispatch) => {
+    groupService.getDetails(idGroup)
+      .then(
+        (details) => {
+          dispatch(success(details));
+        },
+        (error) => {
+          dispatch(failure(error));
+        },
+      );
+  };
+}
+
 const groupActions = {
   getAllgroups,
+  getDetails,
 };
 
 export default groupActions;

@@ -1,6 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Drawer, Button } from 'antd';
+import { Button, Drawer } from 'antd';
+import PropTypes from 'prop-types';
 
 class DrawerMarker extends React.Component {
   state = { visible: false };
@@ -18,10 +19,11 @@ class DrawerMarker extends React.Component {
   };
 
   render() {
+    const { title } = this.props;
     return (
       <div>
         <Button type="primary" onClick={this.showDrawer}>
-          Event
+          {title}
         </Button>
         <Drawer
           title="Détail de l'event"
@@ -39,5 +41,15 @@ class DrawerMarker extends React.Component {
     );
   }
 }
+
+DrawerMarker.propTypes = {
+  object: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  typeUserTrueEventFalse: PropTypes.bool,
+};
+
+DrawerMarker.defaultProps = {
+  typeUserTrueEventFalse: false,
+};
 
 export default DrawerMarker;
