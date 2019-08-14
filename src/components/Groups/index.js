@@ -1,8 +1,12 @@
 // == Import : npm
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
-import { Card, Button } from 'antd';
+import {
+  Card,
+  Button,
+  Modal,
+  Input,
+} from 'antd';
 
 // == Import : local
 import SelectSpecial from 'src/containers/SelectSpecial';
@@ -10,15 +14,39 @@ import SelectSpecial from 'src/containers/SelectSpecial';
 
 // == Composant
 class Groups extends React.Component {
+  state = { visible: false };
+
   componentDidMount() {
     const { dispatchNewTitle } = this.props;
     dispatchNewTitle('Mes Groupes');
   }
 
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  handleOk = (e) => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleCancel = (e) => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
   render() {
     const { actualGroup, groups } = this.props;
 
     const actualGroupFull = groups.find(group => (group.id === actualGroup));
+
+    const { TextArea } = Input;
 
     return (
       <div id="groups">
@@ -30,11 +58,18 @@ class Groups extends React.Component {
             </Card>
           )
         }
-        <Button type="primary">
-          <NavLink to="/creation-groupe">
-              Créer un groupe
-          </NavLink>
+        <Button type="primary" onClick={this.showModal}>
+          Créer un groupe
         </Button>
+        <Modal
+          title="Création d'un groupe"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <Input placeholder="Nom du groupe" />
+          <TextArea placeholder="Description du groupe" rows={4} />
+        </Modal>
       </div>
     );
   }

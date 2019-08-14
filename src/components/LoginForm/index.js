@@ -12,7 +12,7 @@ import {
   Checkbox,
 } from 'antd';
 
-// FORMULAIRE D'INSCRIPTION
+// FORMULAIRE DE CONNECTION
 
 class LoginFormUnwrap extends React.Component {
   usernameInput = React.createRef();
