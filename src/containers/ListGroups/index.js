@@ -12,8 +12,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   dispatchGetAll: () => {
-    const result = groupActions.getAllgroups();
-    result(dispatch);
+    // const result = groupActions.getAllgroups();
+    // result(dispatch);
   },
 });
 

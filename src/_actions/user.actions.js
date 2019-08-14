@@ -10,16 +10,13 @@ function login(username, password) {
     return { type: userConstants.LOGIN_FAILURE, error };
   }
   return (dispatch) => {
-
     userService.login(username, password)
       .then(
         (user) => {
-          console.log('success');
-          dispatch(success(user));
           history.push('/');
+          dispatch(success(user));
         },
         (error) => {
-          console.log('error');
           dispatch(failure(error));
         },
       );
@@ -28,7 +25,7 @@ function login(username, password) {
 
 function logout() {
   userService.logout();
-  history.push('/login');
+  history.push('/');
   return { type: userConstants.LOGOUT };
 }
 

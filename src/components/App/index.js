@@ -1,7 +1,7 @@
 // == Import : npm
 import React from 'react';
 import { Layout } from 'antd';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // == Import : local
@@ -29,6 +29,13 @@ import './app.scss';
 // == Composant
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends React.Component {
+  componentDidMount() {
+    const { loggedIn, dispatchAll } = this.props;
+    if (loggedIn) {
+      dispatchAll();
+    }
+  }
+
   render() {
     const {
       Header: AntdHeader,
@@ -38,10 +45,10 @@ class App extends React.Component {
     } = Layout;
 
     const { loggedIn } = this.props;
-
+    console.log(loggedIn);
     return (
       <>
-        {loggedIn
+        {loggedIn === true
           ? (
             // if logged
             <div id="app">
@@ -54,11 +61,13 @@ class App extends React.Component {
                     <Header />
                   </AntdHeader>
                   <Content>
-                    <Route path="/" exact component={Dashboard} />
-                    <Route path="/map" exact component={Map} />
-                    <Route path="/groupes" exact component={Groups} />
-                    <Route path="/evenements" exact component={Events} />
-                    <Route path="/profil" exact component={Profile} />
+                    <Switch>
+                      <Route path="/map" exact component={Map} />
+                      <Route path="/groupes" exact component={Groups} />
+                      <Route path="/evenements" exact component={Events} />
+                      <Route path="/profil" exact component={Profile} />
+                      <Route exact component={Dashboard} />
+                    </Switch>
                   </Content>
                   <AntdFooter className="footer">
                     <Footer />
@@ -73,9 +82,11 @@ class App extends React.Component {
                 <Content>
                   <img className="logo" src={Logo} alt="logo" />
                   <p>AperO'Clock vous permet de vous retrouver entre amis, entre collègues, entre famille, avec des alertes intelligentes !</p>
-                  <Route path="/" exact component={Home} />
-                  <Route path="/login" exact component={LoginForm} />
-                  <Route path="/inscription" exact component={SignIn} />
+                  <Switch>
+                    <Route path="/login" exact component={LoginForm} />
+                    <Route path="/inscription" exact component={SignIn} />
+                    <Route exact component={Home} />
+                  </Switch>
                 </Content>
               </Layout>
             </div>
@@ -89,7 +100,9 @@ class App extends React.Component {
 
 App.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
+  dispatchAll: PropTypes.func.isRequired,
 };
+
 
 // == Export
 export default App;
