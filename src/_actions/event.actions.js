@@ -21,8 +21,14 @@ function getAllEvents() {
   };
 }
 
+function createEvent() {
+  eventService.createEvent();
+  return { type: eventConstants.EVENT_CREATE };
+}
+
 const eventActions = {
   getAllEvents,
+  createEvent,
 };
 
 export default eventActions;

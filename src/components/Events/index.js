@@ -16,10 +16,26 @@ import SelectSpecial from 'src/containers/SelectSpecial';
 class Events extends React.Component {
   state = { visible: false };
 
+  eventnameInput = React.createRef();
+
+  descriptionInput = React.createRef();
+
   componentDidMount() {
     const { dispatchNewTitle } = this.props;
     dispatchNewTitle('Mes Événements');
   }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const eventname = this.eventnameInput.current.state.value;
+    const description = this.descriptionInput.current.state.value;
+    const { dispatchEvent } = this.props;
+    if (eventname && description) {
+      dispatchEvent(eventname, description);
+    }
+  }
+
 
   showModal = () => {
     this.setState({
@@ -79,6 +95,7 @@ Events.propTypes = {
   actualEvent: PropTypes.number,
   events: PropTypes.array,
   dispatchNewTitle: PropTypes.func.isRequired,
+  dispatchEvent: PropTypes.func.isRequired,
 };
 
 Events.defaultProps = {
@@ -86,5 +103,6 @@ Events.defaultProps = {
   events: [],
 };
 
+// const EventCreate = Modal.create({ name: 'Event' })(Events);
 // == Export
 export default Events;

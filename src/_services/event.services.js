@@ -33,10 +33,11 @@ function editEvent() {
       });
 }
 
-function createEvent() {
+function createEvent(eventname, description) {
   const requestOptions = {
     method: 'POST',
-    headers: authHeader(),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ eventname, description }),
   };
   const { handleResponse } = handleResponseService;
   return fetch(`${process.env.API_URL}/user/events/create`, requestOptions)

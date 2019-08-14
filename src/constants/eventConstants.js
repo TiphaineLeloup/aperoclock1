@@ -2,6 +2,8 @@ const eventConstants = {
   EVENT_GET_ALL: 'EVENT_GET_ALL',
   EVENT_GET_ALL_FAILURE: 'EVENT_GET_ALL_FAILURE',
   EVENT_GET_ALL_SUCCESS: 'EVENT_GET_ALL_SUCCESS',
+
+  EVENT_CREATE: 'EVENT_CREATE_SUCCESS',
 };
 
 export default eventConstants;
