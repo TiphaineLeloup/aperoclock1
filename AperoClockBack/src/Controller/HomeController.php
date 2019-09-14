@@ -29,7 +29,7 @@ class HomeController extends AbstractController
 
            $email="rime.zahir@yahoo.fr";
            $subject="an apple";
-           $content="yesterday i ate an apple and it was soo good";
+           $content="yesterday i ate an apple and it was so good";
            
             //$mailer =  new \Swift_Mailer($transport);
             $message = (new \Swift_Message('Nouveau mail user/visiteur: '.$subject.''))
