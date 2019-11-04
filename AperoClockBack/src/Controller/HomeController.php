@@ -16,7 +16,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/contact", name="contact", methods={"POST"})
      */
-    public function contact( \Swift_Mailer $mailer, Request $request, $email="rime.zahir")
+    public function contact( \Swift_Mailer $mailer, Request $request, $email)
     {
         $frontDatas = [];
         if ($content = $request->getContent()) {
@@ -26,10 +26,6 @@ class HomeController extends AbstractController
           $email = $frontDatas['email'];
           $subject = $frontDatas['subject'];
           $content = $frontDatas['content'];
-
-           $email="rime.zahir@yahoo.fr";
-           $subject="an apple";
-           $content="yesterday i ate an apple and it was so good";
            
             //$mailer =  new \Swift_Mailer($transport);
             $message = (new \Swift_Message('Nouveau mail user/visiteur: '.$subject.''))

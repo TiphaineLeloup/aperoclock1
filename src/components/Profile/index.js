@@ -113,7 +113,7 @@ class ProfileUnwrap extends React.Component {
         <Form.Item label="Alerte par mail" {...formItemLayout}>
           <Switch size="small" defaultChecked />
         </Form.Item>
-        <Form.Item label="Alertes uniquement en-dessous de" {...formItemLayout}>
+        <Form.Item label="Alertes uniquement en-dessous de (en km)" {...formItemLayout}>
           <Row>
             <Col span={12}>
               <Slider
