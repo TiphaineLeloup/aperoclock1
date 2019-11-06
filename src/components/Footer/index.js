@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  Button,
   Modal,
+  Form,
+  Input,
 } from 'antd';
 import Legal from 'src/components/Footer/legal-mentions';
 import './footer.scss';
@@ -27,47 +28,57 @@ class Footer extends React.Component {
 
 
   render() {
+    const { TextArea } = Input;
     return (
       <>
         <div className="footer">
-          <Button className="footer-text" type="link" onClick={() => this.setModal1Visible(true)}>
+          <a className="footer-text" type="link" onClick={() => this.setModal1Visible(true)}>
         Copyright
-          </Button>
+          </a>
           <Modal
             title="Copyright"
             visible={this.state.modal1Visible}
             onOk={() => this.setModal1Visible(false)}
             onCancel={() => this.setModal1Visible(false)}
             footer={null}
-            
+
           >
             <p>AperO'Clock - Promo Rocket 2019</p>
           </Modal>
 
-          <Button className="footer-text" type="link" onClick={() => this.setModal2Visible(true)}>
+          <a className="footer-text" type="link" onClick={() => this.setModal2Visible(true)}>
         Mentions Légales
-          </Button>
+          </a>
           <Modal
             title="Mentions Légales"
             visible={this.state.modal2Visible}
             onOk={() => this.setModal2Visible(false)}
             onCancel={() => this.setModal2Visible(false)}
-            footer={null}
+            cancelText="Fermer"
           >
             <Legal />
           </Modal>
 
-          <Button className="footer-text" type="link" onClick={() => this.setModal3Visible(true)}>
+          <a className="footer-text" type="link" onClick={() => this.setModal3Visible(true)}>
         Contact
-          </Button>
+          </a>
           <Modal
-            title="Nous contacter"
+            title="Contactez-nous"
             visible={this.state.modal3Visible}
             onOk={() => this.setModal3Visible(false)}
             onCancel={() => this.setModal3Visible(false)}
-            footer={null}
+            cancelText="Fermer"
+            okText="Envoyer"
           >
-          Aperoclock@mail.com
+            <Form.Item label="Votre adresse mail">
+              <Input type="text" id="userMailAdress" name="fullName" placeholder="Email" />
+            </Form.Item>
+            <Form.Item label="Objet du message">
+              <Input type="text" id="messageSubject" name="fullName" placeholder="Objet" />
+            </Form.Item>
+            <Form.Item label="Votre message">
+              <TextArea placeholder="Message" rows={4} />
+            </Form.Item>
           </Modal>
         </div>
       </>

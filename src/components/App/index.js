@@ -1,6 +1,6 @@
 // == Import : npm
 import React from 'react';
-import { Layout } from 'antd';
+import { Layout, Input, Modal, Form } from 'antd';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -28,7 +28,30 @@ import './app.scss';
 
 // == Composant
 // eslint-disable-next-line react/prefer-stateless-function
+
 class App extends React.Component {
+  state = { visible: false };
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  handleOk = (e) => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleCancel = (e) => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
   render() {
     const {
       Header: AntdHeader,
@@ -38,6 +61,8 @@ class App extends React.Component {
     } = Layout;
 
     const { dispatchAll, loggedIn } = this.props;
+
+    const { TextArea } = Input;
 
     if (loggedIn) {
       dispatchAll();
@@ -84,6 +109,29 @@ class App extends React.Component {
                     <Route path="/inscription" exact component={SignIn} />
                     <Route exact component={Home} />
                   </Switch>
+                  <a type="primary" onClick={this.showModal}>
+                    Contactez-nous
+                  </a>
+
+                  {/* FORMULAIRE DE CONTACT - FENETRE MODALE */}
+                  <Modal
+                    title="Contactez-nous"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    cancelText="Fermer"
+                    okText="Envoyer"
+                  >
+                    <Form.Item label="Votre adresse mail">
+                      <Input type="text" id="userMailAdress" name="fullName" placeholder="Email" />
+                    </Form.Item>
+                    <Form.Item label="Objet du message">
+                      <Input type="text" id="messageSubject" name="fullName" placeholder="Objet" />
+                    </Form.Item>
+                    <Form.Item label="Votre message">
+                      <TextArea placeholder="Message" rows={4} />
+                    </Form.Item>
+                  </Modal>
                 </Content>
               </Layout>
             </div>

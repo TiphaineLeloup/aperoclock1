@@ -60,7 +60,7 @@ class SignInUnwrap extends React.Component {
           {getFieldDecorator('birthDate', {
             rules: [{ required: true, message: 'Ce champ est requis' }],
           })(
-            <DatePicker format="DD/MM/YYYY" />
+            <DatePicker format="DD/MM/YYYY" />,
           )}
         </Form.Item>
         <Form.Item label="Nom Prénom">
